@@ -1,0 +1,214 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\newcommand{\bleft}{
+    \boldsymbol{\left(\right.}
+}
+
+\newcommand{\bright}{
+    \boldsymbol{\left.\right)}
+}
+
+\newcommand{\bplus}{
+    \boldsymbol{+}
+}
+
+\newcommand{\bepsilon}{
+    \boldsymbol{\epsilon}
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 5}
+\end{center}
+
+\vspace{15pt}
+
+\section{Регулярни изрази и теорема на Клини}
+\hspace{15pt} \textit{Регулярният израз} е още едно средство за описване на формалните езици 
+    над дадена азбука $\Sigma$. Грубо казано, регулярните изрази използват само буквите
+    от азбуката и \textit{символите} $\oslash$, $\bepsilon$, $\bplus$, $^\star$, $\bleft$ и $\bright$, за да дадат 
+    представяне на езиците над $\Sigma$. Формалната дефиниция за \textit{синтаксиса} на 
+    регулярните изрази е следната.
+
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} Нека е дадена азбука $\Sigma$. \textbf{Регулярен израз} над
+    $\Sigma$ дефинираме индуктивно, както следва. \\
+    \vspace{10pt}
+    \textbf{База:} $\oslash$ е регулярен израз, $\bepsilon$ е регулярен израз
+    и всеки елемент на $\Sigma$ е регулярен израз. \\
+    \vspace{5pt}
+    \textbf{Стъпка:} (1) Ако $\alpha$ и $\beta$ са регулярни изрази, то и $\bleft \alpha \beta \bright$
+    е регулярен израз. \\
+    (2) Ако $\alpha$ и $\beta$ са регулярни изрази, то и $\bleft \alpha \bplus \beta \bright$
+    е регулярен израз. \\
+    (3) Ако $\alpha$ е регулярен израз, то и $\alpha^\star$ е регулярен израз.
+
+    \vspace{10pt}
+
+    \hspace{15pt} Всеки регулярен израз съответства на един и точно един език над $\Sigma$.
+    Формално, релацията между регулярните изрази и езиците, които те представят, се описва
+    чрез функция $\mathscr{L}$, такава че ако $\alpha$ е регулярен израз, то $\mathscr{L}(\alpha)$
+    е езикът, който $\alpha$ представя. Функцията $\mathscr{L}$ ще наричаме \\
+    \textbf{семантика}, а стойността ѝ в $\alpha$ — \textbf{семантика на $\boldsymbol{\alpha}$}. \\
+    \hspace{15pt} За да дефинираме формално $\mathscr{L}$ ще трябва да кажем еднозначно
+    какво тя връща за всеки даден регулярен израз $\alpha$ над $\Sigma$. Това естествено
+    ще сторим с индукция по конструкцията на $\alpha$. \\
+
+    \vspace{10pt}
+
+    \textbf{База:} $\mathscr{L}(\oslash) = \varnothing$, $\mathscr{L}(\bepsilon) = \{\epsilon\}$ и $\mathscr{L}(a) = \{a\}$ за всяко $a \in \Sigma$. \\
+    
+    \vspace{5pt}
+    
+    \textbf{Стъпка:} (1) Ако $\alpha$ и $\beta$ са регулярни изрази, то $\mathscr{L}(\bleft \alpha \beta \bright) =$
+    $\mathscr{L}(\alpha)\mathscr{L}(\beta)$. \\
+    (2) Ако $\alpha$ и $\beta$ са регулярни изрази, то $\mathscr{L}(\bleft \alpha \bplus \beta \bright) =$
+    $\mathscr{L}(\alpha) \cup \mathscr{L}(\beta)$. \\
+    (3) Ако $\alpha$ е регулярен израз, то $\mathscr{L}(\alpha^\star) =$
+    $\mathscr{L}(\alpha)^*$. 
+
+    \vspace{15pt}
+    
+    \textbf{Пример 1.} Да намерим $\mathscr{L}(\bleft a \bplus b \bright ^* a \bright)$. Имаме следното. \\
+    \begin{center}
+        $\mathscr{L}(\bleft a \bplus b \bright ^\star a \bright) = $
+        $\mathscr{L}(\bleft a \bplus b \bright ^\star) \mathscr{L}(a)$ \hspace{10pt} // съгласно (2) \\
+        \hspace{62pt}$=\mathscr{L}(\bleft a \bplus b \bright ^\star)\{a\}$ \hspace{10pt} // съгласно (1) \\
+        \hspace{62pt}$=\mathscr{L}(\bleft a \bplus b \bright )^*\{a\}$ \hspace{10pt} // съгласно (4) \\
+        \hspace{76pt}$=(\mathscr{L}(a) \cup \mathscr{L}(b))^*\{a\}$ \hspace{10pt} // съгласно (3) \\
+        \hspace{104pt}$=(\{a\} \cup \{b\})^*\{a\}$ \hspace{10pt} // съгласно (1) два пъти \\
+        \hspace{-44pt}$=(\{a,b\})^*\{a\}$ \\
+        \hspace{33pt}$=\{w \in \Sigma^*$ | $w$ завършва на $a$\}
+    \end{center}
+
+    \vspace{15pt}
+
+    \hspace{15pt} Класът на \textbf{регулярните езици} над дадена азбука $\Sigma$ се дефинира
+    да бъде множеството от всички езици $L$ над $\Sigma$, такива че $L = \mathscr{L}(\alpha)$ 
+    за някой регулярен израз $\alpha$ над $\Sigma$. Алтернативно, можем да мислим за класа
+    на регулярните езици като \textit{затварянето} на множеството от езици
+    \begin{center}
+        $\{\{\sigma\}$ | $\sigma \in \Sigma\} \cup \{\{\epsilon\}\} \cup \{\varnothing\}$
+    \end{center}
+    относно операциите обединение, конкатенация и звезда на Клини. 
+
+    \vspace{15pt}
+
+    \hspace{15pt} Основен резултат в теорията на формалните езици е следната теорема за еквивалентност. 
+
+    \vspace{15pt}
+
+    \textbf{Теорема 1(на Клини).} Един език $L$ е регулярен тогава и само тогава, когато
+    е автоматен.
+    
+    \vspace{15pt}
+
+    \hspace{15pt} Едната посока на доказателството на тази теорема вече на практика сме направили, а
+    именно правата; трябва само да дадем автомати за базовите регулярно езици — $\varnothing$,
+    $\{\epsilon\}$ и $\{a\}$ за $a \in \Sigma$. От там нататък затвореността на автоматните
+    езици относно операциите обединение, конкатенация и звезда на Клини ни дават именно,
+    че регулярността на един език влече неговата автоматност. \\
+    \hspace{15pt} Обратната посока ще бъде от интерес за нас за целите на това упражнение.
+    Как от детерминиран автомат $A = (Q,\Sigma,\delta,s,F)$ да получим регулярен израз $\alpha$, такъв че 
+    $L(A) = \mathscr{L}(\alpha)$? За начало, да номерираме състоянията на автомата; нека $Q = \{q_1,...,q_n\}$, 
+    като $s = q_1$. За $i,j = 1,...,n$ и $k = 0,...,n$, дефинираме $R(i,j,k)$ да бъде
+    множеството от всички думи в $\Sigma^*$, с които $A$ може да направи преход от 
+    състояние $q_i$ до състояние $q_j$ без да премине през \textit{вътрешни} състояния
+    с индекси по-големи от $k$ — крайните състояния за този преход $q_i$ и $q_j$ могат да 
+    имат индекси по-големи от $k$. За $k = n$, имаме че 
+    \begin{center}
+        $R(i,j,n) = \{w \in \Sigma^*$ | $\hat{\delta}(q_i,w) = q_j\}$.
+    \end{center}
+    Следователно
+    \begin{center}
+        $L(A) = \bigcup\{R(1,j,n)$ | $q_j \in F\}$.
+    \end{center}
+    \hspace{15pt} За целите на доказателството следва да се покаже, че езиците \\ $R(i,j,k)$
+    по всевъзможните $i,j$ и $k$ са регулярни, и следователно такъв е и $L(A)$. Доказателството
+    на този факт се извършва с индукция по $k$. За нас съществено е изразяването на
+    езика $R(i,j,k)$ чрез езици с по-малка стойност на параметъра $k$, а именно
+    \begin{center}
+        $R(i,j,k) = R(i,j,k-1) \cup R(i,k,k-1)R(k,k,k-1)^*R(k,j,k-1)$.
+    \end{center}
+
+    Това уравнение просто ни казва, че за да стигне от състояние $q_i$ до състояние
+    $q_j$ без да минава през състояние с номер по-голям от $k$, автоматът А може да 
+    стори едно от следните две неща
+    
+    (1) да отиде от състояние $q_i$ до състояние $q_j$, минавайки през вътрешни \\
+    \hspace{13pt}    състояния с номера, по-малки от $k-1$; или \\
+    (2) да премине първо от $q_i$ до $q_k$; след което да премине от $q_k$ до $q_k$ \\
+    \hspace{13pt}    нула или повече пъти; след което да премине от $q_k$ до $q_j$; като през \\
+    \hspace{13pt}    цялото време не минава през \textit{вътрешни} състояния с индекси \\
+    \hspace{13pt}    по-големи от $k-1$. 
+
+    \vspace{15pt}
+
+    \textbf{Пример 2.} Да построим регулярен израз за езика 
+    $L = \{w \in \Sigma^*$ | $w$ има $3k + 1$ $b$-та за някое $k \in \mathbb{N}$\}, разпонат от следния автомат.
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto] 
+            \node[state,initial] (q_1)   {$q_1$}; 
+            \node[state] (q_2) [right=of q_1] {$q_2$};
+            \node[state,accepting] (q_3) [above right=of q_1, xshift=-0.6cm] {$q_3$}; 
+            \path[->]
+            (q_1) edge [loop below] node {$a$} ()
+                  edge node {$b$} (q_3)
+            (q_2) edge [loop below] node {$a$} ()
+                  edge node {$b$} (q_1)
+            (q_3) edge [loop above] node {$a$} ()
+                  edge node {$b$} (q_2);
+        \end{tikzpicture}
+    \end{center}
+
+    Ако се опитаме подробно да проследим конструкцията от доказателството 
+    на обратната посока на \textbf{Теорема 1} ще трябва да построим всички езици 
+    $R(i,j,k)$ по всевъзможните стойностти за $i,j$ и $k$, които са $3*3*4 = 36$ на брой.
+    Ясно е, че $R(i,j,0) = \{\sigma \in \Sigma$ | $\delta(q_i,\sigma) = q_j$\} за $i,j = 1,2,3$. \\
+    \vspace{10pt}
+    Нататък за $k = 1$ имаме $R(1,1,1) = \mathscr{L}(a^\star)$, \\ $R(1,2,1) = \varnothing$, 
+    $R(1,3,1) = \mathscr{L}(a^\star b)$, $R(2,1,1) = R(2,1,0)$, \\ $R(2,2,1) = R(2,2,0)$,
+    $R(2,3,1) = \mathscr{L}(b a^\star b)$, а $R(3,j,1) = R(3,j,0)$, \\ за $j=1,2,3$. \\
+    \vspace{10pt}
+    След това за $k = 2$ имаме $R(1,j,2) = R(1,j,1)$, за $j=1,2,3$, \\
+    $R(2,1,2) = \mathscr{L}(a^\star b a^\star)$, $R(2,2,2) = \mathscr{L}(a^\star)$,
+    $R(2,3,2) = \mathscr{L}(a^\star b a^\star b)$, \\ $R(3,1,2) = \mathscr{L}(b a^\star b a^\star)$,
+    $R(3,2,2) = \mathscr{L}(b a^\star)$, $R(3,3,2) = \mathscr{L}(a + b a^\star b a^\star b)$.  \\
+    \vspace{10pt}
+    Накрая за $k = 3$ е достатъчно да намерим $R(1,3,3)$, защото \\
+    съгласно \textbf{Теорема 1}, $L(A) = R(1,3,3)$. Имаме
+    \begin{center}
+        $R(1,3,3) = R(1,3,2) \cup R(1,3,2)R(3,3,2)^*R(3,3,2) =$
+        $\mathscr{L}(a^\star b) \cup \mathscr{L}(a^*b)\mathscr{L}(b a^\star b a^\star b)^*\mathscr{L}(b a^\star b a^\star b) =$
+        $\mathscr{L}(a^\star b \bplus a ^\star b \bleft a \bplus b a^\star b a^\star b \bright ^\star \bleft a \bplus b a^\star b a^\star b \bright) =$
+        $\mathscr{L}(a^\star b \bleft \bepsilon \bplus \bleft a \bplus b a^\star b a^\star b \bright ^\star \bleft a \bplus b a^\star b a^\star b \bright) =$
+        $\mathscr{L}(a^\star b \bleft a \bplus b a^\star b a^\star b \bright^\star)$.
+    \end{center}
+
+\section{Задачи}
+
+\vspace{25pt}
+
+\section{Решения}
+    
+
+\end{document} 

@@ -1,0 +1,218 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\newcommand{\bleft}{
+    \boldsymbol{\left(\right.}
+}
+
+\newcommand{\bright}{
+    \boldsymbol{\left.\right)}
+}
+
+\newcommand{\bplus}{
+    \boldsymbol{+}
+}
+
+\newcommand{\bepsilon}{
+    \boldsymbol{\epsilon}
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 9}
+\end{center}
+
+\vspace{15pt}
+
+\section{Контекстно-свободни граматики}
+    \hspace{15pt}Автоматите, които разглеждахме досега бяха \textbf{разпознаватели на езици}. 
+    \textit{Граматиката}, подобно на регулярния израз е \textbf{генератор на езици}. 
+    Тя представлява множество от правила и променливи, посредством които строим думи над дадена азбука. 
+
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} \textbf{Контекстно-свободна граматика} е наредена четворка $G = (V,\Sigma,R,S)$, където \\
+    — $V$ е \textit{крайно} множество от \textbf{нетерминали(променливи)}, \\
+    — $\Sigma$ е азбука, чиито елементи ще наричаме \textbf{терминали}, \\
+    — $R$, \textbf{множеството от правилата}, е крайно подмножество на \\ $V \times (\Sigma \cup V)^*$ и \\
+    — $S \in V$ е \textbf{началната променлива}.
+
+    \vspace{10pt}
+
+    \hspace{15pt}Вместо $(X,y) \in R$ ще пишем $X \rightarrow_G y$. За всеки две думи $u,v \in (\Sigma \cup V)^*$
+    ще пишем $u \Rightarrow_G v$ тогава и само тогава, когато съществуват думи \\ $x,y \in (\Sigma$ $\cup$ $V)^*$
+    и нетерминал $A \in V$, такива че $u = xAy, v=xv'y$ и $A \rightarrow_G v'$.
+    Релацията $\Rightarrow_G^*$ е рефлексивното и транзитивно затваряне на $\Rightarrow_G$.
+    Накрая, \textbf{езика генериран от $\boldsymbol{G}$} е езикът 
+    \begin{center}
+        $L(G) = \{w \in \Sigma^*$ | $S \Rightarrow_G^* w\}$. 
+    \end{center}
+    \hspace{15pt}Един език $L$ наричаме \textbf{контекстно-свободен}, ако $L = L(G)$ за някоя контекстно-свободна граматика $G$.
+    Ако от контекста се подразбира, за коя граматика става въпрос, ще пишем $\rightarrow$ 
+    вместо $\rightarrow_G$ и $\Rightarrow$ вместо $\Rightarrow_G$. \\
+    \hspace{15pt} Всяка редица от вида
+    \begin{center}
+        $w_0 \Rightarrow_G w_1 \Rightarrow_G ... \Rightarrow_G w_n$
+    \end{center}
+    наричаме \textbf{извод} по $G$ на $w_n$ от $w_0$, за $w_0,...,w_n \in (\Sigma \cup V)^*$ и $n \in \mathbb{N}$.
+    Дължината на един извод е броя на срещанията на символа $\boxed{\Rightarrow_G}$ в него.
+    Фактът, че съществува извод с дължина $n$ на $v$ от $u$ по $G$ ще записваме $u \Rightarrow_G^n v$. 
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Да разгледаме контекстно-свободната граматика \\
+    $G = (V,\Sigma,R,S)$, където $V = {S}$, $\Sigma = \{a,b\}$ и $R$ се 
+    състои от правилата $S \rightarrow aSb$ и $S \rightarrow \epsilon$. Възможен
+    извод по $G$ е например
+    \begin{center}
+        $S \Rightarrow aSb \Rightarrow aaSbb \Rightarrow aabb$.
+    \end{center}
+    На първите две стъпки използвахме правилото $S \rightarrow aSb$, а на последната
+    използвахме $S \rightarrow \epsilon$. Лесно е да се съобрази, че $L(G) = \{a^nb^n$ | $n \in \mathbb{N}\}$.
+    Следователно, някои контекстно-свободни езици не са регулярни.
+
+    \vspace{15pt}
+
+    \textbf{Пример 2.} Следната граматика генерира всички думи от балансирани леви
+    и десни скоби: всяка лява скоба може да се съчетае с уникална дясна скоба след нея,
+    и всяка дясна скоба може да се съчетае с уникална лява скоба преди нея. Нека 
+    $G = (V,\Sigma,R,S)$, където
+    \begin{center}
+        $V = \{S\}$, \\
+        $\Sigma = \{(,)\}$, \\
+        $R = \{S \rightarrow \epsilon,$ $S \rightarrow SS$, $S\rightarrow (S)\}$.
+    \end{center}
+
+    Два възможни извода по тази граматика са например
+    \begin{center}
+        $S \Rightarrow SS \Rightarrow S(S) \Rightarrow S((S)) \Rightarrow S(()) \Rightarrow (S)(()) \Rightarrow ()(())$ \\
+        \vspace{5pt}
+        и \\
+        \vspace{5pt}
+        $S \Rightarrow SS \Rightarrow (S)S \Rightarrow ()S \Rightarrow ()(S) \Rightarrow ()((S)) \Rightarrow ()(())$.
+    \end{center}
+    Значи една и съща дума може да има два различни извода от $S$ по една и съща граматика.
+
+    \vspace{15pt}
+
+    \hspace{15pt}Сега ще покажем, че всички регулярни езици са контекстно-свободни. За целта ще дадем
+    директна конструкция, която по подаден ДКА \\ $A = (Q,\Sigma,\delta,s,F)$ генерира контекстно-свободна граматика \\
+    $G=(V,\Sigma,R,S)$, такава че $L(A) = L(G)$. Конструкцията е следната.
+    \begin{center}
+        $V = Q$, \\
+        $S = s$, \\
+        $R = \{q \rightarrow \sigma p$ | $\delta(q,\sigma) = p\} \cup \{q \rightarrow \epsilon$ | $q \in F$\}.
+    \end{center}
+
+    Има и други начини да покажем, че регулярните езици са подмножество
+    на контекстно-свободните, но тях ще покажем по-нататък.
+
+
+\vspace{25pt}
+
+\section{Задачи}
+    \textbf{Задача 1.} Да разгледаме граматиката $G = (V,\Sigma,R,S)$, където
+    \vspace{5pt}
+    \begin{center}
+        $V = \{S,A\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $R = \{S \rightarrow AA$, $A \rightarrow AAA$, $A \rightarrow a$, $A \rightarrow bA$, $A \rightarrow Ab$\}. \\
+    \end{center}
+    \vspace{5pt}
+    (a) Кои думи от $L(G)$ могат да се изведът с извод с дължина не повече от четири? \\
+    (б) Дайте поне четири различни извода на думата $babbab$. \\
+    (в) За всеки $m,n,p > 0$, опишете извод по $G$ на думата $b^mab^nab^p$. 
+
+    \vspace{50pt}
+
+    \textbf{Задача 2.} Да разгледаме граматиката $G = (V,\Sigma,R,S)$, където
+    \vspace{5pt}
+    \begin{center}
+        $V = \{S,A\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $R = \{S \rightarrow aAa$, $S \rightarrow bAb$, $S \rightarrow \epsilon$, $A \rightarrow SS$\}. \\
+    \end{center}
+    Дайте извод на думата $baabbb$ по $G$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Дайте контекстно-свободни граматики за всеки от следните езици. \\
+    (а) $\{w\#w^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (б) $\{ww^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (в) $\{w \in \{a,b\}^*$ | $w = w^{rev}\}$
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Да фиксираме азбука $\Sigma = \{a,b,\bleft,\bright,\bplus,\star,\bepsilon,\oslash\}$.
+    Дайте \\ контекстно-свободна граматика, която генерира всички думи над $\Sigma^*$, които са регулярни изрази
+    над $\{a,b\}$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.} Дайте контекстно-свободни граматики за всеки от следните езици. \\
+    (а) $\{a^mb^n$ | $m \geq n\}$ \\
+    (б) $\{a^mb^nc^pd^q$ | $m + n = p + q\}$ \\
+    (в) $\{w \in \{a,b\}^*$ | броят на $b$-тата в $w$ е равен на два пъти броя на $a$-тата\} \\
+    (г) $\{uawb$ | $u,w \in \{a,b\}^*$ \& $|u| = |w|\}$ \\
+    (д) $\{w_1\#w_2\#...\#w_k\#\#w_j^{rev}$ | $k \geq 1$ \& $1 \leq j \leq k$ \& $w_i \in \{a,b\}^+$ за $i = 1,...,k$\} \\
+    (е) $\{a^mb^n$ | $m \leq 2n$\}
+\vspace{25pt}
+
+\section{Решения}
+    \textbf{Задача 1.} (а) $aa,baa,aba,aab$; \\
+    (б) 1. $S \Rightarrow AA \Rightarrow bAA \Rightarrow bAbA \Rightarrow bAbbA \Rightarrow bAbbAb \Rightarrow babbAb \Rightarrow babbab$; \\
+    2. $S \Rightarrow AA \Rightarrow AbA \Rightarrow AbAb \Rightarrow bAbAb \Rightarrow bAbbAb \Rightarrow babbAb \Rightarrow babbab$; \\
+    3. $S \Rightarrow AA \Rightarrow bAA \Rightarrow bAAb \Rightarrow bAbAb \Rightarrow bAbbAb \Rightarrow babbAb \Rightarrow babbab$; \\
+    4. $S \Rightarrow AA \Rightarrow AbA \Rightarrow AbbA \Rightarrow bAbbA \Rightarrow bAbbAb \Rightarrow babbAb \Rightarrow babbab$. \\
+    (в) $S \Rightarrow AA \underbrace{\Rightarrow bAA \Rightarrow bbAA \Rightarrow ... \Rightarrow}_\text{$m$ пъти} b^mAA \Rightarrow \underbrace{b^mAbA \Rightarrow b^mAbbA \Rightarrow ... \Rightarrow}_\text{$n$ пъти}$ \\  $b^mAb^nA \Rightarrow b^mab^nA \Rightarrow \underbrace{b^mab^nAb \Rightarrow b^mab^nAbb \Rightarrow ... \Rightarrow}_\text{$p$ пъти} b^mab^nAb^p \Rightarrow b^mab^nab^p$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} $S \Rightarrow bAb \Rightarrow bSSb \Rightarrow baAaSb \Rightarrow baAabAbb \Rightarrow baabAbb \Rightarrow baabbb$.
+
+    \vspace{50pt}
+
+    \textbf{Задача 3.} (а) $S \rightarrow aSa$ | $bSb$ | $\#$; \\
+    (б) $S \rightarrow aSa$ | $bSb$ | $\epsilon$; \\
+    (в) $S \rightarrow aSa$ | $bSb$ | $a$ | $b$ | $\epsilon$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} $S \rightarrow a$ | $b$ | $\oslash$ | $\bepsilon$ | $\bleft SS \bright$ | $\bleft S \bplus S \bright$ | $S^\star$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.}(а) $S \rightarrow aS$ | $aSb$ | $\epsilon$; \\
+    \vspace{5pt}
+    (б) $S \rightarrow aSd$ | $A$ | $B$ | $\epsilon$ \\
+    $A \rightarrow aAc$ | $C$ | $\epsilon$ \\
+    $B \rightarrow bBd$ | $C$ | $\epsilon$ \\
+    $C \rightarrow bCc$ | $\epsilon$; \\
+    \vspace{5pt}
+    (в) $S \rightarrow aSbSbS$ | $bSaSbS$ | $bSbSaS$ | $\epsilon$; \\
+    \vspace{5pt}
+    (г) $S \rightarrow Ab$ \\
+    $A \rightarrow aAb$ | $bAa$ | $aAa$ | $bAb$ | $a$; \\
+    \vspace{5pt}
+    (д) $S \rightarrow AB$ | $B$ \\
+    $B \rightarrow aBa$ | $bBb$ | $a\#A\#a$ |$b\#A\#b$ | $a\#\#a$ | $b\#\#b$ \\
+    $A \rightarrow aA$ | $bA$ | $AA$ | $a\#$ | $b\#$; \\
+    \vspace{5pt}
+    (е) $S \rightarrow aSbb$ | $Sb$ | $\epsilon$;
+\end{document} 

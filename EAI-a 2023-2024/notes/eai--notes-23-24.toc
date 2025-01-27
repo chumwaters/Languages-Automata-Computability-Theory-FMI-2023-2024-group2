@@ -1,0 +1,38 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{\numberline {1}Въведение}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Азбуки и езици}{4}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Задачи}{6}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Решения}{7}{subsection.1.1.2}%
+\contentsline {chapter}{\numberline {2}Крайни автомати и регулярни езици}{10}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Детерминирани крайни автомати}{10}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Задачи}{12}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Решения}{14}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Недетерминирани крайни автомати}{15}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Задачи}{19}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Решения}{20}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Затвореност относно регулярните операции}{21}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Задачи}{24}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Решения}{26}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Регулярни изрази и теорема на Клини}{28}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Задачи}{31}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Решения}{31}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Минимален автомат}{31}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Задачи}{35}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Решения}{35}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}Критерии за нерегулярност}{35}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Задачи}{38}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Решения}{39}{subsection.2.6.2}%
+\contentsline {chapter}{\numberline {3}Граматики и стекови автомати}{41}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Контекстно-свободни граматики}{41}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Задачи}{43}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Решения}{44}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Затвореност относно регулярните операции}{44}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Задачи}{45}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Решения}{46}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Коректност на контекстно-свободни граматики}{46}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Задачи}{50}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Решения}{51}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Синтактични дървета на извод}{51}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Езици, които не са контекстно-свободни}{53}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Задачи}{55}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Решения}{56}{subsection.3.5.2}%

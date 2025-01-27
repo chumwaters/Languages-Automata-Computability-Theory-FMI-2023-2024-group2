@@ -1,0 +1,3033 @@
+\documentclass[openany]{book}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\addto\captionsrussian{
+  \renewcommand{\contentsname}
+    {Съдържание}
+}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{qtree}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage[bookmarks=true]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\usepackage{bookmark}
+
+\paperwidth=500.62pt
+\paperheight=650.43pt
+\textwidth=400.215pt
+\textheight=505.89001pt
+\oddsidemargin=-18.06749pt
+\evensidemargin=-18.06749pt
+\topmargin=-37.0pt
+\headheight=12.0pt
+\headsep=25.0pt
+\topskip=10.0pt
+\footskip=30.0pt
+\marginparwidth=0.0pt
+\marginparsep=0.0pt
+\columnsep=10.0pt
+\skip\footins=28.90755pt
+\hoffset=0.0pt
+\voffset=0.0pt
+\mag=1000
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\newcommand{\bleft}{
+    \boldsymbol{\left(\right.}
+}
+
+\newcommand{\bright}{
+    \boldsymbol{\left.\right)}
+}
+
+\newcommand{\bplus}{
+    \boldsymbol{+}
+}
+
+\newcommand{\bepsilon}{
+    \boldsymbol{\epsilon}
+}
+
+\begin{titlepage}
+    \title{Записки по ЕАИ}
+    \author{Александър Тангълов}
+    \date{3 януари 2023г.}
+\end{titlepage}
+
+\begin{document}
+\maketitle
+\pdfbookmark{\contentsname}{Съдържание}
+\tableofcontents
+
+\chapter{Въведение}
+
+\section{Азбуки и езици}
+    \textbf{Дефиниция 1.} \textbf{Азбука} наричаме крайно множество от \textbf{символи}. \\
+    
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ето два примера за азбуки: \\ 
+    
+    \vspace{5pt}
+
+    1. Латинската азбука \{$a,...,z$\}. \\
+    2. Двоичната азбука \{$0,1$\}.
+
+    \vspace{5pt}
+
+    Всяко крайно множество е азбука; формална
+    дефиниция за понятието \textit{символ} няма. За простота в курса
+    ще използваме само латински букви, цифри и често срещани
+    символи като \$, \# и !. Освен това, вместо по-общото понятие \textit{символ} ще
+    използваме \textit{буква} за елементите на една азбука.
+
+    \vspace{15pt}
+
+    \textbf{Дефиниция 2.} \textbf{Дума} над азбука ще наричаме всяка крайна
+    редица от букви от азбуката.
+
+    \vspace{5pt}
+
+    За коя да е азбука, думата представляваща редица от $0$ букви бележим с $\epsilon$
+    и наричаме \textbf{празната дума}.
+
+    \vspace{5pt}
+
+    Множеството от всички думи над дадена азбука $\Sigma$ бележим със $\Sigma^*$.
+
+    \vspace{5pt}
+
+    \textbf{Дължината} на една дума е дължината ѝ като редица от букви. 
+    Бележим дължината на думата $w$ с $|w|$.
+
+    \vspace{30pt}
+    
+    \hspace{15pt} Сега ще дадем няколко операции, които можем да прилагаме върху думите
+    над дадена азбука.
+
+    \newpage
+
+    \textbf{Операции върху думи} \\
+
+    \vspace{5pt}
+    
+    1. \textbf{Конкатенацията} на думите $w_1$ и $w_2$ бележим с 
+    $w_1 \circ w_2$ или по-просто $w_1w_2$. Неформално, конкатенацията
+    на думите $w_1$ и $w_2$ представлява думата $w_1$ последвана непосредствено
+    от думата $w_2$.
+
+    \vspace{5pt}
+
+    Дума $v$ наричаме \textbf{поддума} на думата $w$ тогава и само тогава,
+    когато съществуват думи $w_1$ и $w_2$ такива, че $w = w_1vw_2$. Допълнително,
+    ако $w = w_1v$ за някоя дума $w_1$, то $v$ наричаме \textbf{суфикс} на $w$. Аналогично, ако
+    $w = vw_2$ за някоя дума $w_2$, то $v$ наричаме \textbf{префикс} на $w$.
+
+    \vspace{5pt}
+
+    За всяка дума $w$ и всяко естествено число $i$, думата $w^i$ е дефинирана
+    като 
+
+    \begin{center}
+        $w^0 = \epsilon$, празната дума \\
+        $w^{i+1} = w^i \circ w$ за всяко $i \geq 0$
+    \end{center}
+
+    \vspace{5pt}
+
+    2. \textbf{Обръщането} на дума $w$, означавано с $w^{rev}$, представлява
+    думата $w$ "написана на обратно". 
+
+    \vspace{5pt}
+
+    Формалните дефиниции на \textit{конкатенация} и \textit{обръщане} по индукция са
+    дадени в секцията със задачи (задачи 3 и 4).
+    
+    \vspace{15pt}
+
+    \textbf{Дефиниция 3.} Всяко множество от думи над дадена азбука $\Sigma$
+    — тоест, всяко подмножество на $\Sigma^*$ — наричаме \textbf{език} над $\Sigma$.
+
+    \vspace{5pt}
+
+    \textbf{Пример 2.} Примери за езици са: \\
+    
+    \vspace{5pt}
+
+    1. $\varnothing$ е език над всяка азбука. \\
+    2. За всяка азбука $\Sigma$ и всяка буква $a$ $\in \Sigma$, $\{a\}$ е език над $\Sigma$. \\
+    3. $\Sigma^*$ е език над $\Sigma$ за всяка азбука $\Sigma$. Да забележим, че 
+    при $|\Sigma| \geq 1$, $\Sigma^*$ е безкраен език. \\
+    4. $\{0,01,011,0111,...\}$ е безкраен език над $\Sigma = \{0,1\}$. \\
+    5. $\{w \in \{0,1\}^*$ | $w$ има равен брой $0$-ли и $1$-ци$\}$
+    е безкраен език над \\ $\Sigma = \{0,1\}$. \\
+    6. $\{w \in \Sigma^*$ | $w = w^{rev}\}$ е безкраен език над
+    всяка азбука $\Sigma$.
+
+    \vspace{5pt}
+
+    Предимно ще се вълнуваме от безкрайни езици.
+
+    \vspace{5pt}
+
+    Тъй като езиците са множества, върху тях можем да прилагаме стандартните
+    операции на обединение, сечение и разлика. Ако от контекста се подразбира
+    дадена азбука $\Sigma$, то пишейки $\bar{L}$ за даден език $L$ над $\Sigma^*$,
+    ще имаме предвид разликата $\Sigma^* \setminus L$.
+
+    \vspace {30pt}
+
+    \textbf{Операции върху езици}
+
+    \vspace{5pt}
+
+    Освен стандартните такива, върху езици можем да прилагаме и следните две операции:
+
+    \vspace{5pt}
+
+    1. \textbf{Конкатенация на езици.} Ако $L_1$ и $L_2$ са езици над азбука $\Sigma$,
+    тяхната \textbf{конкатенация} е езикът $L = L_1 \circ L_2$, или по-просто $L = L_1L_2$, където
+
+    \begin{center}
+        $L = \{ w \in \Sigma^*$ | $w = w_1 \circ w_2$ за някои $w_1 \in L_1$ и $w_2 \in L_2$\}.
+    \end{center}
+
+    \vspace{5pt}
+
+    \textbf{Пример 3.} Нека $L_1 = \{0,00,000,0000,...\}$ и $L_2 = \{1,11,111,1111,...\}$. Тогава
+    \begin{center}
+        $L_1 \circ L_2 = \{01,011,0111,...,001,0011,00111,...,0001,00011,000111,...\}$.
+    \end{center}
+    \vspace{15pt}
+
+    2. \textbf{Звезда на Клини.} За даден език $L$ над азбука $\Sigma$ с $L^*$ означаваме
+    \textbf{звездата на Клини} на $L$. $L^*$ е множеството от всички думи получени чрез прилагане
+    на операцията конкатенация върху нула или повече думи от $L$. (Да забележим, че конкатенацията
+    на нула думи би дала като резултат неутралния елемент на операцията конкатенация, а именно празната
+    дума.) И така,
+
+    \begin{center}
+        $L^* = \{w \in \Sigma^*$ | $w = w_1 \circ ... \circ w_k$ за някое $k \geq 0$ и някои $w_1,...,w_k \in L\}$
+    \end{center}
+
+    \vspace{5pt}
+
+    \textbf{Пример 4.} Нека $L = \{0,11\}$. Тогава
+    
+    \vspace{5pt}
+
+    $L^* = \{\epsilon,0,11,00,011,110,1111,000,0011,0110,01111,1100,11011,11110,111111,...\}$.
+
+    \vspace{15pt}
+
+    Езикът $LL^*$ означаваме с $L^+$. Еквивалентно
+
+    \begin{center}
+        $L^+ = \{w \in \Sigma^*$ | $w = w_1 \circ ... \circ w_k$ за някое $k \geq 1$ и някои $w_1,...,w_k \in L\}$.
+    \end{center}
+   
+\vspace{25pt}
+
+\subsection{Задачи}
+    \textbf{Задача 1.} Където е възможно дайте по един пример за дума във и дума извън всеки от следните езици над $\Sigma = \{a,b\}$. \\
+    (a) $L = \{w \in \Sigma^*$ | съществува $u \in \Sigma^2$, $w = uu^{rev}u$\} \\
+    (б) $L = \{w \in \Sigma^*$ | $ww = www$\} \\
+    (в) $L = \{w \in \Sigma^*$ | съществуват $u,v \in \Sigma^*$, $uvw = wvu$\} \\
+    (г) $L = \{w \in \Sigma^*$ | съществува $u \in \Sigma^*$, $www = uu$\}
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Докажете всяко от следните. \\
+    (а) $\{\epsilon\}^* = \{\epsilon\}$ \\ 
+    (б) За всяка азбука $\Sigma$ и всеки език $L \subseteq \Sigma^*$, $(L^*)^* = L^*$. \\
+    (в) Ако $a$ и $b$ са различни букви, то $\{a,b\}^* = \{a\}^*(\{b\}\{a\}^*)^*$. \\
+    (г) Ако $\Sigma$ е произволна азбука, $\epsilon \in L_1 \subseteq \Sigma^*$ и $\epsilon \in L_2 \subseteq \Sigma^*$, то \\
+    $(L_1 \Sigma L_2)^* = \Sigma^*$. \\
+    (д) За всеки език $L$, $\varnothing L = L \varnothing = \varnothing$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Да разгледаме формалната дефиниция на операцията \textit{обръщане} с индукция по дължината на думата-операнд $w$: \\
+    \textcolor{blue}{(1) Ако $|w| = 0$, то $w^{rev} = w = \epsilon$.} \\
+    \textcolor{blue}{(2) Ако $|w| = n + 1$ за някое $n \in \mathbb{N}$, то $w = ua$ за някое $a \in \Sigma$ и \\ $w^{rev} = au^{rev}$.} \\
+    \vspace{5pt}
+    Използвайте тази дефиниция, за да докажете всяко от следните. \\
+    (a) $(w^{rev})^{rev} = w$ за всяка дума $w$. \\
+    (б) Ако $v$ е поддума на $w$, то $v^{rev}$ е поддума на $w^{rev}$. \\
+    (в) $(w^i)^{rev} = (w^{rev})^i$ за всяка дума $w$ и $i \geq 0$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Да разгледаме формалната дефиниция на операцията \textit{конкатенация}
+    с индукция по дължината на втория операнд $w_2$: \\
+    \textcolor{blue}{(1) Ако $|w_2| = 0$, то $w_1 \circ w_2 = w_1$.} \\
+    \textcolor{blue}{(2) Ако $|w_2| = n + 1$ за някое $n \in \mathbb{N}$, то $w_2 = ua$ за някое $a \in \Sigma$ и \\ $w_1 \circ w_2 = (w_1 \circ u)a$.} \\ 
+    \vspace{5pt}
+    Използвайте тази дефиниция, за да докажете, че операцията конкатенация е асоциативна.
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.} Кога е изпълнено, че $L^+ = L^* \setminus \{\epsilon\}$?
+
+\vspace{25pt}
+
+\subsection{Решения}
+    \textbf{Задача 1.} (а) $abbaab$ е във; $ababab$ е извън. \\
+    (б) $\epsilon$ е във; $a$ е извън. \\
+    (в) Този език е $\Sigma^*$. \\
+    (г) $\epsilon$ е във; $a$ е извън.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} (а) Следва директно от равенството $\epsilon = \underbrace{\epsilon \circ ... \circ \epsilon}_\text{$k$ пъти}$, където $k$ е което и да е естествено число,
+    и дефиницията на \textit{Звезда на Клини}. \\
+    (б) Имаме \\
+    $w \in (L^*)^* \iff$ \\ 
+    $w = w_1 \circ ... \circ w_k$ за някое $k \geq 0$ и някои  $w_1,...,w_k \in L^* \iff$ \\
+    $w = w_{1,1} \circ...\circ w_{1,l_1} \circ...\circ w_{k,1} \circ...\circ w_{k,l_k}$ за някои $l_1,...,l_k \geq 0$ и $w_{i,j} \in L$ за $1 \leq i \leq k$ и $1 \leq j \leq l_i \iff$ \\
+    $w \in L^*$. \\
+    (в) Включването "$\supseteq$" е ясно. Ще докажем включването "$\subseteq$". Нека \\ $w \in \{a,b\}^*$. Ако $w \in \{a\}^*$, то очевидно $w$ принадлежи на езика в дясната страна. В противен случай можем да 
+    представим $w$ във вида $w = w_1w_2$, където $w_1 \in \{a\}^*$ и $w_2 \in \{b\}\{a,b\}^*$. (Тоест $w_2$ е суфиксът на $w$ започващ от първото срещане на $b$.) 
+    На свой ред $w_2$ можем да запишем във вида $w_2 = w_{2,1},...,w_{2,k}$, където $w_{2,i} \in \{b\}\{a\}^*$, за $1 \leq i \leq k$.
+    (Тоест $\{w_{2,i}\}_{i=1}^k$ са максималните по включване поддуми на $w_2$ започващи с $b$ и съдържащи точно едно $b$). Оттук следва, че $w_2 \in (\{b\}\{a\}^*)^*$. Общо имаме
+    $w \in \{a\}^*(\{b\}\{a\}^*)^*$. \\
+    (г) Включването "$\subseteq$" е ясно. Ще докажем включването "$\supseteq$". Нека \\$w \in \Sigma^*$. Думата $w$ има вида
+    $w = a_1...a_k$, където $|w| = k$ и $a_1,...,a_k \in \Sigma$. Мислейки за $\{a_i\}_{i=1}^k$ като за думи, а не букви, можем да презапишем $w$ във вида $w = \textcolor{blue}{\epsilon a_1 \epsilon} \textcolor{red}{\epsilon a_2 \epsilon}... \textcolor{green}{\epsilon a_k \epsilon}$.
+    Оттук $w = \textcolor{blue}{w_1}\textcolor{red}{w_2}...\textcolor{green}{w_k}$, за $w_i \in L_1 \Sigma L_2$, \\ за $1 \leq i \leq k$. (Тук използваме, че $\epsilon \in L_1$ и $\epsilon \in L_2$.)
+    Следователно \\ $w \in (L_1 \Sigma L_2)^*$. \\
+   (д) По дефиниция $\varnothing L = \{w \in \Sigma^*$ | $w = w_1 \circ w_2$ за някои $w_1 \in \varnothing$ и $w_2 \in L_2$\} = $\varnothing$.
+   Аналогично $L \varnothing = \varnothing$. 
+
+   \vspace{15pt}
+
+   \textbf{Задача 3.}(а) Индукция по $|w|$. Ако $|w| = 0$, то $w = \epsilon$ и съгласно дефиницията на \textit{обръщане}, $w^{rev} = \epsilon$. Tогава 
+   $(w^{rev})^{rev} = \epsilon^{rev} = \epsilon$. Ако $|w| = n + 1$ за някое $n \in \mathbb{N}$, то $w = ua$ за някое $u \in \Sigma^*$ и $a \in \Sigma$.
+   Тогава по дефиниция $w^{rev} = au^{rev}$. Сега имаме $(w^{rev})^{rev} = (au^{rev})^{rev} = (u^{rev})^{rev}a \stackrel{\text{И.П}}{=} ua = w$. \\
+   (б) С индукция по $|w|$ ще докажем, че
+   \begin{center}
+        $w = w_1vw_2 \implies w^{rev} = w_2^{rev}v^{rev}w_1^{rev}$.
+   \end{center}
+   Ако $|w| = 0$, то $w = \epsilon$ и значи $w_1 = v = w_2 = \epsilon$. От друга страна \\ $w^{rev} = \epsilon$ и $w_2^{rev} = v^{rev} = w_1^{rev} = \epsilon$.
+   Равенството следва непосредствено. Ако $|w| = n + 1$ за някое $n \in \mathbb{N}$, то $w = ua$ за някои $u \in \Sigma^*$ и $a \in \Sigma$. Имаме два случая. \\
+   \textbf{1сл.} $v$ е поддума на $u$. Тогава $u = u_1vu_2$ и от И.П. следва, че \\ $u^{rev} = u_2^{rev}v^{rev}u_1^{rev}$. По дефиниция $w^{rev} = au^{rev} = 
+   au_2^{rev}v^{rev}u_1^{rev}$. Освен това от равенството $ua = u_1vu_2 = w = w_1vw_2$ можем да съобразим, че $w_1 = u_1$, $w_2 = u_2a$. Тогава
+   $w_1^{rev} = u_1^{rev}$ и $w_2^{rev} = au_2^{rev}$. Значи \\ $w^{rev} = w_2^{rev}v^{rev}w_1^{rev}$, което искахме. \\
+   \textbf{2сл.} $v$ не е поддума на $u$. Веднага следва, че $w = u_1v$, където $u_1 \in \Sigma^*$ е такава, че $u = u_1u_2$ за някоя $u_2 \in \Sigma^*$.
+   От друга страна $w = w_1vw_2$. Значи $w_1 = u_1$ и $w_2 = \epsilon$. Освен това от И.П. имаме, че $u^{rev} = u_2^{rev}u_1^{rev} = u_2^{rev}w_1^{rev}$. 
+   Тогава $w^{rev} = au_2^{rev}w_1^{rev} = v^{rev}w_1^{rev} = \epsilon v^{rev}w_1^{rev} = w_2^{rev}v^{rev}w_1^{rev}$, което искахме. \\
+   (в) Нека $w \in \Sigma^*$. Ще проведем индукция по $i$. Ако $i = 0$, то $(w^i)^{rev} = (w^0)^{rev} = \epsilon^{rev} = \epsilon = \epsilon^0 = (\epsilon^{rev})^0$. 
+   Ако $i = n + 1$ за някое $n \in \mathbb{N}$, то $(w^i)^{rev} = ((w)^nw)^{rev} = w^{rev}(w^n)^{rev} \stackrel{\text{И.П}}{=} w^{rev}(w^{rev})^n = (w^{rev})^{n+1} = (w^{rev})^i$.
+
+   \vspace{15pt}
+
+   \textbf{Задача 4.} Искаме да покажем, че за произволни думи $w_1, w_2$ и $w_3$ е изпълнено равенството $(w_1 \circ w_2) \circ w_3$ = $w_1 \circ (w_2 \circ w_3)$. За целта ще проведем
+   индукция по $|w_3|$. Ако $|w_3| = 0$, то съгласно дефиницията на \textit{конкатенация} имаме $(w_1 \circ w_2) \circ w_3 = w_1 \circ w_2 = w_1 \circ (w_2 \circ w_3)$.
+   Ако $|w_3| = n + 1$ за някое $n \in \mathbb{N}$, то $w_3 = ua$ за някои $u \in \Sigma^*$ и $a \in \Sigma$. Тогава $(w_1 \circ w_2) \circ w_3 = ((w_1 \circ w_2) \circ u)a \stackrel{\text{И.П}}{=}$
+   $(w_1 \circ (w_2 \circ u))a = w_1 \circ (w_2 \circ u)a = w_1 \circ (w_2 \circ ua) = w_1 \circ (w_2 \circ w_3)$.
+
+   \vspace{15pt}
+
+   \textbf{Задача 5.} Твърдим, че $L^+ = L^* \setminus \{\epsilon\} \iff \epsilon \notin L$. \\
+   ($\Rightarrow$) Нека $L^+ = L^* \setminus \{\epsilon\}$. Тогава със сигурност $\epsilon \notin L^+$. Да допуснем, че $\epsilon \in L$. Директно следва, че $\epsilon \in L^+$, Тъй
+   като $\epsilon = \underbrace{\epsilon \circ ... \circ \epsilon}_\text{произв. брой пъти}$. Противоречие. Значи $\epsilon \notin L$. \\
+   ($\Leftarrow$) Обратно нека $\epsilon \notin L$. Сега от дефиницията на $L^+$ следва, че $\epsilon \notin L^+$. Освен това очевидно $L^+ \subseteq L^*$. Тогава $L^+ \subseteq L^* \setminus \{\epsilon\}$.
+   Сега нека $w \in L^* \setminus \{\epsilon\}$. Тогава $w = w_1 \circ ... \circ w_k$ за някои $w_1,...,w_k \in L$ и $k \geq 0$. Oт факта, че $w \neq \epsilon$ следва, че $k \geq 1$.
+   Значи $w \in L^+$. Следователно $L^* \setminus \{\epsilon\} \subseteq L^+$. Общо имаме $L^+ = L^* \setminus \{\epsilon\}$.
+
+\vspace{15pt}
+
+\chapter{Крайни автомати и регулярни езици}
+
+\section{Детерминирани крайни автомати}
+    \textit{Крайният автомат} представлява абстрактна машина снабдена с множество от състояния, азбука и правила за преход между състоянията с буквите от азбуката.
+    Някои от състоянията на автомата са \textit{крайни}, а някои — при \textit{детерминираните крайни автомати}, точно едно — \textit{начални}. 
+    Работата на автомата при подадена дума на вход е да прочете думата и в процеса на което, да извърши зададените преходи спрямо снабдените му правила. След
+    прочитането на подадената дума, автоматът има единствена функционалност да върне отговор \textit{да} или \textit{не} на въпроса дали четенето е приключило в 
+    крайно състояние.
+    
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} \textbf{Детерминиран краен автомат (ДКА)} е наредена петорка $A = (Q, \Sigma, \delta, s, F)$, където \\
+    — $Q$ е \textit{крайно} множество от \textbf{състояния}, \\
+    — $\Sigma$ е азбука, \\
+    — $s \in Q$ е \textbf{началното състояние}, \\
+    — $F \subseteq Q$ е множеството от \textbf{крайни състояния} и \\
+    — $\delta$, \textbf{функцията на преходите}, е функция от $Q \times \Sigma$ към $Q$.
+
+    \vspace{5pt}
+    Неформално, за една дума $w \in \Sigma^*$ казваме, че автоматът $A$ разпознава $w$, ако четенето на $w$ по автомата приключи в някое заключително
+    състояние $q \in F$.
+
+    \vspace{5pt}
+
+    За да стигнем до формалната дефиниция на това, какво означава един автомат да разпознава дума $w$,
+    трябва първо да дефинираме така наречената \textit{разширена функция на преходите} $\hat{\delta}:Q \times \Sigma^* \rightarrow Q$. 
+    При аргументи състояние $q$ и дума $w$, функцията $\hat{\delta}$ връща състоянието, в което ще попаднем,
+    тръгвайки от $q$ и четейки думата $w$. Дефиницията е с индукция по дължината на $w$.
+
+    \vspace{5pt}
+
+    \textbf{База:} $\hat{\delta}(q,\epsilon) = q$, за всяко $q \in Q$.
+
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Сега да предположим, че $w = ua$ за някои $u \in \Sigma^*$ и 
+    $a \in \Sigma$. Тогава \\
+    \begin{center}
+        $\hat{\delta}(q,w) = \delta(\hat{\delta}(q,x),a)$.
+    \end{center}
+
+    \vspace{5pt}
+    Сега вече формално, казваме, че автоматът $A$ \textbf{разпознава} думата $w$, ако просто
+    $\hat{\delta}(s,w) \in F$.
+
+    \vspace{5pt}
+    С $L(A)$ означаваме множеството от всички думи $w \in \Sigma^*$, които $A$ разпознава.
+    Тоест, $L(A) = \{w \in \Sigma^*$ | $\hat{\delta}(s,w) \in F$\}.
+    \vspace{10pt}
+
+    \textbf{Пример 1.} Нека $A$ е детерминираният краен автомат $(Q, \Sigma, \delta, s, F)$, където \\
+    \begin{center}
+        $Q = \{q_0, q_1\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $s = q_0$, \\
+        $F = \{q_0\}$,
+    \end{center}
+
+    и $\delta$ е функцията, представена чрез следната талбица.
+
+    \vspace{5pt} 
+
+    \begin{center}
+        \begin{tabular}{ c c c } 
+         \hline
+         $q$ & $\sigma$ & $\delta(q,\sigma)$ \\
+         \hline 
+         $q_0$ & $a$ & $q_0$ \\ 
+         $q_0$ & $b$ & $q_1$ \\ 
+         $q_1$ & $a$ & $q_1$ \\
+         $q_1$ & $b$ & $q_0$ \\
+         \hline
+        \end{tabular}
+    \end{center}
+
+    \vspace{5pt}
+
+    Можем да онагледим вида на $A$ чрез следната фигура.
+
+    \vspace{5pt}
+
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0)   {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$}; 
+            \path[->] 
+            (q_0) edge  [loop above] node {$a$} ()
+                  edge  [bend left, above] node [swap] {$b$} (q_1)
+            (q_1) edge  [bend left, below] node [swap] {$b$} (q_0)
+                  edge [loop above] node {$a$} ();
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{5pt}
+
+    Състоянието $q_0$, бивайки крайно, е илюстрирано с двойно оградено кръгче.
+
+    \vspace{5pt}
+
+    Вече лесно се вижда, че $L(A) = \{w \in \{a,b\}^*$ | $w$ има четен брой $b$-та\}.
+
+    \vspace{10pt}
+
+    \textbf{Пример 2.} Сега ще построим ДКА $A$, който разпознава езика \\ $L = \{w \in \{a,b\}^*$ | $w$ не съдържа три последователни $b$-та\}.
+    Нека \\ $A = (Q, \Sigma, \delta, s, F)$, където
+    \begin{center}
+        $Q = \{q_0, q_1, q_2, q_3\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $s = q_0$, \\
+        $F = \{q_0, q_1, q_2\}$,
+    \end{center}
+    и $\delta$ е функцията, представена чрез следната талбица.
+
+    \vspace{5pt} 
+
+    \begin{center}
+        \begin{tabular}{ c c c } 
+         \hline
+         $q$ & $\sigma$ & $\delta(q,\sigma)$ \\
+         \hline 
+         $q_0$ & $a$ & $q_0$ \\ 
+         $q_0$ & $b$ & $q_1$ \\ 
+         $q_1$ & $a$ & $q_0$ \\
+         $q_1$ & $b$ & $q_2$ \\
+         $q_2$ & $a$ & $q_0$ \\ 
+         $q_2$ & $b$ & $q_3$ \\ 
+         $q_3$ & $a$ & $q_3$ \\
+         $q_3$ & $b$ & $q_3$ \\
+         \hline
+        \end{tabular}
+    \end{center}
+    
+    \vspace{5pt}
+
+    Можем да онагледим вида на $A$ чрез следната фигура.
+
+    \vspace{5pt}
+
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0)   {$q_0$}; 
+            \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+            \node[state, accepting] (q_2) [right=of q_1] {$q_2$}; 
+            \node[state] (q_3) [right=of q_2] {$q_3$};  
+            \path[->] 
+            (q_0) edge  [loop above] node {$a$} ()
+                  edge  node [swap] {$b$} (q_1)
+            (q_1) edge  [bend right, above] node [swap] {$a$} (q_0)
+                  edge  node [swap] {$b$} (q_2)
+            (q_2) edge  [bend left, below] node [swap] {$a$} (q_0)
+                  edge  node [swap] {$b$} (q_3)
+            (q_3) edge  [loop above] node {$a$} ()
+                  edge  [loop right] node {$b$} ();
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{5pt}
+
+    Можем да мислим за състоянието $q_3$ като за "мъртво състояние" — влезем ли веднъж в него в процеса на четене, не можем да излезем.
+
+\vspace{25pt}
+
+\subsection{Задачи}
+    \textbf{Задача 1.} Нека $A$ е детерминиран краен автомат. Кога е изпълнено, че $\epsilon \in L(A)$? Докажете отговора си.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Постройте детерминирани крайни автомати разпознаващи всеки от следните езици. \\
+    (а) \{$w \in \{a,b\}^*$ | всяко $a$ в $w$ е последвано непосредствено от $b$\}. \\
+    (б) \{$w \in \{a,b\}^*$ | $w$ има $abab$ като поддума\}. \\
+    (в) \{$w \in \{a,b\}^*$ | $w$ няма нито $aa$, нито $bb$ като поддума\}. \\
+    (г) \{$w \in \{a,b\}^*$ | $w$ има нечетен брой $a$-та и четен брой $b$-та\}. \\
+    (д) \{$w \in \{a,b\}^*$ | $w$ има $ab$ и $ba$ като поддуми\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} За всеки от дадените по-долу автомати посочете езиците, които разпознават. \\
+    \vspace{10pt}
+    (а) \hspace{5.2cm} (б) \\ 
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial] (q_0)   {$q_0$}; 
+        \node[state, accepting] (q_1) [above right=of q_0] {$q_1$};
+        \node[state] (q_2) [below right=of q_0] {$q_2$}; 
+        \node[state] (q_3) [below right=of q_1] {$q_3$};
+        %(b)
+        \node[state,initial] (p_0) [right=3cm of q_3]  {$q_0$}; 
+        \node[state] (p_1) [above right=of p_0] {$q_1$};
+        \node[state, accepting] (p_2) [below right=of p_0] {$q_2$}; 
+        \node[state, accepting] (p_3) [right=of p_1] {$q_3$};  
+        \node[state] (p_4) [right=of p_2] {$q_4$};  
+        \path[->] 
+        (q_0) edge  [bend left, above] node {$a$} (q_1)
+              edge  node [swap] {$b$} (q_2)
+        (q_1) edge  node [swap] {$a$} (q_3)
+              edge  [bend left, below] node {$b$} (q_0)
+        (q_2) edge  [loop below] node {$a$, $b$} (q_0)
+        (q_3) edge  node {$a$, $b$} (q_2)
+        %(b)
+        (p_0) edge  node {$a$} (p_1)
+              edge  node {$b$} (p_2)
+        (p_1) edge  [loop above] node  {$a$} ()
+              edge  node {$b$} (p_3)
+        (p_2) edge  node {$a$, $b$} (p_4)
+        (p_3) edge  node {$a$, $b$} (p_4)
+        (p_4) edge [loop right] node {$a$, $b$} ();
+    \end{tikzpicture}
+
+    \vspace{10pt}
+
+    (в) \hspace{5.2cm} (г)\\ 
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$}; 
+        \node[state] (q_3) [below right=2.45cm of q_0] {$q_3$};
+        %(г)
+        \node[state] (p_0) [right=2cm of q_2] {$q_0$};
+        \node[state,initial, initial where=above, accepting] (p_1) [right=of p_0] {$q_1$};
+        \node[state] (p_2) [right=of p_1] {$q_2$};
+        \node[state] (p_3) [below right=2.45cm of p_0] {$q_3$};
+        \path[->]
+        (q_0) edge [bend left, above] node {$a$} (q_1)
+              edge node [below] {$b$} (q_3)
+        (q_1) edge [bend left, above] node {$a$} (q_2)
+              edge [bend left, below] node {$b$} (q_0)
+        (q_2) edge node {$a$} (q_3)
+              edge [bend left, below] node {$b$} (q_1)
+        (q_3) edge [loop below] node {$a$,$b$} ()
+        (p_0) edge [bend right, below] node {$a$} (p_1)
+              edge node [below] {$b$} (p_3)
+        (p_1) edge [bend left, above] node {$a$} (p_2)
+              edge [bend right, above] node {$b$} (p_0)
+        (p_2) edge node {$a$} (p_3)
+              edge [bend left, below] node {$b$} (p_1)
+        (p_3) edge [loop below] node {$a$,$b$} (); 
+    \end{tikzpicture}
+        
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Докажете, че за произволни думи $w_1$ и $w_2$ и произволно състояние $q$, 
+    $\hat{\delta}(q,w_1w_2) = \hat{\delta}(\hat{\delta}(q,w_1),w_2)$.
+
+\vspace{25pt}
+
+\subsection{Решения}
+    
+    \textbf{Задача 1.} Нека $s$ е началното състояние на $A$, a
+    $F$ — множеството от крайните му състояния. Твърдим, че 
+    $\epsilon \in L(A) \iff s \in F$. \\
+    Имаме $\epsilon \in L(A) \iff$ \\
+    $\hat{\delta}(s,\epsilon) \in F \iff$ \\
+    $s \in F$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} \\
+    (а) \hspace{5cm} (б) \\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.4cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$};
+        %(б)
+        \node[state,initial] (p_0) [above=of p_1]  {$q_0$}; 
+        \node[state] (p_1) [right=3cm of q_2] {$q_1$};
+        \node[state] (p_2) [below=of p_1] {$q_2$}; 
+        \node[state] (p_3) [below=of p_2] {$q_3$};  
+        \node[state,accepting] (p_4) [below=of p_3] {$q_4$};  
+        \path[->] 
+        (q_0) edge node {$a$} (q_1)
+              edge [loop above] node {$b$} ()
+        (q_1) edge node {$a$} (q_2)
+              edge [bend left, below] node {$b$} (q_0)
+        (q_2) edge [loop above] node {$a$,$b$} ()
+        %(б)
+        (p_0) edge  node {$a$} (p_1)
+              edge  [loop right] node {$b$} ()
+        (p_1) edge  [loop left] node  {$a$} ()
+              edge  node {$b$} (p_2)
+        (p_2) edge  node {$a$} (p_3)
+              edge  [bend right, above] node [below, pos=0.2] {$b$} (p_0)
+        (p_3) edge  [bend left, below] node [below, pos=0.5, xshift=-0.2cm] {$a$} (p_1)
+              edge node {$b$} (p_4)
+        (p_4) edge [loop right] node {$a$, $b$} (); 
+    \end{tikzpicture}
+
+    \vspace{10pt}
+    (в) \hspace{6.5cm} (г)\\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+        \node[state,accepting] (q_2) [right=of q_1] {$q_2$}; 
+        \node[state] (q_3) [below right=2.45cm of q_0] {$q_3$};
+        %(г)
+        \node[state,initial] (p_0) [right=4cm of q_2]   {$q_0$}; 
+        \node[state,accepting] (p_1) [right=of p_0] {$q_1$};
+        \node[state] (p_2) [below=of p_0] {$q_2$}; 
+        \node[state] (p_3) [right=of p_2] {$q_3$};
+        \path[->]
+        (q_0) edge node {$a$} (q_1)
+             edge node [below, pos=0.2] {$b$} (q_3)
+        (q_1) edge node {$a$} (q_2)
+              edge [bend left, below] node [pos=0.3, xshift=0.15cm] {$b$} (q_3)
+        (q_2) edge [loop right] node {$a$,$b$} ()
+        (q_3) edge [bend left, below] node [pos=0.7, xshift=-0.15cm] {$a$} (q_1)
+              edge node [below] {$b$} (q_2)
+        (p_0) edge [bend right, below] node {$a$} (p_1)
+              edge [bend right, above] node [xshift=-0.15cm] {$b$} (p_2)
+        (p_1) edge [bend right, above] node {$a$} (p_0)
+              edge [bend left] node {$b$} (p_3)
+        (p_2) edge [bend left] node {$a$} (p_3)
+              edge [bend right] node {$b$} (p_0)
+        (p_3) edge [bend left] node {$a$} (p_2)
+              edge [bend left] node {$b$} (p_1);
+    \end{tikzpicture}
+
+    \vspace{15pt}
+    (д) \\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial] (q_1) {$q_0$}; 
+        \node[state] (q_2) [above right=of q_1] {$q_1$};
+        \node[state] (q_3) [right=of q_2] {$q_2$}; 
+        \node[state,accepting] (q_4) [below right=of q_3] {$q_3$};
+        \node[state] (q_5) [below right=of q_1] {$q_4$};
+        \node[state] (q_6) [right=of q_5] {$q_5$};
+        \path[->]
+        (q_1) edge node {$a$} (q_2)
+              edge node {$b$} (q_5)
+        (q_2) edge [loop above] node {$a$} (q_2)
+              edge node {$b$} (q_3)
+        (q_3) edge node {$a$} (q_4)
+              edge [loop above] node {$b$} ()
+        (q_4) edge [loop above] node {$a$,$b$} (q_3)
+        (q_5) edge node {$a$} (q_6)
+              edge [loop below] node {$b$} ()
+        (q_6) edge [loop below] node {$a$} ()
+              edge node {$b$} (q_4);
+    \end{tikzpicture}
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} (а) ${a} \circ \{ba\}^*$ \\
+    (б) $\{a\}^* \circ \{b\}$ \\
+    (в) $(\{a\} \circ \{ab\}^* \circ \{b\})^*$ \\
+    (г) $(\{ab\}^* \circ \{ba\}^*)^*$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Ще докажем твърдението с индукция по $|w_2|$. \\
+    \textbf{База:} Ако $w_2 = \epsilon$, то $\hat{\delta}(q,w_1w_2) = \hat{\delta}(q,w_1) = \textcolor{blue}{\hat{\delta}}\cleft[blue](\hat{\delta}(q,w_1)\textcolor{blue}{,\epsilon}\cright[blue]) = \textcolor{blue}{\hat{\delta}}\cleft[blue](\hat{\delta}(q,w_1)\textcolor{blue}{,w_2}\cright[blue])$. \\
+    \textbf{Стъпка:} Ако $w_2 = ua$ за някои $u \in \Sigma^*$ и $a \in \Sigma$, то \\
+
+    \vspace{5pt}
+    $\hat{\delta}(q,w_1w_2) = $ \\
+    \vspace{5pt}
+    $\hat{\delta}(q,w_1ua) = $ \\
+    \vspace{5pt}
+    $\textcolor{blue}{\delta}\cleft[blue](\hat{\delta}(q,w_1u)\textcolor{blue}{,a}\cright[blue]) \stackrel{\text{И.П}}{=}$ \\
+    \vspace{5pt}
+    $\textcolor{blue}{\delta}\cleft[blue](\textcolor{red}{\hat{\delta}}\cleft[red](\hat{\delta}(q,w_1)\textcolor{red}{,u}\cright[red])\textcolor{blue}{,a}\cright[blue]) \stackrel{\text{деф.} \hat{\delta}}{=}$ \\
+    \vspace{5pt}
+    $\textcolor{violet}{\hat{\delta}}\cleft[violet](\hat{\delta}(q,w_1)\textcolor{violet}{,ua}\cright[violet]) = $ \\
+    \vspace{5pt}
+    $\hat{\delta}(\hat{\delta}(q,w_1),w_2)$.
+
+    \vspace{15pt}
+
+    \section{Недетерминирани крайни автомати}
+          \textit{Детерминистичността} при детерминираните крайни автомати се изразява в това,
+          че във всеки един момент от четенето на подадената му дума, детерминираният
+          автомат има едно и точно едно състояние, в което може да отиде с току-що прочетената
+          буква. По тази причина, измислянето на ДКА за даден език може да бъде
+          тромаво в някои случаи. Например, нека разгледаме следния ДКА, разпознаващ
+          езика $L = (\{ab\} \cup \{aba\})^*$. 
+    
+          \begin{center}
+            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                \node[state,initial,accepting] (q_0)   {$q_0$}; 
+                \node[state] (q_1) [right=of q_0] {$q_1$};
+                \node[state, accepting] (q_2) [right=of q_1] {$q_2$}; 
+                \node[state, accepting] (q_3) [right=of q_2] {$q_3$};  
+                \node[state] (q_4) [below=of q_1] {$q_4$};
+                \path[->]
+                (q_0) edge   node {$a$} (q_1)
+                      edge   node [swap] {$b$} (q_4)
+                (q_1) edge   node {$a$} (q_4)
+                      edge   node {$b$} (q_2)
+                (q_2) edge   node {$a$} (q_3)
+                      edge   node {$b$} (q_4)
+                (q_3) edge   [bend right, above] node {$a$} (q_1)
+                      edge   [bend left, below] node {$b$} (q_2)
+                (q_4) edge   [loop below] node {$a$,$b$} ();
+            \end{tikzpicture}
+        \end{center}
+    
+        Може да се покаже, че не съществува ДКА с по-малко от пет състояния за този език,
+        така че този автомат е минимален по отношение на броя на състоянията му. Сега нека за момент забравим за това, че функцията
+        на преходите е \textit{функция} по същество (тоест за всяка двойка от състояние и буква от домейна
+        има точно едно състояние, което ѝ съответства) и да се опитаме да измислим по-прост
+        "автомат" \hspace{0.01cm} за дадения език. Най-естествена е следната идея.
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+              \node[state,initial,accepting] (q_0)   {$q_0$}; 
+              \node[state] (q_1) [right=of q_0] {$q_1$};
+              \node[state] (q_2) [below right=1.5 of q_0, yshift = -0.7cm] {$q_2$}; 
+              \path[->]
+              (q_0) edge [bend right, below] node {$a$} (q_1)
+              (q_1) edge   node {$b$} (q_2)
+                    edge [bend right, above] node {$b$} (q_0)
+              (q_2) edge   node {$a$} (q_0);
+          \end{tikzpicture}
+        \end{center}
+    
+        Наистина, езика на този "автомат" \hspace{0.01cm} е точно исканият. Броят на състоянията е само три,
+        а идеята — съвършено проста. Формално обаче, тази илюстрация не съответства на това,
+        което досега сме наричали \textit{автомат}. За да разширим понятието, нека
+        въведем следната дефиниция.
+    
+        \vspace{15pt}
+    
+        \textbf{Дефиниция 1.} \textbf{Недетерминиран краен автомат (НКА)} е наредена петорка $N = (Q, \Sigma, \Delta, s, F)$, където \\
+        — $Q$ е \textit{крайно} множество от \textbf{състояния}, \\
+        — $\Sigma$ е азбука, \\
+        — $s \in Q$ е \textbf{началното състояние}, \\
+        — $F \subseteq Q$ е множеството от \textbf{крайни състояния} и \\
+        — $\Delta$, \textbf{функцията на преходите}, е функция от $Q \times \Sigma$ в $2^Q$.
+     
+        \vspace{15pt}
+    
+        По тази дефиниция, автоматът на последната картинка вече точно съответства на 
+        конкретен НКА.
+        
+        \vspace{5pt}
+    
+        Следва да дефинираме \textbf{разширената функция на преходите} \\ $\hat{\Delta} : Q \times \Sigma^* \rightarrow 2^Q$
+        за НКА. Отново ще сторим това с индукция по думата-аргумент $w$.
+    
+        \vspace{5pt}
+    
+        \textbf{База:} $\hat{\Delta}(q,\epsilon) = \{q\}$, за всяко $q \in Q$.
+    
+        \vspace{5pt}
+    
+        \textbf{Стъпка:} Сега да предположим, че $w = ua$ за някои $u \in \Sigma^*$ и 
+        $a \in \Sigma$. Нека също предположим, че $\hat{\Delta}(q,u) = \{q_1,...,q_k\}$. 
+        Тогава \\
+        \begin{center}
+            $\hat{\Delta}(q,w) = \bigcup\limits_{i=1}^k \Delta(q_i,a)$.
+        \end{center}
+    
+        \vspace{5pt}
+    
+        Kазваме, че недетерминираният автомат $N$ \textbf{разпознава} думата $w$, ако просто
+        $\hat{\Delta}(s,w) \cap F \neq \varnothing$.
+    
+        \vspace{5pt}
+    
+        С $L(N)$ означаваме множеството от всички думи $w \in \Sigma^*$, които $N$ разпознава.
+        Тоест, $L(N) = \{w \in \Sigma^*$ | $\hat{\Delta}(s,w) \cap F \neq \varnothing$\}.
+    
+        \vspace{15pt}
+    
+        Вече демонстрирахме удобството, което недетерминираните крайни автомати предоставят.
+        Сега ни вълнува въпроса, дали те са неотменна част от теорията на крайните автомати.
+        Тоест, дали съществуват езици, които се разпонават от някой НКА, но не се разпознават
+        от нито един ДКА. Следната теорема ни дава отговора на този въпрос, а именно — не,
+        всичко, което можем да сторим с недетерминиран автомат, можем да сторим и с детерминиран
+        такъв.
+    
+        \vspace{15pt}
+    
+        \textbf{Теорема 1(на Рабин-Скот).} За всеки НКА $N$ съществува ДКА $A$, такъв че
+        $L(N) = L(A)$.
+    
+        \vspace{15pt}
+    
+        Доказателството на тази теорема, макар и да не е изложено тук, е \textit{конструктивно}.
+        С други думи, то предоставя \textit{алгоритъм}, по който от даден НКА $N$ да 
+        конструираме \textit{еквивалентен} на него ДКА $A$ (тоест такъв, че $L(N) = L(A)$).
+        Силно неформално, идеята е следната: \\
+        \vspace{15pt}
+        Нека ни е даден НКА $N = (Q_N,\Sigma,\Delta,s,F_N)$. Ще конструираме еквивалентен
+        на него ДКА $A = (Q_A,\Sigma,\delta,s,F_A)$. \\
+        \hspace{1cm} 1. Инициализираме $Q_A$, $\delta$ и $F_A$ съответно с $\varnothing$. \\
+        \hspace{1cm} 2. Добавяме $\{s\}$ към $Q_A$. \\
+        \hspace{1cm} 3. Разглеждаме състояние $q \in Q_A$, което не е маркирано като \\
+        \hspace{1cm} \textit{обходено}.  За всяка буква $a \in \Sigma$ добавяме множеството \\
+        \hspace{1cm} $B = \bigcup\limits_{q_i \in q}\Delta(q_i,a)$ към $Q_A$ и в последствие добавяме двойката \\
+        \hspace{1cm} ($(q,a),B$) към $\delta$. Маркираме състоянието $q$ като \textit{обходено} и \\
+        \hspace{1cm} прилагаме стъпка 3 отново, ако още има необходени състояния. \\
+        \hspace{1cm} 4. След като необходените състояния се изчерпат "сканираме" \hspace{0.01cm} \\
+        \hspace{1cm} множеството $Q_A$ и добавяме към $F_A$ тези състояния $B$, за които \\
+        \hspace{1cm} $B \cap F_N \neq \varnothing$.
+    
+        \vspace{15pt}
+    
+        \textbf{Пример 1.} Да приложим алгоритъма за детерминиране върху автомата с три 
+        състояния, който предложихме за езика $L = ({ab} \cup {aba})^*$.
+    
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+              \node[state,initial,accepting] (q_0)   {$q_0$}; 
+              \node[state] (q_1) [right=of q_0] {$q_1$};
+              \node[state] (q_2) [below right=1.5 of q_0, yshift = -0.7cm] {$q_2$}; 
+              \path[->]
+              (q_0) edge [bend right, below] node {$a$} (q_1)
+              (q_1) edge   node {$b$} (q_2)
+                    edge [bend right, above] node {$b$} (q_0)
+              (q_2) edge   node {$a$} (q_0);
+          \end{tikzpicture}
+        \end{center}
+    
+        Първо инициализираме $Q$, $\delta$ и $F$ с $\varnothing$. След това добавяме състоянието
+        $\{q_0\}$ към $Q$ и преминаваме към стъпка 3. \\
+    
+        \vspace{5pt}
+    
+        Единственото състояние в $Q$ е $\{q_0\}$ и то не е маркирано като обходено. 
+        Добавяме $\{q_1\}$ и $\varnothing$ към $Q$ съответно заради преходите от $q_0$ с
+        буквите $a$ и $b$. Добавяме в $\delta$ преходите $((\{q_0\},a),\{q_1\})$ и 
+        $((\{q_0\},b),\varnothing)$.\\
+    
+        \vspace{5pt}
+    
+        Сега разглеждаме необходеното състояние $\{q_1\}$. Добавяме $\{q_0,q_2\}$ в $Q$
+        заради преходите от $q_1$ с $b$. Към $\delta$ добавяме преходите
+        $((\{q_1\},a),\varnothing)$ и \\
+        $((\{q_1\},b),\{q_0,q_2\})$.
+    
+        \vspace{5pt}
+    
+        Следва да разгледаме необходеното състояние $\varnothing$. Добавяме преходите
+        $((\varnothing,a),\varnothing)$ и $((\varnothing,b),\varnothing)$.
+    
+        \vspace{5pt}
+    
+        Разглеждаме необходеното състояние $\{q_0,q_2\}$. Добавяме $\{q_0,q_1\}$ към
+        $Q$ заради преходите от $q_0$ и $q_1$ с буквата $a$. Добавяме и преходите \\ 
+        $((\{q_0,q_2\},a),\{q_0,q_1\})$ и $((\{q_0,q_2\},b),\varnothing)$ към $\delta$.
+    
+        \vspace{5pt}
+    
+        Преминаваме към необходеното състояние $\{q_0,q_1\}$. Добавяме към $\delta$
+        преходите $((\{q_0,q_1\},a),\{q_1\})$ и $((\{q_0,q_1\},b),\{q_0,q_2\})$.
+    
+        \vspace{5pt}
+    
+        С това се изчерпаха необходените състояния. Сканираме $Q$ и заключаваме, че
+        $F = \{\{q_0\},\{q_0,q_2\},\{q_0,q_1\}\}$.
+    
+        \vspace{5pt}
+    
+        Резултатът от детерминирането е изобразен отдолу.
+    
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+              \node[state,initial,accepting] (q_0)   {$\{q_0\}$}; 
+              \node[state] (q_1) [right=of q_0] {$\{q_1\}$};
+              \node[state, accepting] (q_2) [right=of q_1] {$\{q_0,q_2\}$}; 
+              \node[state, accepting] (q_3) [right=of q_2] {$\{q_0,q_1\}$};  
+              \node[state] (q_4) [below=of q_1] {$\varnothing$};
+              \path[->]
+              (q_0) edge   node {$a$} (q_1)
+                    edge   node [swap] {$b$} (q_4)
+              (q_1) edge   node {$a$} (q_4)
+                    edge   node {$b$} (q_2)
+              (q_2) edge   node {$a$} (q_3)
+                    edge   node {$b$} (q_4)
+              (q_3) edge   [bend right, above] node {$a$} (q_1)
+                    edge   [bend left, below] node {$b$} (q_2)
+              (q_4) edge   [loop below] node {$a$,$b$} ();
+          \end{tikzpicture}
+      \end{center}
+    
+      Ясно се вижда, че това всъщност е детерминираният автомат от началото на упражнението,
+      но с променени "имена" \hspace{0,01cm} на състоянията.
+    
+    \vspace{25pt}
+    
+    \subsection{Задачи}
+        \textbf{Задача 1.} (а) Кои от следните думи се разпознават от автомата показан на картинката долу вляво? \\
+        (i) $a$ \\
+        (ii) $aa$ \\
+        (iii) $aab$ \\
+        (iv) $\epsilon$
+        
+        
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+              \node[state,initial,accepting] (q_0)   {$q_0$}; 
+              \node[state] (q_1) [right=of q_0] {$q_1$};
+              \node[state,initial,accepting] (p_0) [right=4cm of q_1] {$q_0$};
+              \node[state] (p_1) [right=of p_0] {$q_1$};
+              \node[state,accepting] (p_2) [right=of p_1] {$q_2$};
+              \node[state] (p_3) [below=of p_1] {$q_3$};
+              \path[->]
+              (q_0) edge [loop above] node {$a$} ()
+                    edge node [swap] {$a$} (q_1)
+              (q_1) edge [loop right] node {$b$} ()
+              (p_0) edge node {$a$} (p_1)
+              (p_1) edge node {$b$} (p_2)
+                    edge node [swap] {$b$} (p_3)
+              (p_2) edge [bend left, below] node {$a$} (p_1)
+              (p_3) edge [bend right, below] node {$a$} (p_2);
+          \end{tikzpicture}
+    
+       \vspace{10pt}
+    
+       (б) Кои от следните думи се разпознават от автомата показан на картинката горе вдясно? \\
+       (i) $\epsilon$ \\
+       (ii) $ab$ \\
+       (iii) $abab$ \\
+       (iv) $aba$ \\
+       (v) $abaa$ \\
+        
+       \vspace{35pt}
+    
+       \textbf{Задача 2.} Намерете НКА за всеки от следните езици. \\
+       (а) $(\{ab\}^*)(\{ba\}^*)\cup\{a\}\{a\}^*$ \\
+       (б) $((\{ab\} \cup \{aab\})^*\{a\}^*)^*$ \\
+       (в) $((\{a\}^*\{b\}^*\{a\}^*)^*\{b\})^*$ \\ 
+       (г) $(\{ba\} \cup \{b\})^* \cup (\{bb\} \cup \{a\})^*$ 
+    
+       \vspace{15pt}
+       
+       \textbf{Задача 3.} Намерете НКА за всеки от следните езици. След това детерминирайте
+       посочените от вас автомати. \\
+       (а) $(\{ab\}\cup\{aab\}\cup\{aba\})^*$ \\
+       (б) $(\{a\}\cup\{b\})^*\{aabab\}$ \\
+       (в) $(\{a\}\cup\{b\})^*\{a\}(\{a\}\cup\{b\})(\{a\}\cup\{b\})(\{a\}\cup\{b\})(\{a\}\cup\{b\})$
+    \vspace{25pt}
+    
+    \subsection{Решения}
+      \textbf{Задача 1.}(а) Всички освен $aab$. \\
+      (б) Всички освен $abaa$.
+    
+      \vspace{15pt}
+    
+      \textbf{Задача 2.} \\ (а)\hspace {6cm} (б)\\ 
+      \vspace{10pt}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial,accepting] (q_0)   {$q_0$}; 
+          \node[state] (q_1) [above=of q_0] {$q_1$};
+          \node[state] (q_2) [right=of q_0] {$q_2$}; 
+          \node[state, accepting] (q_3) [right=of q_2] {$q_3$};  
+          \node[state, accepting] (q_4) [below=of q_0] {$q_4$};
+          \node[state,initial,initial where=right,accepting] (p_0) [right=4cm of q_3] {$q_0$};
+          \node[state] (p_1) [above=of p_0] {$q_1$};
+          \node[state] (p_2) [below left=of p_0] {$q_2$};
+          \node[state] (p_3) [below right=of p_0] {$q_3$};
+          \node[state,accepting] (p_4) [left=of p_0] {$q_4$};
+          \path[->]
+          (q_0) edge [bend left] node {$a$} (q_1)
+                edge node {$b$} (q_2)
+                edge node [swap] {$a$} (q_4)
+          (q_1) edge [bend left] node {$b$} (q_0)
+          (q_2) edge node {$a$} (q_3)
+          (q_3) edge   [bend left] node {$b$} (q_2)
+          (q_4) edge   [loop left] node {$a$} ()
+          (p_0) edge [bend left] node {$a$} (p_1)
+                edge node  {$a$} (p_2)
+                edge node {$a$} (p_4)
+          (p_1) edge [bend left] node {$b$} (p_0)
+          (p_2) edge node [swap] {$a$} (p_3)
+          (p_3) edge node  {$b$} (p_0)
+          (p_4) edge [loop above] node {$a$} ()
+                edge node {$a$} (p_1)
+                edge node [swap] {$a$} (p_2);
+      \end{tikzpicture}
+    
+    \newpage
+    
+    (в) \hspace{6cm} (г)\\
+    \vspace{5pt}
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+      \node[state,initial,accepting] (q_0) {$q_0$};
+      \node[state] (q_1) [right=of q_0] {$q_1$};
+      \node[state,initial,accepting] (p_0) [right=5cm of q_1] {$q_0$};
+      \node[state] (p_1) [above=of p_0] {$q_1$};
+      \node[state,accepting] (p_2) [right=3cm of p_0] {$q_2$};
+      \node[state] (p_3) [above=of p_2] {$q_3$}; 
+      \path[->]
+      (q_0) edge [bend left] node {$a$} (q_1)
+            edge [loop above] node {$b$} ()
+      (q_1) edge [loop above] node {$a$} ()
+            edge [bend left] node {$b$} (q_0)
+      (p_0) edge [bend left] node {$b$} (p_1)
+            edge [loop below] node {$b$} ()
+            edge node [swap] {$a$} (p_2)
+            edge node {$b$} (p_3)
+      (p_1) edge [bend left] node {$a$} (p_0)
+      (p_2) edge [bend left] node {$b$} (p_3)
+            edge [loop below] node {$a$} ()
+      (p_3) edge [bend left] node {$b$} (p_2);
+    \end{tikzpicture}
+
+    \vspace{15pt}
+
+    \section{Затвореност относно регулярните операции}
+          В това упражнение целим да покажем, че класът на \textit{автоматните} езици е
+          затворен относно някои от операциите, които въведохме върху езици — 
+          \textit{обединение, конкатенация} и \textit{звезда на Клини}.
+    
+          \vspace{15pt}
+    
+          \textbf{Дефиниция 1.} Казваме, че един език $L$ е \textbf{автоматен}, ако
+          съществува ДКА $A$, такъв че $L(A) = L$.
+    
+          \vspace{15pt}
+    
+          \textbf{Теорема 1.} Класът на автоматните езици е затворен относно операциите \\
+          (а) \textit{обединение}; \\
+          (б) \textit{конкатенация}; \\
+          (в) \textit{звезда на Клини}; \\
+    
+         \vspace{15pt}
+    
+         Доказателството на горната теорема би се състояло в това да се предложат конструкции,
+         които по подадени два детерминирани автомата $A_1$ и $A_2$ или единствен ДКА
+         $A$ строят нови детерминирани автомати, разпознаващи съответно езиците 
+         $L(A_1) \cup L(A_2)$, $L(A_1) \circ L(A_2)$ и $L(A)^*$, след което да се докаже 
+         коректността на предложените конструкции. Ние ще се ограничим само до това да 
+         предложим конструкции.
+    
+         \vspace{15pt}
+         
+         (а) \textit{Обединение.} Нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и 
+         $A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$ са детерминирани крайни автомати. Ще
+         конструираме нов НКА $N$, такъв че $L(N) = L(A_1) \cup L(A_2)$. Идеята е да
+         добавим ново начално състояние, което недетерминистично да извършва всички преходи,
+         които $s_1$ и $s_2$ извършват, ефективно опитвайки се да \textit{познаем} 
+         дали входната дума принадлежи на $L(A_1)$ или на $L(A_2)$. \\
+         \hspace{15pt} Формално, ако Б.О.О.
+         допуснем, че $Q_1 \cap Q_2 = \varnothing$, то $N$ дефинираме както следва:
+         $N = (Q,\Sigma,\Delta,s,F)$, където $s \notin Q_1 \cup Q_2$,
+         \begin{center}
+            $Q = Q_1 \cup Q_2 \cup \{s\}$, \\
+         \end{center}
+    
+         \begin{center}
+         $F = 
+         \begin{cases}
+          F_1 \cup F_2 \cup \{s\}, & \text { ако } s_1 \in F_1 \text { или } s_2 \in F_2, \\
+          F_1 \cup F_2, & \text { иначе },
+        \end{cases}$
+        \end{center}      
+        
+         а $\Delta$ дефинираме по следния начин
+    
+         \begin{center}
+            $\Delta(q,a) =
+            \begin{cases}
+              \{\delta_1(q,a)\}, & \text { ако } q \in Q_1, \\
+              \{\delta_2(q,a)\}, & \text { ако } q \in Q_2, \\
+              \{\delta_1(q,a)\} \cup \{\delta_2(q,a)\}, & \text { ако } q = s.
+            \end{cases}$
+         \end{center}
+    
+         \vspace{15pt}
+    
+         \textbf{Пример 1.} Ще построим НКА за езика $\{a\} \cup \{ab\}$ използвайки 
+         горната конструкция върху следните два автомата за езиците $\{a\}$ и $\{ab\}$
+         съответно.
+    
+         \vspace{10pt}
+    
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial] (q_0) {$q_0$}; 
+          \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+          \node[state] (q_2) [below=of q_0] {$q_2$};
+          \node[state,initial] (p_0) [right=3cm of q_1] {$p_0$};
+          \node[state] (p_1) [right=of p_0] {$p_1$};
+          \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+          \node[state] (p_3) [below=of p_1] {$p_3$};
+          \path[->]
+          (q_0) edge node {$a$} (q_1)
+                edge node {$b$} (q_2)
+          (q_1) edge node {$a$,$b$} (q_2)
+          (q_2) edge [loop left] node {$a$,$b$} ()
+          (p_0) edge node {$a$} (p_1)
+                edge node {$b$} (p_3)
+          (p_1) edge node {$b$} (p_2)
+                edge node {$a$} (p_3)
+          (p_2) edge node {$a$,$b$} (p_3)
+          (p_3) edge [loop left] node {$a$,$b$} ();
+      \end{tikzpicture}
+    
+      \vspace{10pt}
+    
+      Резултатния НКА е следният. 
+    
+      \vspace{10pt}
+    
+      \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial] (s) [below left=1.5cm of q_2] {$s$} ;
+        \node[state] (q_0) {$q_0$}; 
+        \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [below=of q_0] {$q_2$};
+        \node[state] (p_0) [below=of q_2] {$p_0$};
+        \node[state] (p_1) [right=of p_0] {$p_1$};
+        \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+        \node[state] (p_3) [below=of p_1] {$p_3$};
+        \path[->]
+        (s)   edge [bend right] node [swap] {$a$} (q_1)
+              edge [bend left] node [swap] {$a$} (p_1)
+              edge node [yshift=-0.1cm] {$b$} (q_2)
+              edge [bend right] node [swap] {$b$} (p_3)
+        (q_0) edge node {$a$} (q_1)
+              edge node [swap] {$b$} (q_2)
+        (q_1) edge node [swap] {$a$,$b$} (q_2)
+        (q_2) edge [loop left] node {$a$,$b$} ()
+        (p_0) edge node {$a$} (p_1)
+              edge node {$b$} (p_3)
+        (p_1) edge node {$b$} (p_2)
+              edge node {$a$} (p_3)
+        (p_2) edge node {$a$,$b$}  (p_3)
+        (p_3) edge [loop below] node {$a$,$b$} ();
+    \end{tikzpicture}
+    \end{center}
+    
+    \vspace{15pt}
+    
+    (б) \textit{Конкатенация.} Отново, нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и \\
+    $A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$, са детерминирани крайни автомати. Конструираме
+    НКА $N$ такъв че $L(N) = L(A_1) \circ L(A_2)$. Идеята този път е $N$ да симулира $A_1$
+    докато стигне до някое негово крайно състояние, след което да направи
+    недетерминистичен "скок" \hspace{0.1cm} към $A_2$ чрез имитация на преходите
+    на $s_2$ със следващата прочетена буква. \\
+    \hspace{15pt} Формално, ако Б.О.О.
+    допуснем, че $Q_1 \cap Q_2 = \varnothing$, то $N$ дефинираме както следва:
+         $N = (Q,\Sigma,\Delta,s_1,F)$,
+         \begin{center}
+            $Q = Q_1 \cup Q_2$ \\
+         \end{center}
+    
+         \begin{center}
+          $F = 
+          \begin{cases}
+           F_1 \cup F_2, & \text { ако } s_2 \in F_2, \\
+           F_2, & \text { иначе },
+          \end{cases}$
+         \end{center} 
+          
+         а $\Delta$ дефинираме по следния начин
+    
+         \begin{center}
+            $\Delta(q,a) =
+            \begin{cases}
+              \{\delta_1(q,a)\}, & \text { ако } q \in Q_1 \setminus F_1, \\
+              \{\delta_1(q,a)\} \cup \{\delta_2(s_2,a)\}, & \text { ако } q \in F_1, \\
+              \{\delta_2(q,a)\}, & \text { ако } q \in Q_2.
+            \end{cases}$
+         \end{center}
+    
+    
+    \vspace{15pt}
+    
+    \textbf{Пример 2.} Ще построим НКА за езика $\{a\} \circ \{ab\}$ използвайки 
+    горната конструкция върху автоматите от \textbf{Пример 1}.
+    \vspace{25pt}
+    
+    \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial] (q_0) {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$};
+            \node[state] (q_2) [below=of q_0] {$q_2$};
+            \node[state] (p_0) [right=3cm of q_1] {$p_0$};
+            \node[state] (p_1) [right=of p_0] {$p_1$};
+            \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+            \node[state] (p_3) [below=of p_1] {$p_3$};
+            \path[->]
+            (q_0) edge node {$a$} (q_1)
+                  edge node [swap] {$b$} (q_2)
+            (q_1) edge node [swap] {$a$,$b$} (q_2)
+                  edge [bend left] node {$a$} (p_1)
+                  edge [bend right] node [swap] {$b$} (p_3)
+            (q_2) edge [loop left] node {$a$,$b$} ()
+            (p_0) edge node {$a$} (p_1)
+                  edge node {$b$} (p_3)
+            (p_1) edge node {$b$} (p_2)
+                  edge node {$a$} (p_3)
+            (p_2) edge node {$a$,$b$}  (p_3)
+            (p_3) edge [loop below] node {$a$,$b$} ();
+        \end{tikzpicture}
+        \end{center}
+    
+    \vspace{15pt}
+    
+    (в) \textit{Звезда на Клини.} Нека $A = (Q,\Sigma,\delta,s,F)$ е ДКА. Ще конструираме
+    НКА $N$, такъв че $L(N) = L(A)^*$. Естествената идея би била да конкатенираме 
+    $A$ към самия себе си без да създаваме копие и да направим началното състояние крайно, ако вече не е 
+    такова. Този подход обаче е грешен, защото може да вкара нови думи в езика в случаите,
+    в които $A$ има преходи обратно към началното състояние.
+    За да получим автомат за $L(A)^*$ трябва да добавим ново начално и заключително състояние,
+    което да имитира преходите на оригиналното начално състояние вместо да правим оригиналното
+    начално състояние крайно. \\
+    
+    \hspace{15pt} Формално $N$ дефинираме както следва:
+         $N = (Q',\Sigma,\Delta,s',F')$,
+         \begin{center}
+          $s' \notin Q$ \\
+          $Q' = Q \cup \{s'\}$ \\
+          $F' = F \cup \{s'\}$,
+         \end{center} 
+          
+         а $\Delta$ дефинираме по следния начин
+    
+         \begin{center}
+            $\Delta(q,a) =
+            \begin{cases}
+              \{\delta(q,a)\}, & \text { ако } q \in Q \setminus F_1, \\
+              \{\delta(s,a)\} \cup \{\delta(q,a)\}, & \text { ако } q \in F_1, \\
+              \{\delta(s,a)\}, & \text { ако } q = s'.
+            \end{cases}$
+         \end{center}
+    
+    \vspace{15pt}
+    
+    \textbf{Пример 3.} Ще построим НКА за езика $\{ab\}^*$ използвайки 
+    горната конструкция върху автомата за $\{ab\}$ от \textbf{Пример 1}.
+    
+    \vspace{15pt}
+    
+    \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (s') {$s'$}; 
+            \node[state] [right=of s'] (p_0) {$p_0$};
+            \node[state] (p_1) [right=of p_0] {$p_1$};
+            \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+            \node[state] (p_3) [below=of p_1] {$p_3$};
+            \path[->]
+            (s')  edge [bend left] node {$a$} (p_1)
+                  edge node [swap] {$b$} (p_3)
+            (p_0) edge node {$a$} (p_1)
+                  edge node {$b$} (p_3)
+            (p_1) edge node [swap] {$b$} (p_2)
+                  edge node {$a$} (p_3)
+            (p_2) edge node {$a$,$b$}  (p_3)
+                  edge [bend right] node [swap] {$a$} (p_1)
+            (p_3) edge [loop below] node {$a$,$b$} ();
+        \end{tikzpicture}
+        \end{center}
+    
+    \vspace{15pt}
+    
+    Разбира се, предложените конструкции строят недетерминирани автомати, а нашата цел
+    беше да построим детерминирани такива, за да покажем затвореността на класа на
+    автоматните езици. Както показахме на миналото упражнение, резултатните недетерминирани
+    автомати винаги могат да се детерминират като последна стъпка в предложените конструкции.
+    
+    \subsection{Задачи}
+        \textbf{Задача 1.} Дайте \textit{директни} конструкции за затвореността относно
+        следните две операции.\\
+        (а) \textit{Допълнение.} \\
+        (б) \textit{Сечение.} \\
+    
+        \vspace{10pt}
+    
+        \textit{Забележка.} \textit{Директни} ще рече да не използвате, че сечението може
+        да се представи чрез допълнение и обединение.
+    
+        \vspace{15pt}
+    
+        \textbf{Задача 2.} Използвайки конструкциите от \textbf{Теорема 1}, постройте
+        недетерминирани крайни автомати разпознаващи следните езици. \\
+        (а) $\{a\}^*\circ(\{ab\}\cup\{ba\}\cup\{\epsilon\})\circ\{b\}^*$ \\
+        (б) $(\{a\}\cup\{b\})^*\circ(\{\epsilon\}\cup\{c\})$ \\
+        (в) $(\{a\}^*\cup\{b\}^*)\circ\{c\}$ 
+    
+        \vspace{20pt}
+    
+        \textit{Забележка.} В \textbf{Задача 2} можете неформално да приложите конструкциите върху 
+        недетерминирани автомати, вместо да започнете от детерминирани такива и да 
+        детерминирате на всяка стъпка. Ако човек е схванал конструкциите за детерминирани
+        автомати, не би трябвало да се затрудни да ги прилага и за недетерминирани такива,
+        въпреки липсата на формално изложение.
+    
+        \vspace{15pt}
+    
+        \textbf{Задача 3.} Нека $L \subseteq \Sigma^*$. Дефинираме следните езици. \\
+        \textcolor{blue}{\hspace{10pt} 1. $Pref(L) = \{w \in \Sigma^*$ | $x = wy$ за някои $x \in L, y \in \Sigma^*$\}
+        (множеството \\ \hspace{22pt} от \textbf{префиксите} на $L$). \\
+        \hspace{10pt} 2. $Suff(L) = \{w \in \Sigma^*$ | $x = yw$ за някои $x \in L, y \in \Sigma^*$\}
+        (множеството \\ \hspace{22pt} от \textbf{суфиксите} на $L$). \\
+        \hspace{10pt} 3. $Subseq(L) = \{w_1w_2...w_k$ | $k \in \mathbb{N}, w_i \in \Sigma^*$ за $i = 1,...,k$,
+        и има дума \\ \hspace{22pt} $x = x_0w_1x_1w_2x_2...w_kx_k \in L\}$. (множеството от \textbf{подредиците}
+        на $L$). \\
+        \hspace{10pt} 4. $Max(L) = \{w \in L$ | ако $x \neq \epsilon$, то $wx \notin L\}$. \\
+        \hspace{10pt} 5. $L^{rev} = \{w^{rev}$ | $w \in L\}$.} \\
+        Покажете че ако $L$ е автоматен, то всеки от следните езици също е автоматен. \\
+        (а) $Pref(L)$ \\
+        (б) $Suff(L)$ \\
+        (в) $Subseq(L)$ \\
+        (г) $Max(L)$ \\
+        (д) $L^{rev}$
+    
+        \vspace{15pt}
+    
+        \textbf{Задача 4.} За два езика $L_1$ и $L_2$ над азбука $\Sigma$, дефинираме 
+        \textit{частното} на $L_1$ по отношение $L_2$ да бъде езикът 
+        \begin{center}
+          $L_1/L_2 = \{w \in \Sigma^*$ | $wx \in L_1$ за някое $x \in L_2$\}.
+        \end{center}
+        Докажете, че ако $L_1$ е автоматен, то $L_1/L_2$ е автоматен език.
+    
+    \vspace{25pt}
+    
+    \subsection{Решения}
+        \textbf{Задача 1.}(а) Достатъчно е да обърнем крайността на всяко състояние. Тоест
+        $F' = Q \setminus F$. Тук обаче е ключово да отбележим, че входният автомат трябва
+        да бъде детерминиран. \\
+        (б) Нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и $A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$.
+        Предлагаме НКА $N = (Q_1 \times Q_2,\Sigma,\Delta,(s_1,s_2),F_1 \times F_2)$, където 
+        $\Delta$ е дефинирана както следва. \\
+        \begin{center}
+          $\Delta((q_1,q_2),a) = (\delta_1(q_1,a),\delta_2(q_2,a))$
+        \end{center}
+    
+        \textbf{Задача 2.} 
+        (а)
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0) {$q_0$}; 
+            \node[state] [right=of q_0] (q_1) {$q_1$};
+            \node[state] (q_2) [right=of q_1] {$q_2$};
+            \node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+            \node[state] (q_4) [above=of q_1] {$q_4$};
+            \node[state] (q_5) [right=of q_4] {$q_5$};
+            \node[state,accepting] (q_6) [right=of q_5] {$q_6$};
+            \node[state,accepting] (q_7) [below=of q_1] {$q_7$};
+            \node[state,accepting] (q_8) [right=of q_3] {$q_8$};
+            \path[->]
+            (q_0)  edge [loop above] node {$a$} ()
+                   edge node {$a$} (q_5)
+                   edge [bend right,below] node [xshift=0.5cm] {$b$} (q_2)
+                   edge [bend right=40,below] node {$b$} (q_8)
+            (q_1)  edge node {$b$} (q_2)
+            (q_2)  edge node {$a$} (q_3)
+            (q_3)  edge node {$b$} (q_8)
+            (q_4)  edge node {$a$} (q_5)
+            (q_5)  edge node {$b$} (q_6)
+            (q_6)  edge node {$b$} (q_8)
+            (q_7)  edge [bend right,below] node {$b$} (q_8)
+            (q_8)  edge [loop above] node  {$b$} ();
+        \end{tikzpicture}
+        \end{center}
+    
+        (б)
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0) {$q_0$}; 
+            \node[state] [right=of q_0] (q_1) {$q_1$};
+            \node[state] (q_2) [above right=of q_1] {$q_2$};
+            \node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+            \node[state] (q_4) [below right=of q_1] {$q_4$};
+            \node[state,accepting] (q_5) [right=of q_4] {$q_5$};
+            \node[state,accepting] (q_6) [below right=of q_3] {$q_6$};
+            \node[state,accepting] (q_7) [above right=of q_6] {$q_7$};
+            \node[state] (q_8) [below right=of q_6] {$q_8$};
+            \node[state,accepting] (q_9) [right=of q_8] {$q_9$};
+            \path[->]
+            (q_0)  edge [bend left=50] node {$a$} (q_3)
+                   edge [bend right=50,below] node {$b$} (q_5)
+                   edge [bend right=60,below] node {$c$} (q_9)
+            (q_1)  edge [bend right=20] node {$a$} (q_3)
+                   edge [bend left=20] node {$b$} (q_5)
+            (q_2)  edge node {$a$} (q_3)
+            (q_3)  edge [loop above] node {$a$} ()
+                   edge [bend right] node {$b$} (q_5)
+                   edge [bend left=90] node {$c$} (q_9)
+            (q_4)  edge node {$b$} (q_5)
+            (q_5)  edge [loop below] node {$b$} (q_5)
+                   edge [bend right] node {$a$} (q_3)
+                   edge [bend right,below] node {$c$} (q_9)
+            (q_6)  edge [bend left] node {$c$} (q_9)
+            (q_8)  edge node  {$c$} (q_9);
+        \end{tikzpicture}
+        \end{center}
+    
+        \vspace{1000pt}
+        (в)
+        \begin{center}
+          \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial] (q_0) {$q_0$}; 
+            \node[state] [above right=of q_0] (q_1) {$q_1$};
+            \node[state] (q_2) [right=of q_1] {$q_2$};
+            \node[state] (q_3) [right=of q_2] {$q_3$};
+            \node[state] (q_4) [below right=of q_0] {$q_4$};
+            \node[state] (q_5) [right=of q_4] {$q_5$};
+            \node[state] (q_6) [right=of q_5] {$q_6$};
+            \node[state] (q_7) [above right=of q_6] {$q_7$};
+            \node[state,accepting] (q_8) [right=of q_7] {$q_8$};
+            \path[->]
+            (q_0)  edge [bend right=15] node {$a$} (q_3)
+                   edge [bend left=15,below] node {$b$} (q_6)
+                   edge [bend right=90,below] node {$c$} (q_8)
+            (q_1)  edge [bend left] node {$a$} (q_3)
+                   edge [bend left=50] node {$c$} (q_8)
+            (q_2)  edge node {$a$} (q_3)
+            (q_3)  edge [bend left=20] node {$c$} (q_8)
+                   edge [bend left=12] node {$a$} (q_2)
+            (q_4)  edge [bend right=40] node {$b$} (q_6)
+                   edge [bend right=50,below] node {$c$} (q_8)
+            (q_5)  edge node {$b$} (q_6)
+            (q_6)  edge [bend right=20] node {$c$} (q_8)
+                   edge [bend left=12] node {$b$} (q_5)
+            (q_7)  edge node  {$c$} (q_8);
+        \end{tikzpicture}
+        \end{center}
+    
+        \textbf{Задача 3.} (а) Просто променяме множеството от крайните състояния по следния
+        начин:
+        \begin{center}
+          $F' = \{q \in Q$ | $(\exists w \in \Sigma^*)[\hat{\delta}(q,w) \in F]\}$.
+        \end{center}
+        (б) Едно състояние $q \in Q$ ще наричаме \textit{достижимо от s}, ако съществува дума
+        $w \in \Sigma^*$, такава че $\hat{\delta}(s,w) = q$. Нека $\mathbb{Q}$
+        е множеството от всички достижими от $s$ състояния на входния автомат 
+        (този, разпознаващ $L$). Добавяме ново начално състояние $s \notin Q$. Добавяме $s$ към $F$.
+        Ясно е как работи $\Delta$ върху състояния, които не са $s$. Нека $a \in \Sigma$. Имаме
+        \begin{center}
+          $\Delta(s,a) = \{\delta(q,a)$ | $q \in \mathbb{Q}\}$.
+        \end{center}
+        (в) Нека $Q = \{q_1,...,q_n\}$. За $i=1,...,n$ нека $Q_i$ е множеството от достижимите
+        от $q_i$ състояния. Нека $a \in \Sigma$. Тогава
+        \begin{center}
+          $\Delta(q_i,a) = \bigcup\limits_{q \in Q_i} \{\delta(q,a)\}$ 
+        \end{center}
+        (г) Променяме множеството от крайните състояния по следния начин:
+        \begin{center}
+          $F' = \{q \in F$ | $(\forall w \in \Sigma^+)[\hat{\delta}(q,w) \notin F]\}$.
+        \end{center}
+        (д) Първо обръщаме преходите на автомата:
+        \begin{center}
+          $\Delta(q,a) = \{p \in Q$ | $\delta(p,a) = q\}$.
+        \end{center}
+        След това добавяме ново начално състояние $s \notin Q$, което е крайно тстк началното
+        състояние на входния автомат е крайно. Към $\Delta$ добавяме преходите
+        \begin{center}
+          $\Delta(s,a) = \bigcup\limits_{q \in F} \Delta(q,a)$,
+        \end{center}
+        за всяко $a \in \Sigma$.
+
+        \vspace{15pt}
+
+        \section{Регулярни изрази и теорема на Клини}
+        \hspace{15pt} \textit{Регулярният израз} е още едно средство за описване на формалните езици 
+            над дадена азбука $\Sigma$. Грубо казано, регулярните изрази използват само буквите
+            от азбуката и \textit{символите} $\oslash$, $\bepsilon$, $\bplus$, $^\star$, $\bleft$ и $\bright$, за да дадат 
+            представяне на езиците над $\Sigma$. Формалната дефиниция за \textit{синтаксиса} на 
+            регулярните изрази е следната.
+        
+            \vspace{15pt}
+        
+            \textbf{Дефиниция 1.} Нека е дадена азбука $\Sigma$. \textbf{Регулярен израз} над
+            $\Sigma$ дефинираме индуктивно, както следва. \\
+            \vspace{10pt}
+            \textbf{База:} $\oslash$ е регулярен израз, $\bepsilon$ е регулярен израз
+            и всеки елемент на $\Sigma$ е регулярен израз. \\
+            \vspace{5pt}
+            \textbf{Стъпка:} (1) Ако $\alpha$ и $\beta$ са регулярни изрази, то и $\bleft \alpha \beta \bright$
+            е регулярен израз. \\
+            (2) Ако $\alpha$ и $\beta$ са регулярни изрази, то и $\bleft \alpha \bplus \beta \bright$
+            е регулярен израз. \\
+            (3) Ако $\alpha$ е регулярен израз, то и $\alpha^\star$ е регулярен израз.
+        
+            \vspace{10pt}
+        
+            \hspace{15pt} Всеки регулярен израз съответства на един и точно един език над $\Sigma$.
+            Формално, релацията между регулярните изрази и езиците, които те представят, се описва
+            чрез функция $\mathscr{L}$, такава че ако $\alpha$ е регулярен израз, то $\mathscr{L}(\alpha)$
+            е езикът, който $\alpha$ представя. Функцията $\mathscr{L}$ ще наричаме \\
+            \textbf{семантика}, а стойността ѝ в $\alpha$ — \textbf{семантика на $\boldsymbol{\alpha}$}. \\
+            \hspace{15pt} За да дефинираме формално $\mathscr{L}$ ще трябва да кажем еднозначно
+            какво тя връща за всеки даден регулярен израз $\alpha$ над $\Sigma$. Това естествено
+            ще сторим с индукция по конструкцията на $\alpha$. \\
+        
+            \vspace{10pt}
+        
+            \textbf{База:} $\mathscr{L}(\oslash) = \varnothing$, $\mathscr{L}(\bepsilon) = \{\epsilon\}$ и $\mathscr{L}(a) = \{a\}$ за всяко $a \in \Sigma$. \\
+            
+            \vspace{5pt}
+            
+            \textbf{Стъпка:} (1) Ако $\alpha$ и $\beta$ са регулярни изрази, то $\mathscr{L}(\bleft \alpha \beta \bright) =$
+            $\mathscr{L}(\alpha)\mathscr{L}(\beta)$. \\
+            (2) Ако $\alpha$ и $\beta$ са регулярни изрази, то $\mathscr{L}(\bleft \alpha \bplus \beta \bright) =$
+            $\mathscr{L}(\alpha) \cup \mathscr{L}(\beta)$. \\
+            (3) Ако $\alpha$ е регулярен израз, то $\mathscr{L}(\alpha^\star) =$
+            $\mathscr{L}(\alpha)^*$. 
+        
+            \vspace{15pt}
+            
+            \textbf{Пример 1.} Да намерим $\mathscr{L}(\bleft a \bplus b \bright ^* a \bright)$. Имаме следното. \\
+            \begin{center}
+                $\mathscr{L}(\bleft a \bplus b \bright ^\star a \bright) = $
+                $\mathscr{L}(\bleft a \bplus b \bright ^\star) \mathscr{L}(a)$ \hspace{10pt} // съгласно (2) \\
+                \hspace{62pt}$=\mathscr{L}(\bleft a \bplus b \bright ^\star)\{a\}$ \hspace{10pt} // съгласно (1) \\
+                \hspace{62pt}$=\mathscr{L}(\bleft a \bplus b \bright )^*\{a\}$ \hspace{10pt} // съгласно (4) \\
+                \hspace{76pt}$=(\mathscr{L}(a) \cup \mathscr{L}(b))^*\{a\}$ \hspace{10pt} // съгласно (3) \\
+                \hspace{104pt}$=(\{a\} \cup \{b\})^*\{a\}$ \hspace{10pt} // съгласно (1) два пъти \\
+                \hspace{-44pt}$=(\{a,b\})^*\{a\}$ \\
+                \hspace{33pt}$=\{w \in \Sigma^*$ | $w$ завършва на $a$\}
+            \end{center}
+        
+            \vspace{15pt}
+        
+            \hspace{15pt} Класът на \textbf{регулярните езици} над дадена азбука $\Sigma$ се дефинира
+            да бъде множеството от всички езици $L$ над $\Sigma$, такива че $L = \mathscr{L}(\alpha)$ 
+            за някой регулярен израз $\alpha$ над $\Sigma$. Алтернативно, можем да мислим за класа
+            на регулярните езици като \textit{затварянето} на множеството от езици
+            \begin{center}
+                $\{\{\sigma\}$ | $\sigma \in \Sigma\} \cup \{\{\epsilon\}\} \cup \{\varnothing\}$
+            \end{center}
+            относно операциите обединение, конкатенация и звезда на Клини. 
+        
+            \vspace{15pt}
+        
+            \hspace{15pt} Основен резултат в теорията на формалните езици е следната теорема за еквивалентност. 
+        
+            \vspace{15pt}
+        
+            \textbf{Теорема 1(на Клини).} Един език $L$ е регулярен тогава и само тогава, когато
+            е автоматен.
+            
+            \vspace{15pt}
+        
+            \hspace{15pt} Едната посока на доказателството на тази теорема вече на практика сме направили, а
+            именно правата; трябва само да дадем автомати за базовите регулярно езици — $\varnothing$,
+            $\{\epsilon\}$ и $\{a\}$ за $a \in \Sigma$. От там нататък затвореността на автоматните
+            езици относно операциите обединение, конкатенация и звезда на Клини ни дават именно,
+            че регулярността на един език влече неговата автоматност. \\
+            \hspace{15pt} Обратната посока ще бъде от интерес за нас за целите на това упражнение.
+            Как от детерминиран автомат $A = (Q,\Sigma,\delta,s,F)$ да получим регулярен израз $\alpha$, такъв че 
+            $L(A) = \mathscr{L}(\alpha)$? За начало, да номерираме състоянията на автомата; нека $Q = \{q_1,...,q_n\}$, 
+            като $s = q_1$. За $i,j = 1,...,n$ и $k = 0,...,n$, дефинираме $R(i,j,k)$ да бъде
+            множеството от всички думи в $\Sigma^*$, с които $A$ може да направи преход от 
+            състояние $q_i$ до състояние $q_j$ без да премине през \textit{вътрешни} състояния
+            с индекси по-големи от $k$ — крайните състояния за този преход $q_i$ и $q_j$ могат да 
+            имат индекси по-големи от $k$. За $k = n$, имаме че 
+            \begin{center}
+                $R(i,j,n) = \{w \in \Sigma^*$ | $\hat{\delta}(q_i,w) = q_j\}$.
+            \end{center}
+            Следователно
+            \begin{center}
+                $L(A) = \bigcup\{R(1,j,n)$ | $q_j \in F\}$.
+            \end{center}
+            \hspace{15pt} За целите на доказателството следва да се покаже, че езиците \\ $R(i,j,k)$
+            по всевъзможните $i,j$ и $k$ са регулярни, и следователно такъв е и $L(A)$. Доказателството
+            на този факт се извършва с индукция по $k$. За нас съществено е изразяването на
+            езика $R(i,j,k)$ чрез езици с по-малка стойност на параметъра $k$, а именно
+            \begin{center}
+                $R(i,j,k) = R(i,j,k-1) \cup R(i,k,k-1)R(k,k,k-1)^*R(k,j,k-1)$.
+            \end{center}
+        
+            Това уравнение просто ни казва, че за да стигне от състояние $q_i$ до състояние
+            $q_j$ без да минава през състояние с номер по-голям от $k$, автоматът А може да 
+            стори едно от следните две неща
+            
+            (1) да отиде от състояние $q_i$ до състояние $q_j$, минавайки през вътрешни \\
+            \hspace{13pt}    състояния с номера, по-малки от $k-1$; или \\
+            (2) да премине първо от $q_i$ до $q_k$; след което да премине от $q_k$ до $q_k$ \\
+            \hspace{13pt}    нула или повече пъти; след което да премине от $q_k$ до $q_j$; като през \\
+            \hspace{13pt}    цялото време не минава през \textit{вътрешни} състояния с индекси \\
+            \hspace{13pt}    по-големи от $k-1$. 
+        
+            \vspace{15pt}
+        
+            \textbf{Пример 2.} Да построим регулярен израз за езика 
+            $L = \{w \in \Sigma^*$ | $w$ има $3k + 1$ $b$-та за някое $k \in \mathbb{N}$\}, разпонат от следния автомат.
+            \begin{center}
+                \begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto] 
+                    \node[state,initial] (q_1)   {$q_1$}; 
+                    \node[state] (q_2) [right=of q_1] {$q_2$};
+                    \node[state,accepting] (q_3) [above right=of q_1, xshift=-0.6cm] {$q_3$}; 
+                    \path[->]
+                    (q_1) edge [loop below] node {$a$} ()
+                          edge node {$b$} (q_3)
+                    (q_2) edge [loop below] node {$a$} ()
+                          edge node {$b$} (q_1)
+                    (q_3) edge [loop above] node {$a$} ()
+                          edge node {$b$} (q_2);
+                \end{tikzpicture}
+            \end{center}
+        
+            Ако се опитаме подробно да проследим конструкцията от доказателството 
+            на обратната посока на \textbf{Теорема 1} ще трябва да построим всички езици 
+            $R(i,j,k)$ по всевъзможните стойностти за $i,j$ и $k$, които са $3*3*4 = 36$ на брой.
+            Ясно е, че $R(i,j,0) = \{\sigma \in \Sigma$ | $\delta(q_i,\sigma) = q_j$\} за $i,j = 1,2,3$. \\
+            \vspace{10pt}
+            Нататък за $k = 1$ имаме $R(1,1,1) = \mathscr{L}(a^\star)$, \\ $R(1,2,1) = \varnothing$, 
+            $R(1,3,1) = \mathscr{L}(a^\star b)$, $R(2,1,1) = R(2,1,0)$, \\ $R(2,2,1) = R(2,2,0)$,
+            $R(2,3,1) = \mathscr{L}(b a^\star b)$, а $R(3,j,1) = R(3,j,0)$, \\ за $j=1,2,3$. \\
+            \vspace{10pt}
+            След това за $k = 2$ имаме $R(1,j,2) = R(1,j,1)$, за $j=1,2,3$, \\
+            $R(2,1,2) = \mathscr{L}(a^\star b a^\star)$, $R(2,2,2) = \mathscr{L}(a^\star)$,
+            $R(2,3,2) = \mathscr{L}(a^\star b a^\star b)$, \\ $R(3,1,2) = \mathscr{L}(b a^\star b a^\star)$,
+            $R(3,2,2) = \mathscr{L}(b a^\star)$, $R(3,3,2) = \mathscr{L}(a + b a^\star b a^\star b)$.  \\
+            \vspace{10pt}
+            Накрая за $k = 3$ е достатъчно да намерим $R(1,3,3)$, защото \\
+            съгласно \textbf{Теорема 1}, $L(A) = R(1,3,3)$. Имаме
+            \begin{center}
+                $R(1,3,3) = R(1,3,2) \cup R(1,3,2)R(3,3,2)^*R(3,3,2) =$
+                $\mathscr{L}(a^\star b) \cup \mathscr{L}(a^*b)\mathscr{L}(b a^\star b a^\star b)^*\mathscr{L}(b a^\star b a^\star b) =$
+                $\mathscr{L}(a^\star b \bplus a ^\star b \bleft a \bplus b a^\star b a^\star b \bright ^\star \bleft a \bplus b a^\star b a^\star b \bright) =$
+                $\mathscr{L}(a^\star b \bleft \bepsilon \bplus \bleft a \bplus b a^\star b a^\star b \bright ^\star \bleft a \bplus b a^\star b a^\star b \bright) =$
+                $\mathscr{L}(a^\star b \bleft a \bplus b a^\star b a^\star b \bright^\star)$.
+            \end{center}
+        
+        \subsection{Задачи}
+        
+        \vspace{25pt}
+        
+        \subsection{Решения}
+            
+        \vspace{15pt}
+
+        \section{Минимален автомат}
+            \textbf{Дефиниция 1.} Нека $L \subseteq \Sigma^*$ е език, и нека $x,y \in \Sigma^*$. 
+            Казваме, че $x$ и $y$ са \textbf{еквивалентни по отношение на $\boldsymbol{L}$},
+            означено $x \approx_L y$, ако за всяка дума $z \in \Sigma^*$, следното е вярно:
+            $xz \in L \iff yz \in L$. Тази релация наричаме \textbf{релация на Нероуд за езика $\boldsymbol{L}$}.
+        
+            \vspace{5pt}
+        
+            \hspace{15pt} Забележете, че $\approx_L$ е релация на еквивалентност над $\Sigma^*$ за всеки език
+            $L$ над $\Sigma$. Класовете на еквивалентност на тази релация, неформално казано,
+            са множествата от думи, такива че слепването на коя да е фиксирана дума към края
+            на кои да е две от тях
+            води до получаването на две думи, за които или и двете са в $L$, или и двете са
+            извън $L$. С $[x]_L$ означаваме класът на думата $x$ по отношение на 
+            релацията на Нероуд за $L$.  
+        
+            \vspace{15pt}
+            
+            \textbf{Пример 1.} Да намерим класовете на еквивалентност за езика \\
+            $L = (ab + ba)^*$. Не е трудно да
+            се съобрази, че този език има точно \textit{четири} класа на еквивалентност
+            по отношение на релацията на Нероуд, а именно: \\
+            (1) $[\epsilon]_L = L$, \\
+            (2) $[a]_L = La$, \\
+            (3) $[b]_L = Lb$, \\
+            (4) $[aa]_L = L(aa + bb)\Sigma^*.$ \\
+        
+            \vspace{5pt}
+        
+            \hspace{15pt} За (1) можем да отбележим, че не всеки език има свойството, че \\ $[\epsilon]_L = L$.
+            Разгледайте например езика $(ab)^*(a+b)$. (2) и (3) са класовете на думите,
+            които представляват конкатенация на дума от $L$ с $a$ или $b$ съответно. Тези
+            думи могат да се продължат до дума в $L$ \textit{единствено} с представител на $b L^*$ и $a L^*$ съответно. 
+            (4) е класът на думите с дължина $\geq 2$, които не са в $L$. Каквото и да 
+            конкатенираме към произволни два представителя на този клас, резултатната дума
+            ще бъде извън езика.
+        
+            \vspace{15pt}
+        
+            \textbf{Дефиниция 2.} Нека $A = (Q,\Sigma,\delta,s,F)$ е ДКА. Казваме, че две думи 
+            $x,y \in \Sigma^*$ са \textbf{еквивалентни по отношение на $\boldsymbol{A}$}, 
+            означено с $x \sim_A y$, ако 
+            \begin{center}
+                $\hat{\delta}(s,x) = \hat{\delta}(s,y)$.
+            \end{center}
+            Тази релация наричаме \textbf{релация на Нероуд по автомата $\boldsymbol{A}$}.
+            
+            \vspace{5pt}
+        
+            Отново, $\sim_L$ е релация на еквивалентност над $\Sigma^*$ за всеки език $L$ над
+            $\Sigma$. Класовете ѝ на еквивалентност се идентифицират с достижимите от $s$
+            състояния в $A$. Означаваме съответстващия на състоянието $q \in Q$ клас с $E_q$.
+        
+            \vspace{45pt}
+        
+            \textbf{Пример 2.} Да разгледаме отново езика $L = (ab + ba)^*$. Следният автомат
+            $A$ разпознава точно $L$.
+            \begin{center}
+                \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                    \node[state,initial,accepting] (q_1) {$q_1$}; 
+                    \node[state] (q_2) [right=of q_1] {$q_2$};
+                    \node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+                    \node[state] (q_4) [below=of q_1] {$q_4$};
+                    \node[state] (q_5) [right=of q_4] {$q_5$};
+                    \node[state] (q_6) [right=of q_5] {$q_6$};
+                    \path[->]
+                    (q_1) edge node {$a$} (q_2)
+                          edge [bend right,swap] node {$b$} (q_4)
+                    (q_2) edge node {$a$} (q_5)
+                          edge [bend left] node {$b$} (q_3)
+                    (q_3) edge [bend left] node {$a$} (q_2)
+                          edge [bend right,swap] node {$b$} (q_6)
+                    (q_4) edge [bend right,swap] node {$a$} (q_1)
+                          edge node {$b$} (q_5)
+                    (q_5) edge [loop below] node {$a$,$b$} ()
+                    (q_6) edge [bend right,swap] node {$a$} (q_3)
+                          edge node {$b$} (q_5);
+                \end{tikzpicture}
+            \end{center}
+        
+            Класовете на еквивалентност на $\sim_A$ са \\
+            (1) $E_{q_1} = (ba)^*$, \\
+            (2) $E_{q_2} = La$, \\
+            (3) $E_{q_3} = (ba)^*abL$, \\
+            (4) $E_{q_4} = b(ab)^*$, \\
+            (5) $E_{q_5} = L(bb + aa)\Sigma^*$, \\
+            (6) $E_{q_6} = (ba)^*abLb$.
+        
+            \vspace{15pt}
+        
+            \hspace{15pt} Връзката между двете релации, които дефинирахме е следната.\\
+            \textbf{Теорема 1.} За всеки ДКА $A = (Q,\Sigma,\delta,s,F)$ и всеки две думи
+            $x,y \in \Sigma^*$, ако $x \sim_A y$, то $x \approx_{L(A)} y$. \\
+            
+            \vspace{15pt}
+        
+            \hspace{15pt} Друг начин да изкажем тази връзка е да кажем, че релацията $\sim_L$ 
+            \textit{прецизира} релацията $\approx_{L(A)}$. В общия случай, за две релации
+            на еквивалентност $R$ и $R'$ казваме, че $R$ \textbf{прецизира} $R'$, ако за всеки
+            $x,y$ $xRy$ влече $xR'y$. Обратно, ще казваме, че $R'$ \textbf{апроксимира} $R$.
+            Ако релацията на еквивалентност $\sim$ прецизира релацията
+            на еквивалентност $\approx$, то всеки от класовете на еквивалентност на $\sim$ се
+            съдържа в някой от класовете на $\approx$. С други думи, всеки клас на еквивалентност
+            на $\approx$ е обединение на един или повече класове на еквивалентност на $\sim$.
+        
+            \vspace{15pt}
+        
+            \hspace{15pt} \textbf{Теорема 1} ни дава, че всеки автомат разпознаващ език $L$ има
+            поне толкова състояния, колкото са класовете на еквивалентност на $\approx_L$.
+            Тоест, броят на класовете на еквивалентност на тази релация е \textit{долна граница}
+            за броя на състоянията на кой да е автомат, разпознаващ езика $L$. Но дали тази
+            долна граница е достижима? Следната теорема ни дава отговор на този въпрос. \\
+            
+            \vspace{15pt}
+        
+            \textbf{Теорема 2(на Майхил-Нероуд).} Нека $L \subseteq \Sigma^*$ е регулярен език.
+            Тогава съществува ДКА с точно толкова на брой състояния, колкото е броят на 
+            класовете на еквивалентност на $\approx_L$, който разпознава $L$.
+        
+            \vspace{15pt}
+        
+            \hspace{15pt} Идеята е най-естествена. Използвайки само релацията $\approx_L$ ще 
+            конструираме ДКА $A = (Q,\Sigma,\delta,s,F)$, такъв че $L(A) = L$. $A$ е 
+            дефиниран както следва:
+            \begin{center}
+                $Q = \{[w]$ | $w \in \Sigma^*$\}, множеството от класовете на еквивалентност 
+                на $\approx_L$. \\
+                $s = [\epsilon]$, класът на еквивалентност на $\epsilon$ спрямо $\approx_L$. \\
+                $F = \{[w]$ | $w \in L$\}, множествтото от класовете на еквивалентност на думите
+                в $L$ спрямо $\approx_L$. \\
+                Накрая, за всеки клас $[w] \in Q$ и всяка буква $a \in \Sigma$, дефинираме
+                $\delta([w],a) = [wa]$. 
+            \end{center}
+        
+            \hspace{15pt} Разбира се, такъв автомат може да се конструира само ако $\approx_L$
+            има краен брой класове на еквивалентност. Как сме сигурни, че това е така? Езикът 
+            $L$ е регулярен. Значи съществува ДКА $A'$, такъв че $L(A') = L$. Според 
+            \textbf{Теорема 2} конструираният от нас автомат $A$ също разпознава $L$. Но 
+            броя на състоянията на $A$ е точно броят на класовете на еквивалентност на 
+            $\approx_L$. Този брой на свой ред е по-малък от броя на класовете на еквивалентност
+            на $\sim_{A'}$, съгласно \textbf{Теорема 1}. Сега е достатъчно
+            да забележим, че броят на класовете на еквивалентност на $\sim_{A'}$ е точно
+            броя на състоянията на $A'$, който е краен. Значи броят на състоянията на $A$ е
+            ограничен отгоре от крайно число.
+        
+            \vspace{15pt}
+        
+            \textbf{Пример 3.} Минималния автомат за езика $L = (ab + ba)^*$ можем да 
+            получим от \textbf{Пример 1} и \textbf{Пример 2}. 
+            
+            \begin{center}
+                \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                    \node[state,initial,accepting] (q_1) {$[\epsilon]$}; 
+                    \node[state] (q_2) [right=of q_1] {$[a]$};
+                    \node[state] (q_3) [below=of q_1] {$[b]$};
+                    \node[state] (q_4) [right=of q_3] {$[aa]$};
+                    \path[->]
+                    (q_1) edge node {$a$} (q_2)
+                          edge [bend right,swap] node {$b$} (q_3)
+                    (q_2) edge node {$a$} (q_4)
+                          edge [bend left] node {$b$} (q_1)
+                    (q_3) edge [bend right,swap] node {$a$} (q_1)
+                          edge node {$b$} (q_4)
+                    (q_4) edge [loop right] node {$a$,$b$} ();
+                \end{tikzpicture}
+            \end{center}
+             
+            \vspace {15pt}
+        
+            \hspace{15pt} Изведеното до тук не предоставя алгоритъм с който по даден ДКА $A$
+            да конструираме минималния автомат за $L(A)$. Следва да опишем един такъв алгоритъм.
+            Първо да дефинираме релация 
+            $\equiv_A$ $\subseteq$ $Q \times Q$ по следния начин. За всеки две състояния
+            $q,p \in Q$
+            \begin{center}
+                $q \equiv_A p \iff (\forall w \in \Sigma^*)[\hat{\delta}(q,w) \in F \iff \hat{\delta}(p,w) \in F]$.
+            \end{center}
+            Лесно се забелязва, че тази релация е релация на еквивалентност. Нейните класове
+            на еквивалентност са точно тези множества от състояния, които трябва да се "слеят"
+            \hspace{0,01cm} в $A$, за да получим минималния автомат за $L(A)$. \\
+            \hspace{15pt} Алгоритъмът ни ще трябва да изчислява класовете на еквивалентност на
+            $\equiv_A$. За целта дефинираме следната редица от апроксимации на релацията 
+            $\equiv_A$. За всеки две състояния $q,p \in Q$ 
+            \begin{center}
+                $q \equiv_A^n p \iff (\forall w \in \Sigma^*)[|w| \leq n \implies (\hat{\delta}(q,w) \in F \iff \hat{\delta}(p,w) \in F)]$.
+            \end{center}
+            \hspace{15pt} Очевидно, всяка от релациите $\equiv_A^0,\equiv_A^1,\equiv_A^2,...$
+            e апроксимация на предшественика си в редицата. Освен това, $q \equiv_A^0 p$ е вярно
+            тстк $q$ и $p$ са едновременно крайни или едновременно некрайни състояния. Тоест
+            $\equiv_A^0$ има точно два класа на еквивалентност: $F$ и $Q \setminus F$. Сега
+            остана само да покажем как $\equiv_A^n$ зависи от $\equiv_A^{n-1}$ за всяко
+            $n \geq 1$. Връзката е следната
+            \begin{center}
+                $(\forall q \in Q)(\forall p \in Q)[q \equiv_A^n p \iff q \equiv_A^{n-1} p$ \& $(\forall a \in \Sigma)[\delta(q,a) \equiv_A^{n-1} \delta(p,a)]]$.
+            \end{center}
+            Алгоритъмът за изчисление на $\equiv_A$ има следния вид. \\
+            \vspace{5pt}
+            \hspace{15pt} (1) По начало класовете на $\equiv_A^0$ са $F$ и $Q \setminus F$; \\
+            \hspace{15pt} (2) За всяко $n = 1,2,...$ изчисли класовете на $\equiv_A^n$ чрез класовете на \\
+            \hspace{34pt}$\equiv_A^{n-1}$ докато тези на $\equiv_A^n$ не станат същите като тези на
+            $\equiv_A^{n-1}$. \\
+            \hspace{15pt} (3) Върни $\equiv_A^n$ спрямо текущото достигнатото $n$.
+        
+            \vspace{15pt}
+        
+            \textbf{Пример 4.} Да приложим алгоритъма върху автомата от
+            \textbf{Пример 2}. Очакваме естествено да получим като резултат автомата от 
+            \textbf{Пример 3}. \\
+            \vspace{10pt}
+            По начало, класовете на $\equiv_A^0$ са $\{q_1,q_3\}$ и $\{q_2,q_4,q_5,q_6\}$. \\
+            \vspace{10pt}
+            След първата итерация на (2), класовете на $\equiv_A^1$ са $\{q_1,q_3\}$, $\{q_2\}$,
+            $\{q_4,q_6\}$ и $\{q_5\}$. \\
+            \vspace{10pt}
+            След втората итерация на (2), класовете не се разбиват допълнително. Алгоритъмът
+            терминира и връща горните четири множества като класовете на еквивалентност на 
+            $\equiv_A$. Това са именно състоянията на минималния автомат за $L = (ab + ba)^*$.
+            Крайни са тези от тях, които са получени от разбиването на класа на крайните 
+            състояния (тоест тези, които съдържат само крайни състояния). Преход от състояние
+            $Q$ с буквата $\sigma$ има към състоянието $\{p \in Q$ | $\delta(q,\sigma) = p$, за някое $q \in Q$\}.
+            Резултатният автомат естествено е \textit{изоморфен} на този от \textbf{Пример 3}.
+            
+            \begin{center}
+                \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+                    \node[state,initial,accepting] (q_1) {$\{q_1,q_3\}$}; 
+                    \node[state] (q_2) [right=of q_1] {$\{q_2\}$};
+                    \node[state] (q_3) [below=of q_1] {$\{q_4,q_6\}$};
+                    \node[state] (q_4) [right=of q_3] {$\{q_5\}$};
+                    \path[->]
+                    (q_1) edge node {$a$} (q_2)
+                          edge [bend right,swap] node {$b$} (q_3)
+                    (q_2) edge node {$a$} (q_4)
+                          edge [bend left] node {$b$} (q_1)
+                    (q_3) edge [bend right,swap] node {$a$} (q_1)
+                          edge node {$b$} (q_4)
+                    (q_4) edge [loop right] node {$a$,$b$} ();
+                \end{tikzpicture}
+            \end{center}
+        
+        \subsection{Задачи}
+            \textbf{Задача 1.} (а) Намерете класовете на еквивалентност спрямо $\approx_L$ за 
+            всеки от следните езици: \\
+            (i) $L = (aab + ab)^*$.\\
+            (ii) $L = \{w$ | $w$ има поддумата $aababa$\}.\\
+            (iii) $L = \{ww^{rev}$ | $w \in \{a,b\}^*$\}.\\
+            (iv) $L = \{ww$ | $w \in \{a,b\}^*\}$\\
+            (v) $L_n = (a+b)*a(a+b)^n$, където $n \in N^+$. \\
+            
+            (б) За тези езици от (а), за които отговорът е краен, дайте минимален ДКА, разпознаващ
+            съответния език.
+        
+        
+        
+        \vspace{25pt}
+        
+        \subsection{Решения}        
+
+\section{Критерии за нерегулярност}
+    \hspace{15pt} Вече разгледахме два метода, чрез които показваме регулярността на 
+    даден език. Регулярните езици над дадена азука $\Sigma$ обаче са изброимо много (защото 
+    регулярните изрази над $\Sigma$ са изброимо много). От друга страна, 
+    множеството на всички езици над $\Sigma$, $\mathscr{P}(\Sigma^*)$, е неизброимо
+    безкрайно като степенно множество на изброимо безкрайно множество, $\Sigma^*$.
+    Тези съображения показват съществуването на нерегулярни езици над $\Sigma$.
+    Ясно е, че каквато и да е $\Sigma$ и каквито и да са тези езици, те най-малкото 
+    ще бъдат безкрайни. Но какво откроява безкрайните нерегулярни езици от безкрайните
+    регулярни такива? Както знаем, всеки регулярен език се разпознава от ДКА. Ако $L$
+    е безкраен регулярен език, а $A$ е ДКА с $n$ състояния, такъв че $L(A) = L$, 
+    то безкрайността на $L$ влече съществуването на думи с дължина поне $n$. Нека
+    $w$ е една такава дума. Тогава пътят на $w$ по $A$ със сигурност минава през поне
+    $n+1$ състояния. По принципа на Дирихле, някое от състоянията по този път ще се 
+    повтаря; тоест пътят на $w$ по $A$ ще съдържа цикъл. Естествено движейки се по $A$
+    ние можем да изберем да се "завъртим"\hspace{0.01cm} по този цикъл произволен брой пъти, след което
+    наличието на $w$ в $L$ ни гарантира, че ще можем да приключим този път в крайно
+    състояние, ефективно вкарвайки безкрайно много думи (за всяко количество "завъртания"),
+    зависими по някакъв начин от $w$, в $L$. Всичко това можем да изкажем чрез следната
+    теорема.
+
+    \vspace{15pt}
+
+    \textbf{Теорема 1(лема за разрастването/the pumping lemma).} Нека $L$ е регулярен
+    език. Тогава съществува естествено число $p \geq 1$, такова че всяка дума $w \in L$
+    с $|w| \geq p$ може да се презапише във вида $w = xyz$, като \\
+    (1) $|y| \geq 1$, тоест $y \neq \epsilon$; \\
+    (2) $|xy| \leq p$; \\
+    (3) $xy^iz \in L$ за всяко $i \in \mathbb{N}$.
+
+    \vspace{15pt}
+
+    \hspace{15pt}Първия (най-малкия) свидетел за съществуването на числото $p$ е \\
+    именно броят на състоянията на минималния автомат за $L$. Такъв автомат знаем че 
+    съществува, заради регулярността на $L$. Мислейки за минималния автомат $A$ за $L$,
+    всяка дума $w \in L$ с $|w| \geq p$ ще съдържа цикъл в пътя си по $A$. Представянето
+    $w = xyz$ заедно със свойствата си (1), (2) и (3) точно съответства на този факт.
+    Наистина, $x$ е думата прочетена от началното състояние до началото на \textit{първия}
+    цикъл в пътя на $w$ по $A$; 
+    $y$ е думата прочетена по този цикъл (затова $|y| \geq 0$), а $z$ е думата прочетена
+    от края на цикъла до крайното състочние, в което $w$ приключва пътя си по $A$. 
+    Свойството (2) следва от избора ни $y$ да е думата прочетена по първия цикъл в пътя
+    на $w$ по $A$ — първото повторение на състояние ще се случи след прочитането на $y$,
+    тоест $|xy|$ няма как да бъде по-голяма от броя на състоянията на $A$. Свойството
+    (3) е именно свойството, което дава и името на теоремата; щом можем да се въртим
+    по така фиксирания първи цикъл в пътя на $w$ по $A$ произволен брой пъти, четейки
+    по него думата $y$, то за всяко $i \in \mathbb{N}$, думата $xy^iz$ ще да бъде в
+    $L(A)$, а значи и в $L$. \\
+
+    \vspace{15pt}
+
+    \hspace{15pt} \textbf{Теорема 1} по същество е импликация от вида 
+    \begin{center}
+        $L$ е регулярен $\implies P(L)$. 
+    \end{center}
+    Разбира се в сила е и нейната контрапозиция
+    \begin{center}
+        $\neg P(L) \implies$ $L$ не е регулярен.
+    \end{center}
+    \textit{Това} е първият критерии за нерегулярност, който ще разгледаме. Отрицанието
+    на свойството $P$ трябва да се разгледа по-подробно. Първо, да запишем свойството
+    $P$ формално.
+    \begin{center} 
+        $P(L) \iff (\exists p \in \mathbb{N}^+)(\forall w \in L)[|w| \geq p \implies (\exists x \in \Sigma^*)(\exists y \in \Sigma^*)(\exists z \in \Sigma^*)[w = xyz$ $\&$ $|y| \geq 1$ $\&$ $|xy| \leq p$ $\&$ $(\forall i \in \mathbb{N})[xy^iz \in L]]]$
+    \end{center}
+    Сега можем да съобразим, че отрицанието на $P$ е точно
+    \begin{center}
+        $\neg P(L) \iff (\forall p \in \mathbb{N}^+)(\exists w \in L) [|w| \geq p$ $\&$ $(\forall x \in \Sigma^*)(\forall y \in \Sigma^*)(\forall z \in \Sigma^*)[w = xyz$ $\&$ $|y| \geq 0$ $\&$ $|xy| \leq p$ $\implies$ $(\exists i \in \mathbb{N})[xy^iz \notin L]]]$.
+    \end{center}
+
+    Ако успеем да покажем, че даден език притежава горното свойство, то контрапозицията
+    на лемата за разрастването ни дава, че този език не \\ е регулярен. \\
+    \hspace{15pt} Първо трябва да 
+    удовлетворим кванторите в началото на формулата \\ $\boxed{(\forall p \in \mathbb{N}^+)}$ и
+    $\boxed{(\exists w \in L)}$, както и първия конюнкт в областта им на действие 
+    $\boxed{|w| \geq p}$. За целта избираме в ролята на $w$ подходяща дума с дължина по-голяма от и зависеща от $p$
+    в $L$. Зависимостта на дължината на $w$ от $p$ е това, което удовлетворява първия
+    квантор. \\ 
+    \hspace{15pt} След това удовлетворяваме втория конюнкт в областта на действие на  
+    $\boxed{(\exists w \in L)}$. За целта разглеждаме произволно представяне на 
+    така избраната $w$
+    във вида $w = xyz$ със свойствата (1) и (2) и показваме такова естествено число $i$,
+    че $xy^iz \notin L$.
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ще докажем посредством \textbf{Теорема 1}, че езикът \\
+    $L = \{a^nb^n$ | $n \in \mathbb{N}\}$ не е регулярен, като покажем, че $L$ не
+    притежава свойството $P$ (тоест, че $L$ притежава свойството $\neg P$). Нека $p \in \mathbb{N^+}$. Да разгледаме думата 
+    $w = a^pb^p \in L$. Очевидно $|w| \geq p$. Сега да разгледаме някое представяне
+    $w = xyz$ на $w$ със свойствата (1) и (2). Щом $|xy| \leq p$ и $|y| \geq 1$, то 
+    $y = a^k$ за някое $k$, такова че $1 \leq k \leq p$. Тогава за $i = 2$ имаме, че 
+    $xy^2z = a^{p+k}b^p \notin L$. 
+
+    \vspace{15pt}
+
+    \hspace{15pt} Сега да си припомним, че \textbf{теоремата на Майхил-Нероуд} 
+    \textit{също} беше импликация от вида 
+    \begin{center}
+        $L$ е регулярен $\implies N(L)$,
+    \end{center}
+    където $N(L)$ е следното свойство:
+    \begin{center}
+        $N(L) \iff$ съществува ДКА за $L$ с толкова на брой състояния, колкото са 
+        класовете на еквивалентност на $\approx_L$.
+    \end{center}
+    Това свойство влече, че броят на класовете на еквивалентност на $\approx_L$ \\
+    трябва да бъде краен. Тоест имаме импликацията
+    \begin{center}
+        $N(L) \implies \approx_L$ има краен брой класове на еквивалентност. 
+    \end{center}
+    Двете импликации дотук ни дават общо
+    \begin{center}
+        $L$ е регулярен $\implies \approx_L$ има краен брой класове на еквивалентност.
+    \end{center}
+    Значи в сила е и контрапозитивното
+    \begin{center}
+        $\approx_L$ има безкраен брой класове на еквивалентност $\implies L$ не е регулярен.
+    \end{center}
+    \textit{Това} е вторият критерии за нерегулярност, който ще разгледаме.
+    Но как можем да покажем, че даден език има безкраен брой класове на еквивалентност
+    по релацията си на Нероуд? Идеята е да намерим безкрайна редица от думи 
+    $w_1,w_2,...$, такава че всеки две думи в нея са в различен клас на еквивалентност
+    по $\approx_L$. Най-простият начин е да създадем подходяща зависимост между дължината
+    на думата $w_i$ и индекса ѝ — числото $i$.
+
+    \vspace{15pt}
+
+    \textbf{Пример 2.} Ще покажем отново, че езикът $L = \{a^nb^n$ | $n \in \mathbb{N}$\}
+    не е регулярен; този път използвайки новия критерии.
+    Да разгледаме редицата $w_1,w_2,...$, за която 
+    \begin{center}
+        $w_i = a^i$, за всяко $i \in \mathbb{N}$.
+    \end{center}
+    Нека $i,j \in \mathbb{N}$ са такива, че $i \neq j$. Ще покажем, че $[w_i]_L \neq [w_j]_L$.
+    За целта е достатъчно да покажем, че $w_i \notin [w_j]_L$, тъй като $w_i \in [w_i]_L$.
+    Еквивалентно на това, трябва да покажем, че $w_i \not \approx_L w_j$. Да разгледаме
+    думата $b^i \in \Sigma^*$. От една страна $a^i\textcolor{blue}{b^i} \in L$. От друга страна $a^j\textcolor{blue}{b^i} \notin L$,
+    тъй като $i \neq j$. Значи действително $w_i \not \approx_L w_j$. Така показахме,
+    че $\approx_L$ има безкраен брой класове на еквивалентност. Следователно $L$ не е
+    регулярен.
+    
+    \vspace{15pt}
+
+    \textbf{Пример 3.} Ще покажем и трети начин, по който можем да показваме, че даден
+    език е нерегулярен. Този начин е да се възползваме от регулярните операции и езици,
+    за които вече сме показали, че са нерегулярни. Например да разгледаме езика
+    \begin{center}
+        $L = \{w \in \{a,b\}^*$ | $w$ има равен брой $a$-та и $b$-та\}.
+    \end{center}
+    $L$ не е регулярен, защото ако беше, то такъв би бил и $L \cap a^*b^*$—по затвореност
+    на регулярните езици относно сечение. Обаче, $L \cap a^*b^* =$ \\
+    $\{a^nb^n$ | $n \in \mathbb{N}$\},
+    за който вече два пъти показахме, че не е регулярен.
+\vspace{25pt}
+
+\subsection{Задачи}
+    \textbf{Задача 1.} Използвайте лемата за разрастването или теоремата на \\Майхил-Нероуд,
+    за да покажете, че следните езици не са регулярни. \\
+    (а) \{$ww$ | $w \in \{a,b\}^*$\} \\
+    (б) \{$ww^{rev}$ | $w \in \{a,b\}^*$\} \\
+    (в) \{$w\overline{w}$ | $w \in \{a,b\}^*$\}, където $\overline{w}$ е думата получена от $w$, 
+    като сме заменили всяко срещане на $a$ с $b$ и обратно \\
+    (г) \{$w^{|w|}$ | $w \in \{a,b\}^*$\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Докажете, че езикът $\{a^nba^mba^{n+m}$ | $n,m \geq 1\}$ не е 
+    регулярен.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Една дума $w$ над $\{a,b\}$ наричаме \textit{балансирана}, ако следните
+    две неща са изпълненини: \\
+    (1) във всеки префикс на $w$, броят на $a$-тата е не по-малък от броя на $b$-тата; \\
+    (2) броят на $a$-тата в $w$ е равен на броя на $b$-тата. \\
+    Докажете, че езикът \{$w \in \{a,b\}^*$ | $w$ е балансирана\} не е регулярен.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Кои от следните твърдения са верни? Аргументирайте се.\\
+    (а) Всяко подмножество на регулярен език е регулярен език. \\
+    (б) Всеки регулярен език си има собствено подмножество, което е регулярен език. \\
+    (в) Ако $L$ е регулярен, то регулярен е и \{$xy$ | $x \in L$ $\&$ $y \notin L$\}. \\
+    (г) \{$w$ | $w = w^{rev}$\} е регулярен. \\
+    (д) Ако $L$ е регулярен език, то такъв е и \{$w$ | $w \in L$ $\&$ $w^{rev} \in L$\}. \\
+    (е) Ако $R$ е множество от регулярни езици, то $\bigcup R$ е регулярен език. \\
+    (ж) \{$xyx^{rev}$ | $x,y \in \Sigma^*$\} е регулярен.
+\vspace{25pt}
+
+\subsection{Решения}
+    \textbf{Задача 1.} Ако използвате PL едни възможни избори са: \\
+    (a) $w = a^pba^pb$, $i = 2$; \\
+    (б) $w = a^pbba^p$, $i = 2$; \\
+    (в) $w = a^pb^p$, $i = 2$; \\
+    (г) $w = (a^pb)^{p+1}, i = 2$. \\
+    Ако използвате Майхил-Нероуд: \\
+    (а) $w_i = a^ib$, за $i \in \mathbb{N}$; конкатенирате $a^ib$ към $w_i$ и $w_j$ за $i \neq j$; \\
+    (б) $w_i = a^ib$, за $i \in \mathbb{N}$; конкатенирате $ba^i$ към $w_i$ и $w_j$ за $i \neq j$; \\
+    (в) $w_i = a^i$, за $i \in \mathbb{N}$; конкатенирате $b^i$ към $w_i$ и $w_j$ за $i \neq j$; \\
+    (г) $w_i = (a^ib)^{i}$, за $i \in \mathbb{N}$; конкатенирате $a^ib$ към $w_i$ и $w_j$ за $i \neq j$; \\
+    \vspace{5pt}
+    Алтернативен подход за (в) е да пресечем езика с $a^*b^*$, получавайки \\ $\{a^nb^n$ | $n \in \mathbb{N}$\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} С PL: $w = a^pba^pba^{2p}$, $i = 2$. С Майхил-Нероуд: $w_i = a^{i+1}ba^{i+1}b$,
+    за $i \in \mathbb{N}$ и конкатенирате $a^{2(i+1)}$ към $w_i$ и $w_j$ за $i \neq j$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Пресичаме езика с $a^*b^*$ и получаваме $\{a^nb^n$ | $n \in \mathbb{N}$\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} (а) Не е вярно. Най-просто, $\Sigma^*$ е регулярен език и всеки
+    език над $\Sigma$ е подмножество на $\Sigma^*$. Но както показахме в това упражнение,
+    над $\Sigma$ съществуват и нерегулярни езици. \\
+    (б) Не е вярно. Тривиално, $\varnothing$ е регулярен език, който няма собствени
+    подмножества. \\
+    (в) Вярно е. Имаме \\
+    \begin{center}
+        \{$xy$ | $x \in L$ $\&$ $y \notin L\} =$ \\
+        \{$xy$ | $x \in L$ $\&$ $y \in \overline{L}\} =$ \\
+        \{$x$ | $x \in L$\} $\circ$ \{$y$ | $y \in \overline{L}\} =$ 
+        $L\overline{L}$. 
+    \end{center}
+    Но ние вече показахме, че регулярните езици са затворени относно операциите
+    допълнение и конкатенация. \\
+    (г) Не е вярно. Ако пресечем този език с езика на думите с четна дължина, $(aa + ab + ba + bb)^*$,
+    получаваме езика от (б) на \textbf{Задача 1}. \\
+    (д) Вярно е. Имаме \\
+    \begin{center}
+        \{$w$ | $w \in L$ $\&$ $w^{rev} \in L\} =$ \\
+        \{$w$ | $w \in L$ $\&$ $w \in L^{rev}\} = L \cap L^{rev}$.
+    \end{center}
+    Но ние вече показахме, че регулярните езици са затворени относно операциите
+    обръщане и сечение. \\
+    (е) Не е вярно. Въпреки че обединението, приложено краен брой пъти, запазва
+    регулярността, ако го приложим върху подходящо безкрайно множество от регулярни
+    езици, можем да получим нерегулярен език. Конкретно, да разгледаме в ролята на $R$
+    множеството от крайни и следователно регулярни езици $\{\{\epsilon\},\{ab\},\{aabb\},\{aaabbb\},...\}$.
+    Очевидно $\bigcup R = \{a^nb^n$ | $n \in \mathbb{N}$\}. \\
+    (ж) Вярно е. Този език е точно $\Sigma^*$.
+
+    \chapter{Граматики и стекови автомати}
+
+    \section{Контекстно-свободни граматики}
+    \hspace{15pt}Автоматите, които разглеждахме досега бяха \textbf{разпознаватели на езици}. 
+    \textit{Граматиката}, подобно на регулярния израз е \textbf{генератор на езици}. 
+    Тя представлява множество от правила и променливи, посредством които строим думи над дадена азбука. 
+
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} \textbf{Контекстно-свободна граматика} е наредена четворка $G = (V,\Sigma,R,S)$, където \\
+    — $V$ е \textit{крайно} множество от \textbf{нетерминали(променливи)}, \\
+    — $\Sigma$ е азбука, чиито елементи ще наричаме \textbf{терминали}, \\
+    — $R$, \textbf{множеството от правилата}, е крайно подмножество на \\ $V \times (\Sigma \cup V)^*$ и \\
+    — $S \in V$ е \textbf{началната променлива}.
+
+    \vspace{10pt}
+
+    \hspace{15pt}Вместо $(X,y) \in R$ ще пишем $X \rightarrow_G y$. За всеки две думи $u,v \in (\Sigma \cup V)^*$
+    ще пишем $u \Rightarrow_G v$ тогава и само тогава, когато съществуват думи \\ $x,y \in (\Sigma$ $\cup$ $V)^*$
+    и нетерминал $A \in V$, такива че $u = xAy, v=xv'y$ и $A \rightarrow_G v'$.
+    Релацията $\Rightarrow_G^*$ е рефлексивното и транзитивно затваряне на $\Rightarrow_G$.
+    Накрая, \textbf{езика генериран от $\boldsymbol{G}$} е езикът 
+    \begin{center}
+        $L(G) = \{w \in \Sigma^*$ | $S \Rightarrow_G^* w\}$. 
+    \end{center}
+    \hspace{15pt}Един език $L$ наричаме \textbf{контекстно-свободен}, ако $L = L(G)$ за някоя контекстно-свободна граматика $G$.
+    Ако от контекста се подразбира, за коя граматика става въпрос, ще пишем $\rightarrow$ 
+    вместо $\rightarrow_G$ и $\Rightarrow$ вместо $\Rightarrow_G$. \\
+    \vspace{20pt}
+    \hspace{15pt} Всяка редица от вида
+    \begin{center}
+        $w_0 \Rightarrow_G w_1 \Rightarrow_G ... \Rightarrow_G w_n$
+    \end{center}
+    наричаме \textbf{извод} по $G$ на $w_n$ от $w_0$, за $w_0,...,w_n \in (\Sigma \cup V)^*$ и $n \in \mathbb{N}$.
+    Дължината на един извод е броя на срещанията на символа $\boxed{\Rightarrow_G}$ в него.
+    Фактът, че съществува извод с дължина $n$ на $v$ от $u$ по $G$ ще записваме $u \Rightarrow_G^n v$. 
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Да разгледаме контекстно-свободната граматика \\
+    $G = (V,\Sigma,R,S)$, където $V = {S}$, $\Sigma = \{a,b\}$ и $R$ се 
+    състои от правилата $S \rightarrow aSb$ и $S \rightarrow \epsilon$. Възможен
+    извод по $G$ е например
+    \begin{center}
+        $S \Rightarrow aSb \Rightarrow aaSbb \Rightarrow aabb$.
+    \end{center}
+    На първите две стъпки използвахме правилото $S \rightarrow aSb$, а на последната
+    използвахме $S \rightarrow \epsilon$. Лесно е да се съобрази, че $L(G) = \{a^nb^n$ | $n \in \mathbb{N}\}$.
+    Следователно, някои контекстно-свободни езици не са регулярни.
+
+    \vspace{15pt}
+
+    \textbf{Пример 2.} Следната граматика генерира всички думи от балансирани леви
+    и десни скоби: всяка лява скоба може да се съчетае с уникална дясна скоба след нея,
+    и всяка дясна скоба може да се съчетае с уникална лява скоба преди нея. Нека 
+    $G = (V,\Sigma,R,S)$, където
+    \begin{center}
+        $V = \{S\}$, \\
+        $\Sigma = \{(,)\}$, \\
+        $R = \{S \rightarrow \epsilon,$ $S \rightarrow SS$, $S\rightarrow (S)\}$.
+    \end{center}
+
+    Два възможни извода по тази граматика са например
+    \begin{center}
+        $S \Rightarrow SS \Rightarrow S(S) \Rightarrow S((S)) \Rightarrow S(()) \Rightarrow (S)(()) \Rightarrow ()(())$ \\
+        \vspace{5pt}
+        и \\
+        \vspace{5pt}
+        $S \Rightarrow SS \Rightarrow (S)S \Rightarrow ()S \Rightarrow ()(S) \Rightarrow ()((S)) \Rightarrow ()(())$.
+    \end{center}
+    Значи една и съща дума може да има два различни извода от $S$ по една и съща граматика.
+
+    \vspace{15pt}
+
+    \hspace{15pt}Сега ще покажем, че всички регулярни езици са контекстно-свободни. За целта ще дадем
+    директна конструкция, която по подаден ДКА \\ $A = (Q,\Sigma,\delta,s,F)$ генерира контекстно-свободна граматика \\
+    $G=(V,\Sigma,R,S)$, такава че $L(A) = L(G)$. Конструкцията е следната.
+    \begin{center}
+        $V = Q$, \\
+        $S = s$, \\
+        $R = \{q \rightarrow \sigma p$ | $\delta(q,\sigma) = p\} \cup \{q \rightarrow \epsilon$ | $q \in F$\}.
+    \end{center}
+
+    Има и други начини да покажем, че регулярните езици са подмножество
+    на контекстно-свободните, но тях ще покажем по-нататък.
+
+
+\vspace{25pt}
+
+\subsection{Задачи}
+    \textbf{Задача 1.} Да разгледаме граматиката $G = (V,\Sigma,R,S)$, където
+    \vspace{5pt}
+    \begin{center}
+        $V = \{S,A\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $R = \{S \rightarrow AA$, $A \rightarrow AAA$, $A \rightarrow a$, $A \rightarrow bA$, $A \rightarrow Ab$\}. \\
+    \end{center}
+    \vspace{5pt}
+    (a) Кои думи от $L(G)$ могат да се изведът с извод с дължина не повече от четири? \\
+    (б) Дайте поне четири различни извода на думата $babbab$. \\
+    (в) За всеки $m,n,p > 0$, опишете извод по $G$ на думата $b^mab^nab^p$. 
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Да разгледаме граматиката $G = (V,\Sigma,R,S)$, където
+    \vspace{5pt}
+    \begin{center}
+        $V = \{S,A\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $R = \{S \rightarrow aAa$, $S \rightarrow bAb$, $S \rightarrow \epsilon$, $A \rightarrow SS$\}. \\
+    \end{center}
+    Дайте извод на думата $baabbb$ по $G$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Дайте контекстно-свободни граматики за всеки от следните езици. \\
+    (а) $\{w\#w^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (б) $\{ww^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (в) $\{w \in \{a,b\}^*$ | $w = w^{rev}\}$
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Да фиксираме азбука $\Sigma = \{a,b,\bleft,\bright,\bplus,\star,\bepsilon,\oslash\}$.
+    Дайте \\ контекстно-свободна граматика, която генерира всички думи над $\Sigma^*$, които са регулярни изрази
+    над $\{a,b\}$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.} Дайте контекстно-свободни граматики за всеки от следните езици. \\
+    (а) $\{a^mb^n$ | $m \geq n\}$ \\
+    (б) $\{a^mb^nc^pd^q$ | $m + n = p + q\}$ \\
+    (в) $\{w \in \{a,b\}^*$ | броят на $b$-тата в $w$ е равен на два пъти броя на $a$-тата\} \\
+    (г) $\{uawb$ | $u,w \in \{a,b\}^*$ \& $|u| = |w|\}$ \\
+    (д) $\{w_1\#w_2\#...\#w_k\#\#w_j^{rev}$ | $k \geq 1$ \& $1 \leq j \leq k$ \& $w_i \in \{a,b\}^+$ за $i = 1,...,k$\} \\
+    (е) $\{a^mb^n$ | $m \leq 2n$\}
+\vspace{25pt}
+
+\subsection{Решения}
+    \textbf{Задача 1.} (а) $aa,baa,aba,aab$; \\
+    (б) 1. $S \rightarrow AA \rightarrow bAA \rightarrow bAbA \rightarrow bAbbA \rightarrow bAbbAb \rightarrow babbAb \rightarrow babbab$; \\
+    2. $S \rightarrow AA \rightarrow AbA \rightarrow AbAb \rightarrow bAbAb \rightarrow bAbbAb \rightarrow babbAb \rightarrow babbab$; \\
+    3. $S \rightarrow AA \rightarrow bAA \rightarrow bAAb \rightarrow bAbAb \rightarrow bAbbAb \rightarrow babbAb \rightarrow babbab$; \\
+    4. $S \rightarrow AA \rightarrow AbA \rightarrow AbbA \rightarrow bAbbA \rightarrow bAbbAb \rightarrow babbAb \rightarrow babbab$. \\
+    (в) $S \rightarrow AA \underbrace{\rightarrow bAA \rightarrow bbAA \rightarrow ... \rightarrow}_\text{$m$ пъти} b^mAA \rightarrow \underbrace{b^mAbA \rightarrow b^mAbbA \rightarrow ... \rightarrow}_\text{$n$ пъти}$ \\  $b^mAb^nA \rightarrow b^mab^nA \rightarrow \underbrace{b^mab^nAb \rightarrow b^mab^nAbb \rightarrow ... \rightarrow}_\text{$p$ пъти} b^mab^nAb^p \rightarrow b^mab^nab^p$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} $S \rightarrow bAb \rightarrow bSSb \rightarrow baAaSb \rightarrow baAabAbb \rightarrow baabAbb \rightarrow baabbb$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} (а) $S \rightarrow aSa$ | $bSb$ | $\#$; \\
+    (б) $S \rightarrow aSa$ | $bSb$ | $\epsilon$; \\
+    (в) $S \rightarrow aSa$ | $bSb$ | $a$ | $b$ | $\epsilon$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} $S \rightarrow a$ | $b$ | $\oslash$ | $\bepsilon$ | $\bleft SS \bright$ | $\bleft S \bplus S \bright$ | $S^\star$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.}(а) $S \rightarrow aS$ | $aSb$ | $\epsilon$; \\
+    \vspace{5pt}
+    (б) $S \rightarrow aSd$ | $A$ | $B$ | $\epsilon$ \\
+    $A \rightarrow aAc$ | $C$ | $\epsilon$ \\
+    $B \rightarrow bBd$ | $C$ | $\epsilon$ \\
+    $C \rightarrow bCc$ | $\epsilon$; \\
+    \vspace{5pt}
+    (в) $S \rightarrow aSbSbS$ | $bSaSbS$ | $bSbSaS$ | $\epsilon$; \\
+    \vspace{5pt}
+    (г) $S \rightarrow Ab$ \\
+    $A \rightarrow aAb$ | $bAa$ | $aAa$ | $bAb$ | $a$; \\
+    \vspace{5pt}
+    (д) $S \rightarrow AB$ | $B$ \\
+    $B \rightarrow aBa$ | $bBb$ | $\#A\#$ | $\#\#$ \\
+    $A \rightarrow aA$ | $bA$ | $AA$ | $\#$; \\
+    \vspace{5pt}
+    (е) $S \rightarrow aSbb$ | $Sb$ | $\epsilon$;
+
+    \section{Затвореност относно регулярните операции}
+    \hspace{15pt}В духа на това, което направихме при регулярните езици, сега ще покажем някои 
+    свойства на затвореност на контекстно-свободните езици относно операции върху
+    езици.
+
+    \vspace{15pt}
+
+    \textbf{Теорема 1.} Контекстно-свободните езици са затворени относно обединение,
+    конкатенация и звезда на Клини. \\
+
+    \vspace{15pt}
+
+    \hspace{15pt} Нека $G_1 = (V_1,\Sigma,R_1,S_1)$ и $G_2 = (V_2,\Sigma,R_2,S_2)$ са контекстно-свободни
+    граматики и без ограничение
+    на общността да допуснем, че $V_1 \cap V_2 = \varnothing$. Конструкциите са 
+    следните. \\
+    
+    \vspace{5pt}
+    
+    \hspace{15pt}\textit{Обединение.} Нека $S$ е символ, който не принадлежи на $V_1 \cup V_2$.
+    Езикът $L(G_1) \cup L(G_2)$ се генерира от граматика 
+    \begin{center}
+    $G = (V_1 \cup V_2 \cup \{S\}, \Sigma,R_1 \cup R_2 \cup \{S \rightarrow S_1, S \rightarrow S_2\},S)$.
+    \end{center}
+
+    \vspace{5pt}
+
+    \hspace{15pt}\textit{Конкатенация.} Подобно, $L(G_1) \circ L(G_2)$ се генерира от 
+    граматиката 
+    \begin{center}
+        $G = (V_1 \cup V_2 \cup \{S\},\Sigma,R_1 \cup R_2 \cup \{S \rightarrow S_1S_2\},S)$. \\
+    \end{center}    
+
+    \vspace{5pt}
+    
+    \hspace{15pt}\textit{Звезда на Клини.} $L(G_1)^*$ се генерира от \\
+    \begin{center}
+         $G = (V_1 \cup \{S\},\Sigma,R_1 \cup \{S \rightarrow \epsilon, S \rightarrow SS_1\},S)$.
+    \end{center}
+
+    \vspace{15pt}
+
+    \hspace{15pt} \textbf{Теорема 1} влече вече доказания факт, че класът на регулярните
+    езици се съдържа в класа на контекстно-свободните такива.
+\vspace{25pt}
+
+\subsection{Задачи}
+    \textbf{Задача 1.} Използвайте затвореността относно обединение, за да покажете, че 
+    следните езици са контекстно-свободни. \\
+    (a) $\{a^mb^n$ | $m \neq n\}$ \\
+    (б) $\{a,b\}^* \setminus \{a^nb^n$ | $n \in \mathbb{N}\}$ \\
+    (в) $\{a^mb^nc^pd^q$ | $n = q$, или $m \leq p$ или $m+n = p+q$\} \\
+    (г) \{$w \in \{a,b\}^*$ | $w = w^R$\}
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Покажете, че езикът $L = \{a^nb^{n+m}a^n$ | $n,m \in \mathbb{N}\}$ е контекстно свободен,
+    използвайки затвореността относно конкатенация.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Покажете, че езикът $L = \{uw^{rev}v$ | $w = vu$\} е контекстно
+    свободен, използвайки затвореността относно конкатенация.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Покажете, че е контекстно-свободен следният език \\
+    \begin{center}
+        $L = \{a^{n_1}\#a^{n_1+n_2}\#a^{n_2+n_3}\#...\#a^{n_{k-1} + n_k}\#a^{n_k}$ | $k,n_1,...,n_k \in \mathbb{N}$\}
+    \end{center}
+
+\vspace{25pt}
+
+\subsection{Решения}
+    \textbf{Задача 1.}(а) $\{a^mb^n$ | $n < m$\} $\cup \{a^mb^n$ | $n > m\}$; \\
+    (б) Можем да представим този език като обединението на следните два езика: \\
+    (1) $\{a,b\}^* \setminus \mathscr{L}(a^*b^*)$ (думи, в които има поне едно $b$ преди някое $a$) \\
+    (2) $\{a^nb^m$ | $n \neq m$ \}\\
+    За (1) имаме следната граматика: \\
+    \vspace{5pt}
+    $S \rightarrow AbAaA$ \\
+    $A \rightarrow aA$ | $bA$ | $\epsilon$. \\
+    \vspace{5pt}
+    (в) $\{a^mb^nc^pd^q$ | $n=q\} \cup \{a^mb^nc^pd^q$ | $m\leq p\} \cup \{a^mb^nc^pd^q$ | $m+n = p+q\}$.
+    Граматиките са съответно следните: \\
+    \vspace{5pt}
+    (1) $S \rightarrow aS$ | $A$ \\
+    $A \rightarrow bAd$ | $B$ \\
+    $B \rightarrow cB$ | $\epsilon$; \\
+    \vspace{5pt}
+    (2) $S \rightarrow Sd$ | $A$ \\
+    $A \rightarrow aAc$ | $Ac$ | $B$ \\
+    $B \rightarrow bB$ | $\epsilon$; \\
+    \vspace{5pt}
+    (3) правена на предишното упражнение. \\
+    (г) $\{ww^{rev}$ | $w \in \Sigma^*\} \cup \{waw^{rev}$ | $w \in \Sigma^*\} \cup \{wbw^{rev}$ | $w \in \Sigma^*\}$
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} $L = \{a^nb^n$ | $n \in \mathbb{N}\} \circ \{b^na^n$ | $n \in \mathbb{N}$\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} $L = \{ww^{rev}$ | $w \in \Sigma^*\}^2$. 
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} $L = \{a^n\#a^n$ | $n \in \mathbb{N}\}^*$.
+\section{Коректност на контекстно-свободни граматики}
+
+    \hspace{15pt} В тази секция ще покажем как се доказва формално коректността на
+    една контекстно-свободна граматика. \\
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ще докажем коректността на следната граматика $G$, генерираща езика
+    $L = \{a^nb^n$ | $n \in \mathbb{N}\}$. \\
+
+    \begin{center}
+    
+       $G$ : $\boxed{S \rightarrow aSb \; | \; \epsilon}$
+        
+    \end{center}
+    
+    \vspace{5pt}
+
+    \hspace{5pt} Твърдението, което се опитваме да докажем е следното: \\
+
+    \begin{center}
+        $(\forall w \in \Sigma^*)[w \in L(G) \iff w \in L]$.
+    \end{center}
+
+    За целите на доказателстово му, първо ще докажем следната помощна Лема за релацията
+    $\Rightarrow^*$ в контекста на дадената граматика. \\
+
+    \vspace{5pt}
+
+    \fbox{\parbox{\textwidth}{
+    \hspace{15pt}\textbf{Лема 1.} За всяка дума $w \in (\Sigma \cup V)^*$, ако 
+    $S \Rightarrow^* w$, то $w$ е в един от следните два вида: \\
+    (1) $w = a^nSb^n$, за някое $n \in \mathbb{N}$. \\
+    (2) $w = a^nb^n$, за някое $n \in \mathbb{N}$. \\
+
+    \vspace{5pt}
+
+    \textit{Доказателство:} Еквивалентно, искаме да докажем, че
+    \begin{center}
+        $(\forall n \in \mathbb{N})[(\forall w \in (\Sigma \cup V)^*)[S \Rightarrow^n w \implies w$ е от вид (1) или (2)$]]$.
+    \end{center}
+    Това естествено ще сторим с индукция относно $n$. \\
+
+    \vspace{5pt}
+
+    \textbf{База:} Ако $n = 0$ и $w$ е такава поредица от терминали и нетерминали, че 
+    $S \Rightarrow^0 w$, то съществува извод с дължина $0$ на $w$ от $S$. С други думи
+    $S = w$. Тогава $w = a^0Sb^0$, тоест $w$ е от вид (1). \\
+
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Ако $n > 0$ и $w$ е такава поредица от терминали и нетерминали, че
+    $S \Rightarrow^n w$, то съществува извод с дължина $n$ на $w$ от $S$. Да фиксираме
+    един такъв извод 
+    \begin{center}
+        $S = w_0 \Rightarrow w_1 \Rightarrow ... \Rightarrow w_{n-1} \Rightarrow w_n = w$.
+    \end{center}
+
+    От този извод можем да извлечем, че $S \Rightarrow^{n-1} w_{n-1}$. Съгласно И.П.
+    това означава, че $w_{n-1}$ е от вид (1) или (2). Но $w_{n-1} \Rightarrow w_n$ и
+    значи няма как $w_{n-1}$ да е от вид (1) (тя трябва да съдържа нетерминали, съгласно
+    дефиницията на $\Rightarrow$).
+    Тогава $w_{n-1} = a^kSb^k$ за някое $k \in \mathbb{N}$.
+    Сега, щом $w_{n-1} \Rightarrow w_n$ и в $w_{n-1}$ има един единствен нетерминал, $S$, то 
+    имаме, че $w_n = a^kaSbb^k$ или $w_n = a^k \epsilon b^k$. Тоест $w_n = a^{k+1}Sb^{k+1}$ или
+    $w_n = a^kb^k$. Следователно $w_n$ е от вид (1) или (2). Остана само да си припомним, че
+    $w_n = w$. 
+    }}
+
+    \vspace{10pt}
+
+    Сега преминаваме към доказателството на същинското твърдение. Нека $w \in \Sigma^*$. \\
+    ($\Rightarrow$) Нека $w \in L(G)$. Тогава $S \Rightarrow^* w$ и $w \in \Sigma^*$. Съгласно
+    \textbf{Лема 1} това означава, че $w = a^nb^n$ за някое $n\in\mathbb{N}$. Значи 
+    $w \in L$. \\
+    ($\Leftarrow$) Обратно с индукция относно $n$ ще покажем, че \\
+    \begin{center}
+        $(\forall n \in \mathbb{N})[S \Rightarrow^{n+1} a^nb^n]$,
+    \end{center}
+    което е еквивалентно на обратната посока на твърдението.
+
+    \vspace{5pt}
+
+    \textbf{База:} $n = 0$. Имаме извода $S \Rightarrow \epsilon = a^0b^0$. Значи $S \Rightarrow^1 a^0b^0$. \\
+    
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Да допуснем, че за някое $n\in\mathbb{N}$ $S \Rightarrow^{n+1} a^nb^n$. Приемаме за 
+    очевидно, че това означава, че $aSb \Rightarrow^{n+1} aa^nb^nb = a^{n+1}b^{n+1}$. От друга страна
+    $S \Rightarrow aSb$ и значи общо имаме "извода" \\
+    \begin{center}
+        $S \Rightarrow aSb \Rightarrow^{n+1} a^{n+1}b^{n+1}$.
+    \end{center} 
+    Тоест $S \Rightarrow^{n+2} a^{n+1}b^{n+1}$, което искахме да покажем.
+    
+    \vspace{15pt}
+
+    \hspace{15pt} Продължаваме с доказателство на коректността на к-св. граматика с две променливи.
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ще докажем коректността на следната граматика $G$, генерираща 
+    езика $L = \{a^mb^n$ | $m > n\}$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow aA$ \\
+                    $A \rightarrow aA$ | $aAb$ | $\epsilon$        
+        \end{tabular}}
+    \end{center}
+
+    Отново, твърдението което се опитваме да докажем е следното: \\
+    \begin{center}
+        $(\forall w \in \Sigma^*)[w \in L(G) \iff w \in L]$.
+    \end{center}
+
+    Следната Лема късаеща релацията $\Rightarrow^*$ ще ни бъде нужна. \\
+
+    \vspace{5pt}
+    
+    \hspace{15pt}\textbf{Лема 1.} За всяка дума $w \in (\Sigma \cup V)^*$, ако 
+    $S \Rightarrow^* w$, то $w$ е в един от следните четири вида: \\
+    (1) $S$; \\
+    (2) $a^mAb^n$, за някои $m,n \in \mathbb{N}$ и $m > n$;\\
+    (3) $a^mb^n$, за някои $m,n \in \mathbb{N}$ и $m > n$. \\
+    \textit{Доказателство:} Еквивалентно, искаме да покажем, че \\
+    \begin{center}
+        $(\forall n \in \mathbb{N})[(\forall w \in (\Sigma \cup V)^*)[S \Rightarrow^n w \implies w$ е в някои от видовете (1)-(3)$]]$.
+    \end{center}
+        За целта ще проведем индукция относно $n$. \\
+        \vspace{5pt}
+        \textbf{База:} Ако $n = 0$ и $w$ е такава редица от терминали и нетерминали, че
+        $S \Rightarrow^0 w$, то $w = S$. Следователно, $w$ е от вид (1). \\
+        \vspace{5pt}
+        \textbf{Стъпка:} Ако $n > 0$ и $w$ е такава редица от терминали и нетерминали,
+        че $S \Rightarrow^n w$, то съществува извод с дължина $n$ на $w$ от $S$. Да 
+        фиксираме един такъв извод \\
+        \begin{center}
+            $S = w_0 \Rightarrow w_1 \Rightarrow ... \Rightarrow w_{n-1} \Rightarrow w_n = w$.
+        \end{center}
+        От този извод можем в частност да заключим, че $S \Rightarrow^{n-1} w_{n-1}$. 
+        Съгласно И.П. това означава, че $w_{n-1}$ е в някои от видовете (1)-(3). Веднага
+        отхвърляме възможността $w_{n-1}$ да е от вид (3), тъй като тя трябва да съдържа
+        нетерминали, съгласно дефиницията на $\Rightarrow$. Значи имаме следните два
+        случая: \\
+        \textbf{1 сл.} $w_{n-1} = S$. Тогава единствената възможност е $w_n = aA$, съгласно
+        правилата на $G$. Следователно $w_n$ е от вид (2), за $m = 1$. \\
+        \textbf{2 сл.} $w_{n-1} = a^mAb^n$, за някои $m,n \in \mathbb{N}$, такива че
+        $m > n$. Тук имаме три
+        възможности за това, кое правило ще приложим на следваща стъпка (върху 
+        единствения нетерминал в редицата, $A$). \\
+        \hspace{15pt}\textbf{2.1 сл.} $w_n = a^maAb^n$, тоест приложили сме правилото
+        $\boxed{A \rightarrow aA}$. Тогава $w_n = a^{m+1}Ab^n$ е очевидно от вид (2),
+        тъй като $m > n \implies m+1 > n$. \\
+        \hspace{15pt}\textbf{2.2 сл.} $w_n = a^maAbb^n$, тоест приложили сме правилото
+        $\boxed{A \rightarrow aAb}$. Тогава $w_n = a^{m+1}Ab^{n+1}$ е очевидно от вид
+        (2), тъй като $m > n \implies m+1 > n+1$. \\
+        \hspace{15pt}\textbf{2.3 сл.} $w_n = a^m\epsilon b^n$, тоест приложили сме
+        правилото $\boxed{A \rightarrow \epsilon}$. Тогава $w_n = a^mb^n$ е очевидно
+        от вид (3). \\
+        С това случаите се изчерпаха и индукцията приключи. Лемата е доказана.
+
+        \vspace{15pt} 
+
+        Преминаваме към доказателството на същинското твърдение. Нека \\ $w \in \Sigma^*$. \\
+        ($\Rightarrow$) Нека $w \in L(G)$. Тогава $S \Rightarrow^* w$ и $w \in \Sigma^*$. 
+        Съгласно \textbf{Лема 1}, \\ $w = a^mb^n$, за някои $m,n \in \mathbb{N}$, такива че 
+        $m > n$. Следователно $w \in L$. \\
+        ($\Leftarrow$) Обратно, с индукция относно $m$ ще докажем, че \\
+        \begin{center}
+            ($\forall m \in \mathbb{N}$)$[(\forall n \in \mathbb{N}$)$[m > n \implies S \Rightarrow^{m+1} a^mb^n]]$
+        \end{center}
+        \textbf{База:} $m = 0$. Тогава със сигурност $m \not > n$. Значи импликацията
+        е тривиално изпълнена. \\
+        \vspace{5pt}
+        \textbf{Стъпка:} $m > 0$. Нека $m = m_1 > 0$. Искаме да покажем следното: \\
+        \begin{center}
+            ($\forall n \in \mathbb{N})[m_1 > n \implies S \Rightarrow^{{m_1}+1} a^{m_1}b^n]$
+        \end{center}
+        За целта ще проведем индукция по $n$. \\
+        \vspace{5pt}
+        \hspace{15pt} \textbf{База:} $n=0$. Съгласно И.П. на външната индукция, 
+        $S \Rightarrow^{m_1-1+1} a^{m_1-1}b^0$. Тоест $S \Rightarrow^{m_1} a^{m_1-1}$. Следователно
+        $aA \Rightarrow^{m_1-1} a^{m_1-1}$. От тук имаме, че $aaA \Rightarrow^{m_1-1} aa^{m_1-1}$.
+        Тоест $aaA \Rightarrow^{m_1-1} a^{m_1}$. От друга страна $S \Rightarrow aA$ и $aA \Rightarrow aaA$.
+        Общо имаме $S \Rightarrow^{m_1-1+2} a^m$. Тоест $S \Rightarrow^{m_1+1} a^{m_1}$. \\
+        \hspace{15pt} \textbf{Стъпка:} $n > 0$. Нека $m_1 > n$. Тогава $m_1-1 > n-1$. 
+        По И.П. на външната индукция имаме, че $S \Rightarrow^{m_1-1+1}a^{m_1-1}b^{n-1}$.
+        Тоест $S \Rightarrow^{m-1}a^{m_1-1}b^{n-1}$. Тогава $aA \Rightarrow^{m_1-1} a^{m_1-1}b^{n-1}$. 
+        Следователно $aaAb \Rightarrow^{m_1-1} aa^{m_1-1}b^{n-1}b$. Тоест 
+        $aaAb \Rightarrow^{m_1-1}a^{m_1}b^n$. От друга страна $S \Rightarrow aA$ и 
+        $aA \Rightarrow aaAb$. Общо имаме, че $S \Rightarrow^{m_1-1+2} a^{m_1}b^n$. 
+        Тоест $S \Rightarrow^{m_1+1} a^{m_1}b^n$, което искахме да покажем.
+\subsection{Задачи}
+    \textbf{Задача 1.} Докажете формално коректностите на граматиките, предложени на 
+    последното упражнение за следните езици. \\
+    (а) $\{ww^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (б) $\{a^mb^n$ | $m \geq n$\} \\
+    (в) $\{w \in \{a,b\}^*$ | броят на $a$-тата в $w$ е равен на два пъти броя на $a$-тата\}
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Докажете коректността на следната регулярна граматика, генерираща
+    езика $\mathscr{L}(a^{\star}b)$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow aS$ | $A$ \\
+                    $A \rightarrow b$        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Докажете коректността на следната регулярна граматика, генерираща
+    езика $L = \{w \in \{a,b\}^*$ | $w$ има четен брой $a$-та\}: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow bS$ | $aA$ | $\epsilon$ \\
+                    $A \rightarrow bA$ | $aS$        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Докажете коректността на следната граматика, генерираща
+    езика $\mathscr{L}(aa^{\star}bb^{\star})$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow AB$ \\
+                    $A \rightarrow aA$ | $a$ \\
+                    $B \rightarrow bB$ | $b$.        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 5.} Докажете коректността на следната граматика, генерираща
+    езика $L = \{a^nb^ma^k$ | $n+k = m\}$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow AB$\\
+                    $A \rightarrow aAb$ | $\epsilon$ \\
+                    $B \rightarrow bBa$ | $\epsilon$        
+        \end{tabular}}
+    \end{center}
+\vspace{25pt}
+
+\subsection{Решения}
+\textbf{Задача 2.} Възможните видове на редиците, генерирани от $G$ са: \\
+(1) $a^nS$; \\
+(2) $a^nA$; \\
+(3) $a^nb$.
+
+\vspace{15pt} 
+
+\textbf{Задача 3.} Възможните видове на редиците, генерирани от $G$ са: \\
+(1) $(b^nab^ka)^mb^lab^sA$; \\
+(2) $(b^nab^ka)^mb^lS$; \\
+(3) $(b^nab^ka)^mb^l$. \\
+
+\vspace{15pt}
+
+\textbf{Задача 4.} Езикът по дефиниция е конкатенация на $\mathscr{L}(aa^{\star})$
+и $\mathscr{L}(bb^{\star})$. Ако използваме конструкцията за конкатенация, е достатъчно
+да покажем, че граматиката $G_1 : \boxed{S_1 \rightarrow aS_1 \; | \; a}$ генерира
+$\mathscr{L}(aa^{\star})$ и аналогично, че граматиката $G_2 : \boxed{S_2 \rightarrow bS_2 \; | \; b}$
+генерира $\mathscr{L}(bb^{\star})$.
+
+\vspace{15pt}
+
+\textbf{Задача 5.} 
+Езикът може да се представи като конкатенация на $\{a^nb^n$ | $n \in \mathbb{N}\}$
+и $\{b^na^n$ | $n \in \mathbb{N}\}$. Ако използваме конструкцията за конкатенация, е достатъчно
+да покажем, че граматиката $G_1 : \boxed{S_1 \rightarrow aS_1b \; | \; \epsilon }$ генерира
+$\{a^nb^n$ | $n \in \mathbb{N}\}$ и аналогично, че граматиката $G_2 : \boxed{S_2 \rightarrow bS_2a \; | \; \epsilon}$
+генерира $\{b^na^n$ | $n \in \mathbb{N}\}$.
+
+\vspace{25pt} 
+
+\section{Синтактични дървета на извод}
+\hspace{15pt} Нека $G$ е контекстно-свободна граматика. Както вече видяхме, една дума
+$w \in L(G)$ може да има няколко извода по $G$. Да разгледаме по-прост пример отново 
+използващ граматиката, генерираща думите от балансирани леви и десни скоби — думата
+$()()$ има два различни извода, именно, \\
+
+\begin{center}
+    $S \Rightarrow SS \Rightarrow (S)S \Rightarrow ()S \Rightarrow ()(S) \Rightarrow ()()$
+\end{center}
+
+и
+
+\begin{center}
+    $S \Rightarrow SS \Rightarrow S(S) \Rightarrow (S)(S) \Rightarrow (S)S \Rightarrow ()()$
+\end{center}
+    
+В действителсност, тези два извода са в някакъв смисъл "еднакви". Използваните правила
+са едни и същи и се прилагат на едни и същи позиции в междинните низове. Единствената
+разлика е в \textit{реда}, в който тези правила се прилагат. Интуитивно, и двата 
+извода могат да се получат чрез обхождане на следното дърво.
+\vspace{25pt}
+
+\Tree [.$S$ [.$S$ ( [.$S$ $\epsilon$ ] ) ] [.$S$ ( [.$S$ $\epsilon$ ] ) ] ]
+
+\vspace{15pt}
+
+\hspace{15pt} Неформално, една такава картинка наричаме \textbf{синтактично дърво 
+на извод}. Точките наричаме \textbf{върхове}; всеки връх има етикет, който е елемент
+на $\Sigma \cup V$. Най-горния връх наричаме \textbf{корен}, а най-долните върхове 
+наричаме \textbf{листа}. Всички листа са етикетирани с терминали или с $\epsilon$.
+Конкатенирайки етикетите на листата в ред от ляво надясно, получаваме изведената 
+дума, която още ще наричаме \textbf{продукт} на дървото. \\
+\hspace{15pt} По-формално, за дадена контекстно-свободна граматика $G = (V,\Sigma,R,S)$,
+дефинираме синтактично дърво на извод заедно с неговите корен, листа и продукт 
+индуктивно, както следва. \\
+
+\vspace{10pt}
+
+1.
+\Tree [.$\circ\;\sigma$ ]
+
+\vspace{5pt}
+
+Това е синтактично дърво за всяко $\sigma \in \Sigma$. Единственият връх на това
+дърво е едновременно негов корен и единствено листо. Продукта на дървото е $\sigma$. \\
+
+\vspace{10pt}
+
+2. Ако $A \rightarrow \epsilon$ е правило в $R$, то \\
+
+\vspace{5pt}
+
+\Tree[.$A$ $\epsilon$ ] \\
+
+\vspace{5pt}
+
+е синтактично дърво на извод; корена му е върхът с етикет $A$, единственото му листо
+е върхът с етикет $\epsilon$, и продукта му е $\epsilon$. \\
+
+\vspace{10pt} 
+
+3. Ако \\
+\vspace{5pt}
+\begin{center}
+\qroof{$y_1$}.$A_1$ \hspace{15pt} \qroof{$y_2$}.$A_2$ \hspace{15pt}...\hspace{15pt}\qroof{$y_n$}.$A_n$
+\end{center}
+\vspace{5pt}
+
+са синтактични дървета, за $n \geq 1$, с корени етикетирани $A_1,...,A_n$ съответно, и
+продукти $y_1,...,y_n$, и $A \rightarrow A_1...A_n$ е правило в $R$, то \\
+
+\vspace{5pt}
+\Tree[.$A$ [\qroof{$y_1$}.$A_1$ ] [\qroof{$y_2$}.$A_2$ ] [\qroof{$y_n$}.$...\;A_n$ ] ]
+\vspace{5pt}
+
+е синтактично дърво на извод. Корена му е новият връх етикетиран $A$, листата му са 
+листата на съставящите го синтактични дървета, и продукта му е $y_1...y_n$.
+\vspace{25pt}
+
+\section{Езици, които не са контекстно-свободни} 
+\hspace{15pt} Множеството на контекстно-свободните езици над дадено множество от 
+терминали и нетерминали $\Sigma \cup V$ също е изборимо безкрайно.
+За жалост нямаме толкова подходящо описание на контекстно-свободните езици, каквито 
+бяха регулярните изрази за регулярните езици, с помощта на което да съобразим този факт. Достатъчно е
+обаче да забелижим, че множеството на всички възможни правила над $\Sigma \cup V$ е 
+$V \times (\Sigma \cup V)^*$, което е изброимо безкрайно, по следните съображения: \\
+— $V$ е крайно; \\
+— $\Sigma$ е крайно; \\
+— $\Sigma \cup V$ е крайно м-во, като обединение на крайни м-ва; \\
+— $(\Sigma \cup V)^*$ е изброимо безкрайно; \\
+— декартовото произведение на крайно множество с избоимо безкрайно такова е изброимо безкрайно. \\
+\hspace{15pt} Правилата на една граматика са \textit{крайно} подмножество на изброимо безкрайното множество 
+$V \times (\Sigma \cup V)^*$. Тоест, множеството от всички възможни множества от правила
+е множеството от всички \textit{крайни} подмножества на изброимо безкрайно множество. Като такова, 
+то е изброимо безкрайно (всяко крайно подмножество може да се кодира в разлагане на 
+прости множители на някое естествено число; това кодиране е съобразено с даденото ни
+изброяване). Възможните множества от правила образуват изброимо безкрайно множество. 
+Остана само да съобразим, че възможните избори на начална променлива образуват крайно
+множество и можем да заключим, че има изброимо много контекстно-свободни граматики
+при фиксирано множество от терминали и нетерминали, а от тук и контекстно-свободните
+езици са изброимо много.\\
+\hspace{15pt} Щом множеството на контекстно-свободните езици е изброимо безкрайно, а 
+множеството на всички езици е неизброимо безкрайно, то съществуват езици, които не са 
+контекстно-свободни. За да открием критерий за това, кога един език не е 
+контекстно-свободен отново е смислено да търсим свойство, което всички безкрайни
+контекстно-свободни езици притежават. \\
+\hspace{15pt} Нека $G = (V,\Sigma,R,S)$ е контекстно-свободна граматика. С $\phi(G)$ означаваме 
+най-големият брой символи в дясната страна на кое да е правило в $R$. \textbf{Път} 
+в синтактично дърво на извод е редица от върхове свързани със линия в дървото на 
+извод; първия връх е коренът, а посления е листо. \textbf{Дължината} на този път е
+броят на свързващите линии в него. \textbf{Височината} на едно синтактично дърво е
+дължината на най-дългия път в него. \\
+
+\vspace{15pt}
+
+\textbf{Лема 1.} Продуктът на дадено синтактично дърво на $G$ с височина $h$ има дължина
+не повече от $\phi(G)^h$.
+
+\vspace{15pt}
+\hspace{15pt} Доказателството на горната лема е проста индукция по $h \geq 1$. Лемата 
+ни казва, че синтактичното дърво на коя да е дума $w \in L(G)$ с $|w| > \phi(G)^h$ трябва да
+има път по-дълъг от $h$. Това е ключово за доказателството на следната теорема, 
+даваща ни търсеното свойство, притежавано от всички контекстно-свободни езици. \\
+
+\vspace{15pt}
+
+\textbf{Теорема 1(лема за разрастването за контекстно-свободни езици).} Нека 
+$L$ е контекстно-свободен език. Тогава съществува естествено 
+число $p \geq 1$, такова че всяка дума $w \in L$ с $|w| \geq p$ може да се презапише
+във вида $w = vwxyz$, като \\
+(1) $|wy| \geq 1$, \\
+(2) $|wxy| \leq p$ и \\
+(3) $(\forall i \in \mathbb{N})[vw^ixy^iz \in L]$. \\
+
+\vspace{15pt}
+
+\hspace{15pt}Нека $G = (V,\Sigma,R,S)$ е такава контекстно-свободна граматика, че $L(G) = L$. 
+Ясно е, че един възможен избор за $p$ е именно $\phi(G)^{|V|}+1$ — ако $w$ е дума от 
+$L(G)$, такава че $|w| \geq \phi(G)^{|V|}+1$, то всяко синтактично дърво за $w$ ще има
+продукт с дължина поне $\phi(G)^{|V|}+1$, тоест по-голяма от $\phi(G)^{|V|}$. Съгласно
+\textbf{Лема 1}, всяко такова дърво трябва да има път по-дълъг от $|V|$, тоест с дължина
+поне $|V| + 1$. Този път ще съдържа $|V| + 2$ върха, от които точно един — листото — е 
+етикетиран с терминал, а останалите $|V| + 1$ са етикетирани с нетерминали. Тогава е
+ясно, че поне два върха по пътя ще са етикетирани с един и същ нетерминал. Ако 
+$v_1$ и $v_2$ са два такива върха, то заменяйки "поддървото, вкоренено във $v_1$" \hspace{0,01cm} с
+"поддървото, вкоренено във $v_2$" \hspace{0,01cm} получавамe синтактично дърво на извод за $vw^0xy^0z$.
+Заменяйки $i$ на брой пъти последователно "поддървото, вкоренено във $v_2$" \hspace{0,01cm} с
+"поддървото, вкоренено във $v_1$" \hspace{0,01cm} получаваме синтактично дърво на извод
+за $vw^{i+1}xy^{i+1}z$.
+
+\vspace{15pt}
+
+\textbf{Пример 1.} $L = \{a^nb^nc^n$ | $n \in \mathbb{N}\}$ не е контекстно-свободен. За да докажем
+това, да допуснем, че $L$ контекстно-свободен и нека $p$ е въпросното число от 
+\textbf{лемата за разрастването}. Съгласно лемата, думата $w = a^pb^pc^p$ може да се 
+презапише във вида $w = vwxyz$ за $wy \neq \epsilon$ и $vw^ixy^iz \in L$ за всяко
+$i \in \mathbb{N}$. Има два случая, всеки от които води до противоречие. \\
+\textbf{1сл.} $wy$ съдържа появи на всяка от трите букви $a,b$ и $c$. Тогава поне една
+измежду $w$ и $y$ трябва да съдържа появи на поне две от тези букви. Веднага се вижда, че 
+редът на буквите в $vw^2xy^2z$ е развален — има $b$ преди $a$, или $c$ преди $a$ или $b$. \\
+\textbf{2сл.} $wy$ съдържа появи само на някои, но не всяка от буквите $a,b$ и $c$. 
+Тогава веднага можем да съобразим, че $vw^2xy^2z$ ще има неравен брой $a$-та, $b$-та и
+$c$-та.
+
+
+\vspace{15pt}
+
+\textbf{Пример 2.} $L = \{a^n$ | $n \geq 1$ е просто число\} не е контекстно-свободен.
+За да покажем това, да допуснем, че $L$ е контекстно-свободен и нека $p$ е въпросното
+число от \textbf{лемата за разрастването}. Нека $p'$ е първото просто число по-голямо
+от $p$. Тогава думата $a^{p'}$ може да се презапише във вида $w = vwxyz$, където $wy \neq \epsilon$
+. Тогава $wy = a^q$ и $vxz = a^r$, където $q$ и $r$ са естествени числа и $q > 0$. Съгласно
+лемата, $vw^ixy^iz \in L$ за всяко $i \in \mathbb{N}$. Тоест, $r + iq$ е просто число
+за всяко $i \in \mathbb{N}$. За $i = q+r+1$ обаче имаме, че \\
+\begin{center}
+$r + iq = $ \\
+$r + (q+r+1)q = $ \\
+$r + q^2 + rq + q = $ \\
+$r(q+1) + q(q+1) = $ \\
+$(q+1)(r+q)$, \\
+\end{center}
+което е произведение на две числа, всяко от които е по-голямо от нула и значи няма как
+да е просто число. Противоречие, породено от допускането ни, че $L$ е контекстно-свободен 
+език.
+\vspace{25pt}
+
+\subsection{Задачи} 
+\textbf{Задача 1.} Използвайте лемата за разрастването за да докажете, че следните езици
+не са контекстно-свободни. \\
+(а) $\{a^{n^2}$ | $n \in \mathbb{N}\}$ \\
+(б) $\{www$ | $w \in \{a,b\}^*\}$ \\
+(в) $\{w \in \{a,b,c\}^*$ | $w$ съдържа равен брой $a$-та, $b$-та и $c$-та \} \\
+
+\vspace{15pt}
+
+\textbf{Задача 2.} Използвайте лемата за разрастването за да докажете, че езикът \\ 
+$L = \{babaabaaab...ba^{n-1}ba^nb$ | $n \geq 1$\} не е контекстно-свободен.
+
+\vspace{15pt}
+
+\textbf{Задача 3.} Кои от следните езици са контекстно-свободни? Обосновете се. \\
+(а) $\{a^mb^nc^p$ | $m = n$ или $n = p$ или $m = p$\} \\
+(б) $\{a^mb^nc^p$ | $m \neq n$ или $n \neq p$ или $m \neq p$\} \\
+(в) $\{a^mb^nc^p$ | $m = n \; \& \; n = p \; \& \; m = p$\} \\
+\vspace{25pt}
+
+
+
+\subsection{Решения}
+    \textbf{Задача 1.} (а) Да допуснем, че $L$ е контекстно-свободен. 
+    Разглеждаме думата $a^{p^2} \in L$. Съгласно лемата за 
+    разрастването $a^{p^2} = vwxyz$ за някои $v,w,x,y,z \in \{a\}^*$. Нека
+    $w = a^k$ и $y = a^l$ съгласно свойства (1) и (2) от лемата, $1 \leq k + l \leq p$.
+    От тук имаме, че $p^2 + 1 \leq p^2 + k + l \leq p^2 + p$. Тоест, 
+    $p^2 < p^2 + k + l \leq p^2 + p < p^2 + 2p + 1$. Значи 
+    $p^2 < p^2 + k + l < (p+1)^2$. Тоест $p^2 < |vw^2xy^2z| < (p+1)^2$, откъдето
+    следва, че $|vw^2xy^2z|$ няма как да бъде точен квадрат. Следователно
+    $vw^2xy^2z \notin L$. Намерихме число, за което прилагайки свойство (3) стигаме
+    до дума извън $L$. Противоречие с лемата. Значи $L$ не е контекстно-свободен. \\
+    \vspace{5pt}
+    (б) Разглеждаме думата $(a^pb)^3 \in L$. За $wxy$ имаме следните два случая: \\
+    (1) $wxy = a^k$, аз някое $1 \leq k \leq p$. Тогава лесно може да се 
+    съобрази, че покачвайки нагоре ще излезем от езика. \\
+    (2) $wxy = a^kba^l$ за някои $1 \leq k + l + 1 \leq p$. Имаме следните 
+    подслучаи: \\
+    \hspace{15pt}(2.1) Буквата $b$ е в $w$ или в $y$. Тогава думата $vw^0xy^0z$ ще има
+    две $b$-та и няма как да е в $L$. \\
+    \hspace{15pt}(2.2) Буквата $b$ е в $x$. Тогава както и да изберем да се възползваме
+    от свойство (3) на лемата, ще стигнем до дума извън $L$, защото броят на $a$-тата
+    няма да е един и същ преди всяко от трите $b$-та, а е ясно, че всяка разбивка на
+    покачената дума на три еднакви части $www$ ще има свойството, че $w$ завършва на 
+    $b$.\\
+    \vspace{5pt}
+    (в) Разглеждаме думата $a^pb^pc^p \in L$. За $wxy$ имаме следните два случая: \\
+    (1) $wxy = \sigma^k$ за някои $\sigma \in \{a,b,c\}$ и $1 \leq k \leq p$. Тук е 
+    ясно, че както и да покачим, излизаме от езика. \\
+    (2) $wxy$ попада в интервал, застъпващ \textit{точно} две различни букви. 
+    Независимо как са разпределени тези две букви между $w$ и $y$, тъй като
+    $|wy| \geq 1$, то покачвайки в коя да е посока ще получим дума, в която бройките
+    на трите различни букви не са равни.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Да разгледаме думата $babaabaaab...ba^{p-1}ba^pb \in L$. Нека
+    $vwxyz$ е нейно разбиване със свойствата от лемата за разрастването. Случаите, в
+    които $wxy$ попада изцяло или частично преди $a^pb$ са ясни — покачвайки в която
+    и да е посока, линейно нарастващата структура на думата се нарушава и попадаме 
+    извън езика. Да разгледаме случая, в който $wxy$ попада изцяло в $a^pb$. Имаме
+    следните подслучаи: \\
+    (1) $wxy = a^k$ за някое $1 \leq k \leq p$. Тук нещата пак са ясни — ако се опитаме
+    да приложим св-во (3) веднага разваляме линейно нарастващата структура на $a$-тата. \\
+    (2) $wxy = a^kb$ за някое $1 \leq k \leq p$. Ако $w$ и $y$ са едновременно 
+    непразни, то в частност $y$ съдържа $b$-то, а $w = a^l$, за някое $l \leq k$ и покачвайки нагоре добавяме $a$-та преди
+    последното $b$ в оригиналната дума, което разваля структурата. Ако само $y$ е празна,
+    то $x$ съдържа $b$-то и отново имаме същия проблем. Ако и $x$ и $y$ са празни,
+    то $w = a^kb$ и покачвайки нагоре получаваме думата $babaabaaab...ba^{p-1}ba^pba^kb$,
+    която не е в $L$, тъй като $k \leq p$, тоест $k \neq p+1$. Ако $w$ е празна, а 
+    $y$ е непразна, то $y = a^lb$, за някое $l \leq k$ и покачвайки нагоре получаваме
+    същия проблем. С това случаите се изчерпаха.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} (а) Този език е $\{a^mb^mc^n$ | $m,n \in \mathbb{N}\} \cup \{a^mb^nc^n$ | $m,n \in \mathbb{N}\} \cup \{a^mb^nc^m$ | $m,n \in \mathbb{N}\}$
+    и следователно е контекстно-свободен. Граматики ще дадем за първия и третия от тези операнди. \\
+    (1) $S \rightarrow Sc \; | \; A$ \\
+    \hspace{15pt}$A \rightarrow aAb \; | \; \epsilon$. \\
+    (2) $S \rightarrow aSc \; | \; B$ \\
+    \hspace{15pt}$B \rightarrow bB \; | \epsilon$. \\
+    \vspace{5pt}
+    (б) Този език е $\{a^mb^nc^p$ | $m \neq n\} \cup \{a^mb^nc^p$ | $n \neq p\} \cup \{a^mb^nc^p$ | $m \neq p\}$.
+    На свой ред той е равен на $[\{a^mb^n \; | \; m \neq n\} \circ \mathscr{L}(c^*)] \cup [\mathscr{L}(a^*) \circ \{b^nc^p \; | \; n \neq p\}] \cup \{a^mb^nc^p$ | $m \neq p\}$ 
+    . Всеки от тези езици знаем вече, че е контекстно-свободен, освен $\{a^mb^nc^p \; | \; m \neq p\}$. 
+    Контекстно-свободна граматика за този език е например: \\
+    \begin{center}
+    $S \rightarrow aA \; | \; Cc$ \\
+    $A \rightarrow aA \; | \; aAc \; | \; B$ \\
+    $C \rightarrow Cc \; | \; aCc \; | \; B$ \\
+    $B \rightarrow bB | \epsilon$ \\
+    \end{center}
+    Следователно и целият език е контекстно-свободен. \\ 
+    \vspace{5pt}
+    (в) Това е езикът $\{a^nb^nc^n \; | \; n \in \mathbb{N}\}$, за който вече показахме,
+    че не е контекстно свободен. \\
+
+\end{document} 

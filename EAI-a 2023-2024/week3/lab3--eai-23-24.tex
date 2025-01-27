@@ -1,0 +1,355 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 3}
+\end{center}
+
+\vspace{15pt}
+
+\section{Недетерминирани крайни автомати}
+      \textit{Детерминистичността} при детерминираните крайни автомати се изразява в това,
+      че във всеки един момент от четенето на подадената му дума, детерминираният
+      автомат има едно и точно едно състояние, в което може да отиде с току-що прочетената
+      буква. По тази причина, измислянето на ДКА за даден език може да бъде
+      тромаво в някои случаи. Например, нека разгледаме следния ДКА, разпознаващ
+      езика $L = (\{ab\} \cup \{aba\})^*$. 
+
+      \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0)   {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$};
+            \node[state, accepting] (q_2) [right=of q_1] {$q_2$}; 
+            \node[state, accepting] (q_3) [right=of q_2] {$q_3$};  
+            \node[state] (q_4) [below=of q_1] {$q_4$};
+            \path[->]
+            (q_0) edge   node {$a$} (q_1)
+                  edge   node [swap] {$b$} (q_4)
+            (q_1) edge   node {$a$} (q_4)
+                  edge   node {$b$} (q_2)
+            (q_2) edge   node {$a$} (q_3)
+                  edge   node {$b$} (q_4)
+            (q_3) edge   [bend right, above] node {$a$} (q_1)
+                  edge   [bend left, below] node {$b$} (q_2)
+            (q_4) edge   [loop below] node {$a$,$b$} ();
+        \end{tikzpicture}
+    \end{center}
+
+    Може да се покаже, че не съществува ДКА с по-малко от пет състояния за този език,
+    така че този автомат е минимален по отношение на броя на състоянията му. Сега нека за момент забравим за това, че функцията
+    на преходите е \textit{функция} по същество (тоест за всяка двойка от състояние и буква от домейна
+    има точно едно състояние, което ѝ съответства) и да се опитаме да измислим по-прост
+    "автомат" \hspace{0.01cm} за дадения език. Най-естествена е следната идея.
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial,accepting] (q_0)   {$q_0$}; 
+          \node[state] (q_1) [right=of q_0] {$q_1$};
+          \node[state] (q_2) [below right=1.5 of q_0, yshift = -0.7cm] {$q_2$}; 
+          \path[->]
+          (q_0) edge [bend right, below] node {$a$} (q_1)
+          (q_1) edge   node {$b$} (q_2)
+                edge [bend right, above] node {$b$} (q_0)
+          (q_2) edge   node {$a$} (q_0);
+      \end{tikzpicture}
+    \end{center}
+
+    Наистина, езика на този "автомат" \hspace{0.01cm} е точно исканият. Броят на състоянията е само три,
+    а идеята — съвършено проста. Формално обаче, тази илюстрация не съответства на това,
+    което досега сме наричали \textit{автомат}. За да разширим понятието, нека
+    въведем следната дефиниция.
+
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} \textbf{Недетерминиран краен автомат (НКА)} е наредена петорка $N = (Q, \Sigma, \Delta, s, F)$, където \\
+    — $Q$ е \textit{крайно} множество от \textbf{състояния}, \\
+    — $\Sigma$ е азбука, \\
+    — $s \in Q$ е \textbf{началното състояние}, \\
+    — $F \subseteq Q$ е множеството от \textbf{крайни състояния} и \\
+    — $\Delta$, \textbf{функцията на преходите}, е функция от $Q \times \Sigma$ в $2^Q$.
+ 
+    \vspace{15pt}
+
+    По тази дефиниция, автоматът на последната картинка вече точно съответства на 
+    конкретен НКА.
+    
+    \vspace{5pt}
+
+    Следва да дефинираме \textbf{разширената функция на преходите} \\ $\hat{\Delta} : Q \times \Sigma^* \rightarrow 2^Q$
+    за НКА. Отново ще сторим това с индукция по думата-аргумент $w$.
+
+    \vspace{5pt}
+
+    \textbf{База:} $\hat{\Delta}(q,\epsilon) = \{q\}$, за всяко $q \in Q$.
+
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Сега да предположим, че $w = ua$ за някои $u \in \Sigma^*$ и 
+    $a \in \Sigma$. Нека също предположим, че $\hat{\Delta}(q,u) = \{q_1,...,q_k\}$. 
+    Тогава \\
+    \begin{center}
+        $\hat{\Delta}(q,w) = \bigcup\limits_{i=1}^k \Delta(q_i,a)$.
+    \end{center}
+
+    \vspace{5pt}
+
+    Kазваме, че недетерминираният автомат $N$ \textbf{разпознава} думата $w$, ако просто
+    $\hat{\Delta}(s,w) \cap F \neq \varnothing$.
+
+    \vspace{5pt}
+
+    С $L(N)$ означаваме множеството от всички думи $w \in \Sigma^*$, които $N$ разпознава.
+    Тоест, $L(N) = \{w \in \Sigma^*$ | $\hat{\Delta}(s,w) \cap F \neq \varnothing$\}.
+
+    \vspace{15pt}
+
+    Вече демонстрирахме удобството, което недетерминираните крайни автомати предоставят.
+    Сега ни вълнува въпроса, дали те са неотменна част от теорията на крайните автомати.
+    Тоест, дали съществуват езици, които се разпонават от някой НКА, но не се разпознават
+    от нито един ДКА. Следната теорема ни дава отговора на този въпрос, а именно — не,
+    всичко, което можем да сторим с недетерминиран автомат, можем да сторим и с детерминиран
+    такъв.
+
+    \vspace{15pt}
+
+    \textbf{Теорема 1(на Рабин-Скот).} За всеки НКА $N$ съществува ДКА $A$, такъв че
+    $L(N) = L(A)$.
+
+    \vspace{15pt}
+
+    Доказателството на тази теорема, макар и да не е изложено тук, е \textit{конструктивно}.
+    С други думи, то предоставя \textit{алгоритъм}, по който от даден НКА $N$ да 
+    конструираме \textit{еквивалентен} на него ДКА $A$ (тоест такъв, че $L(N) = L(A)$).
+    Силно неформално, идеята е следната: \\
+    \vspace{15pt}
+    Нека ни е даден НКА $N = (Q_N,\Sigma,\Delta,s,F_N)$. Ще конструираме еквивалентен
+    на него ДКА $A = (Q_A,\Sigma,\delta,s,F_A)$. \\
+    \hspace{1cm} 1. Инициализираме $Q_A$, $\delta$ и $F_A$ съответно с $\varnothing$. \\
+    \hspace{1cm} 2. Добавяме $\{s\}$ към $Q_A$. \\
+    \hspace{1cm} 3. Разглеждаме състояние $q \in Q_A$, което не е маркирано като \\
+    \hspace{1cm} \textit{обходено}.  За всяка буква $a \in \Sigma$ добавяме множеството \\
+    \hspace{1cm} $B = \bigcup\limits_{q_i \in q}\Delta(q_i,a)$ към $Q_A$ и в последствие добавяме двойката \\
+    \hspace{1cm} ($(q,a),B$) към $\delta$. Маркираме състоянието $q$ като \textit{обходено} и \\
+    \hspace{1cm} прилагаме стъпка 3 отново, ако още има необходени състояния. \\
+    \hspace{1cm} 4. След като необходените състояния се изчерпат "сканираме" \hspace{0.01cm} \\
+    \hspace{1cm} множеството $Q_A$ и добавяме към $F_A$ тези състояния $B$, за които \\
+    \hspace{1cm} $B \cap F_N \neq \varnothing$.
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Да приложим алгоритъма за детерминиране върху автомата с три 
+    състояния, който предложихме за езика $L = ({ab} \cup {aba})^*$.
+
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial,accepting] (q_0)   {$q_0$}; 
+          \node[state] (q_1) [right=of q_0] {$q_1$};
+          \node[state] (q_2) [below right=1.5 of q_0, yshift = -0.7cm] {$q_2$}; 
+          \path[->]
+          (q_0) edge [bend right, below] node {$a$} (q_1)
+          (q_1) edge   node {$b$} (q_2)
+                edge [bend right, above] node {$b$} (q_0)
+          (q_2) edge   node {$a$} (q_0);
+      \end{tikzpicture}
+    \end{center}
+
+    Първо инициализираме $Q$, $\delta$ и $F$ с $\varnothing$. След това добавяме състоянието
+    $\{q_0\}$ към $Q$ и преминаваме към стъпка 3. \\
+
+    \vspace{5pt}
+
+    Единственото състояние в $Q$ е $\{q_0\}$ и то не е маркирано като обходено. 
+    Добавяме $\{q_1\}$ и $\varnothing$ към $Q$ съответно заради преходите от $q_0$ с
+    буквите $a$ и $b$. Добавяме в $\delta$ преходите $((\{q_0\},a),\{q_1\})$ и 
+    $((\{q_0\},b),\varnothing)$.\\
+
+    \vspace{5pt}
+
+    Сега разглеждаме необходеното състояние $\{q_1\}$. Добавяме $\{q_0,q_2\}$ в $Q$
+    заради преходите от $q_1$ с $b$. Към $\delta$ добавяме преходите
+    $((\{q_1\},a),\varnothing)$ и \\
+    $((\{q_1\},b),\{q_0,q_2\})$.
+
+    \vspace{5pt}
+
+    Следва да разгледаме необходеното състояние $\varnothing$. Добавяме преходите
+    $((\varnothing,a),\varnothing)$ и $((\varnothing,b),\varnothing)$.
+
+    \vspace{5pt}
+
+    Разглеждаме необходеното състояние $\{q_0,q_2\}$. Добавяме $\{q_0,q_1\}$ към
+    $Q$ заради преходите от $q_0$ и $q_1$ с буквата $a$. Добавяме и преходите \\ 
+    $((\{q_0,q_2\},a),\{q_0,q_1\})$ и $((\{q_0,q_2\},b),\varnothing)$ към $\delta$.
+
+    \vspace{5pt}
+
+    Преминаваме към необходеното състояние $\{q_0,q_1\}$. Добавяме към $\delta$
+    преходите $((\{q_0,q_1\},a),\{q_1\})$ и $((\{q_0,q_1\},b),\{q_0,q_2\})$.
+
+    \vspace{5pt}
+
+    С това се изчерпаха необходените състояния. Сканираме $Q$ и заключаваме, че
+    $F = \{\{q_0\},\{q_0,q_2\},\{q_0,q_1\}\}$.
+
+    \vspace{5pt}
+
+    Резултатът от детерминирането е изобразен отдолу.
+
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial,accepting] (q_0)   {$\{q_0\}$}; 
+          \node[state] (q_1) [right=of q_0] {$\{q_1\}$};
+          \node[state, accepting] (q_2) [right=of q_1] {$\{q_0,q_2\}$}; 
+          \node[state, accepting] (q_3) [right=of q_2] {$\{q_0,q_1\}$};  
+          \node[state] (q_4) [below=of q_1] {$\varnothing$};
+          \path[->]
+          (q_0) edge   node {$a$} (q_1)
+                edge   node [swap] {$b$} (q_4)
+          (q_1) edge   node {$a$} (q_4)
+                edge   node {$b$} (q_2)
+          (q_2) edge   node {$a$} (q_3)
+                edge   node {$b$} (q_4)
+          (q_3) edge   [bend right, above] node {$a$} (q_1)
+                edge   [bend left, below] node {$b$} (q_2)
+          (q_4) edge   [loop below] node {$a$,$b$} ();
+      \end{tikzpicture}
+  \end{center}
+
+  Ясно се вижда, че това всъщност е детерминираният автомат от началото на упражнението,
+  но с променени "имена" \hspace{0,01cm} на състоянията.
+
+\vspace{25pt}
+
+\section{Задачи}
+    \textbf{Задача 1.} (а) Кои от следните думи се разпознават от автомата показан на картинката долу вляво? \\
+    (i) $a$ \\
+    (ii) $aa$ \\
+    (iii) $aab$ \\
+    (iv) $\epsilon$
+    
+    
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+          \node[state,initial,accepting] (q_0)   {$q_0$}; 
+          \node[state] (q_1) [right=of q_0] {$q_1$};
+          \node[state,initial,accepting] (p_0) [right=4cm of q_1] {$q_0$};
+          \node[state] (p_1) [right=of p_0] {$q_1$};
+          \node[state,accepting] (p_2) [right=of p_1] {$q_2$};
+          \node[state] (p_3) [below=of p_1] {$q_3$};
+          \path[->]
+          (q_0) edge [loop above] node {$a$} ()
+                edge node [swap] {$a$} (q_1)
+          (q_1) edge [loop right] node {$b$} ()
+          (p_0) edge node {$a$} (p_1)
+          (p_1) edge node {$b$} (p_2)
+                edge node [swap] {$b$} (p_3)
+          (p_2) edge [bend left, below] node {$a$} (p_1)
+          (p_3) edge [bend right, below] node {$a$} (p_2);
+      \end{tikzpicture}
+
+   \vspace{10pt}
+
+   (б) Кои от следните думи се разпознават от автомата показан на картинката горе вдясно? \\
+   (i) $\epsilon$ \\
+   (ii) $ab$ \\
+   (iii) $abab$ \\
+   (iv) $aba$ \\
+   (v) $abaa$ \\
+    
+   \vspace{35pt}
+
+   \textbf{Задача 2.} Намерете НКА за всеки от следните езици. \\
+   (а) $(\{ab\}^*)(\{ba\}^*)\cup\{a\}\{a\}^*$ \\
+   (б) $((\{ab\} \cup \{aab\})^*\{a\}^*)^*$ \\
+   (в) $((\{a\}^*\{b\}^*\{a\}^*)^*\{b\})^*$ \\ 
+   (г) $(\{ba\} \cup \{b\})^* \cup (\{bb\} \cup \{a\})^*$ 
+
+   \vspace{15pt}
+   
+   \textbf{Задача 3.} Намерете НКА за всеки от следните езици. След това детерминирайте
+   посочените от вас автомати. \\
+   (а) $(\{ab\}\cup\{aab\}\cup\{aba\})^*$ \\
+   (б) $(\{a\}\cup\{b\})^*\{aabab\}$ \\
+   (в) $(\{a\}\cup\{b\})^*\{a\}(\{a\}\cup\{b\})(\{a\}\cup\{b\})(\{a\}\cup\{b\})(\{a\}\cup\{b\})$
+\vspace{25pt}
+
+\section{Решения}
+  \textbf{Задача 1.}(а) Всички освен $aab$. \\
+  (б) Всички освен $abaa$.
+
+  \vspace{15pt}
+
+  \textbf{Задача 2.} \\ (а)\hspace {6cm} (б)\\ 
+  \vspace{10pt}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+      \node[state,initial,accepting] (q_0)   {$q_0$}; 
+      \node[state] (q_1) [above=of q_0] {$q_1$};
+      \node[state] (q_2) [right=of q_0] {$q_2$}; 
+      \node[state, accepting] (q_3) [right=of q_2] {$q_3$};  
+      \node[state, accepting] (q_4) [below=of q_0] {$q_4$};
+      \node[state,initial,initial where=right,accepting] (p_0) [right=4cm of q_3] {$q_0$};
+      \node[state] (p_1) [above=of p_0] {$q_1$};
+      \node[state] (p_2) [below left=of p_0] {$q_2$};
+      \node[state] (p_3) [below right=of p_0] {$q_3$};
+      \node[state,accepting] (p_4) [left=of p_0] {$q_4$};
+      \path[->]
+      (q_0) edge [bend left] node {$a$} (q_1)
+            edge node {$b$} (q_2)
+            edge node [swap] {$a$} (q_4)
+      (q_1) edge [bend left] node {$b$} (q_0)
+      (q_2) edge node {$a$} (q_3)
+      (q_3) edge   [bend left] node {$b$} (q_2)
+      (q_4) edge   [loop left] node {$a$} ()
+      (p_0) edge [bend left] node {$a$} (p_1)
+            edge node  {$a$} (p_2)
+            edge node {$a$} (p_4)
+      (p_1) edge [bend left] node {$b$} (p_0)
+      (p_2) edge node [swap] {$a$} (p_3)
+      (p_3) edge node  {$b$} (p_0)
+      (p_4) edge [loop above] node {$a$} ()
+            edge node {$a$} (p_1)
+            edge node [swap] {$a$} (p_2);
+  \end{tikzpicture}
+
+\vspace{5pt}
+
+(в) \hspace{6cm} (г)\\
+\vspace{5pt}
+\begin{tikzpicture}[shorten >=1pt,node distance=1.5cm,on grid,auto] 
+      \node[state,initial,accepting] (q_0) {$q_0$};
+      \node[state] (q_1) [right=of q_0] {$q_1$};
+      \node[state,initial,accepting] (p_0) [right=5cm of q_1] {$q_0$};
+      \node[state] (p_1) [above=of p_0] {$q_1$};
+      \node[state,accepting] (p_2) [right=3cm of p_0] {$q_2$};
+      \node[state] (p_3) [above=of p_2] {$q_3$}; 
+      \path[->]
+      (q_0) edge [bend left] node {$a$} (q_1)
+            edge [loop above] node {$b$} ()
+      (q_1) edge [loop above] node {$a$} ()
+            edge [bend left] node {$b$} (q_0)
+      (p_0) edge [bend left] node {$b$} (p_1)
+            edge [loop below] node {$b$} ()
+            edge node [swap] {$a$} (p_2)
+            edge node {$b$} (p_3)
+      (p_1) edge [bend left] node {$a$} (p_0)
+      (p_2) edge [bend left] node {$b$} (p_3)
+            edge [loop below] node {$a$} ()
+      (p_3) edge [bend left] node {$b$} (p_2);
+\end{tikzpicture}
+
+\end{document} 

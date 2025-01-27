@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 10}
+\end{center}
+
+\vspace{15pt}
+
+\section{Затвореност относно регулярните операции на контекстно-свободните езици}
+    \hspace{15pt}В духа на това, което направихме при регулярните езици, сега ще покажем някои 
+    свойства на затвореност на контекстно-свободните езици относно операции върху
+    езици.
+
+    \vspace{15pt}
+
+    \textbf{Теорема 1.} Контекстно-свободните езици са затворени относно обединение,
+    конкатенация и звезда на Клини. \\
+
+    \vspace{15pt}
+
+    \hspace{15pt} Нека $G_1 = (V_1,\Sigma,R_1,S_1)$ и $G_2 = (V_2,\Sigma,R_2,S_2)$ са контекстно-свободни
+    граматики и без ограничение
+    на общността да допуснем, че $V_1 \cap V_2 = \varnothing$. Конструкциите са 
+    следните. \\
+    
+    \vspace{5pt}
+    
+    \hspace{15pt}\textit{Обединение.} Нека $S$ е символ, който не принадлежи на $V_1 \cup V_2$.
+    Езикът $L(G_1) \cup L(G_2)$ се генерира от граматика 
+    \begin{center}
+    $G = (V_1 \cup V_2 \cup \{S\}, \Sigma,R_1 \cup R_2 \cup \{S \rightarrow S_1, S \rightarrow S_2\},S)$.
+    \end{center}
+
+    \vspace{5pt}
+
+    \hspace{15pt}\textit{Конкатенация.} Подобно, $L(G_1) \circ L(G_2)$ се генерира от 
+    граматиката 
+    \begin{center}
+        $G = (V_1 \cup V_2 \cup \{S\},\Sigma,R_1 \cup R_2 \cup \{S \rightarrow S_1S_2\},S)$. \\
+    \end{center}    
+
+    \vspace{5pt}
+    
+    \hspace{15pt}\textit{Звезда на Клини.} $L(G_1)^*$ се генерира от \\
+    \begin{center}
+         $G = (V_1 \cup \{S\},\Sigma,R_1 \cup \{S \rightarrow \epsilon, S \rightarrow SS_1\},S)$.
+    \end{center}
+
+    \vspace{15pt}
+
+    \hspace{15pt} \textbf{Теорема 1} влече вече доказания факт, че класът на регулярните
+    езици се съдържа в класа на контекстно-свободните такива.
+\vspace{25pt}
+
+\section{Задачи}
+    \textbf{Задача 1.} Използвайте затвореността относно обединение, за да покажете, че 
+    следните езици са контекстно-свободни. \\
+    (a) $\{a^mb^n$ | $m \neq n\}$ \\
+    (б) $\{a,b\}^* \setminus \{a^nb^n$ | $n \in \mathbb{N}\}$ \\
+    (в) $\{a^mb^nc^pd^q$ | $n = q$, или $m \leq p$ или $m+n = p+q$\} \\
+    (г) \{$w \in \{a,b\}^*$ | $w = w^R$\}
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Покажете, че езикът $L = \{a^nb^{n+m}a^n$ | $n,m \in \mathbb{N}\}$ е контекстно свободен,
+    използвайки затвореността относно конкатенация.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Покажете, че езикът $L = \{uw^{rev}v$ | $w = vu$\} е контекстно
+    свободен, използвайки затвореността относно конкатенация.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Покажете, че е контекстно-свободен следният език \\
+    \begin{center}
+        $L = \{a^{n_1}\#a^{n_1+n_2}\#a^{n_2+n_3}\#...\#a^{n_{k-1} + n_k}\#a^{n_k}$ | $k,n_1,...,n_k \in \mathbb{N}$\}
+    \end{center}
+
+\vspace{25pt}
+
+\section{Решения}
+    \textbf{Задача 1.}(а) $\{a^mb^n$ | $n < m$\} $\cup \{a^mb^n$ | $n > m\}$; \\
+    (б) Можем да представим този език като обединението на следните два езика: \\
+    (1) $\{a,b\}^* \setminus \mathscr{L}(a^*b^*)$ (думи, в които има поне едно $b$ преди някое $a$) \\
+    (2) $\{a^nb^m$ | $n \neq m$ \}\\
+    За (1) имаме следната граматика: \\
+    \vspace{5pt}
+    $S \rightarrow AbAaA$ \\
+    $A \rightarrow aA$ | $bA$ | $\epsilon$. \\
+    \vspace{5pt}
+    (в) $\{a^mb^nc^pd^q$ | $n=q\} \cup \{a^mb^nc^pd^q$ | $m\leq p\} \cup \{a^mb^nc^pd^q$ | $m+n = p+q\}$.
+    Граматиките са съответно следните: \\
+    \vspace{5pt}
+    (1) $S \rightarrow aS$ | $A$ \\
+    $A \rightarrow bAd$ | $B$ \\
+    $B \rightarrow cB$ | $\epsilon$; \\
+    \vspace{5pt}
+    (2) $S \rightarrow Sd$ | $A$ \\
+    $A \rightarrow aAc$ | $Ac$ | $B$ \\
+    $B \rightarrow bB$ | $\epsilon$; \\
+    \vspace{5pt}
+    (3) правена на предишното упражнение. \\
+    (г) $\{ww^{rev}$ | $w \in \Sigma^*\} \cup \{waw^{rev}$ | $w \in \Sigma^*\} \cup \{wbw^{rev}$ | $w \in \Sigma^*\}$
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} $L = \{a^nb^n$ | $n \in \mathbb{N}\} \circ \{b^na^n$ | $n \in \mathbb{N}$\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} $L = \{ww^{rev}$ | $w \in \Sigma^*\}^2$. 
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} $L = \{a^n\#a^n$ | $n \in \mathbb{N}\}^*$.
+\section{Коректност на контекстно-свободни граматики}
+
+    \hspace{15pt} В тази секция ще покажем как се доказва формално коректността на
+    една контекстно-свободна граматика. \\
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ще докажем коректността на следната граматика $G$, генерираща езика
+    $L = \{a^nb^n$ | $n \in \mathbb{N}\}$. \\
+
+    \begin{center}
+    
+       $G$ : $\boxed{S \rightarrow aSb \; | \; \epsilon}$
+        
+    \end{center}
+    
+    \vspace{5pt}
+
+    \hspace{5pt} Твърдението, което се опитваме да докажем е следното: \\
+
+    \begin{center}
+        $(\forall w \in \Sigma^*)[w \in L(G) \iff w \in L]$.
+    \end{center}
+
+    За целите на доказателстово му, първо ще докажем следната помощна Лема за релацията
+    $\Rightarrow^*$ в контекста на дадената граматика. \\
+
+    \vspace{5pt}
+
+    \fbox{\parbox{\textwidth}{
+    \hspace{15pt}\textbf{Лема 1.} За всяка дума $w \in (\Sigma \cup V)^*$, ако 
+    $S \Rightarrow^* w$, то $w$ е в един от следните два вида: \\
+    (1) $w = a^nSb^n$, за някое $n \in \mathbb{N}$. \\
+    (2) $w = a^nb^n$, за някое $n \in \mathbb{N}$. \\
+
+    \vspace{5pt}
+
+    \textit{Доказателство:} Еквивалентно, искаме да докажем, че
+    \begin{center}
+        $(\forall n \in \mathbb{N})[(\forall w \in (\Sigma \cup V))^*[S \Rightarrow^n w \implies w$ е от вид (1) или (2)$]]$.
+    \end{center}
+    Това естествено ще сторим с индукция относно $n$. \\
+
+    \vspace{5pt}
+
+    \textbf{База:} Ако $n = 0$ и $w$ е такава поредица от терминали и нетерминали, че 
+    $S \Rightarrow^0 w$, то съществува извод с дължина $0$ на $w$ от $S$. С други думи
+    $S = w$. Тогава $w = a^0Sb^0$, тоест $w$ е от вид (1). \\
+
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Ако $n > 0$ и $w$ е такава поредица от терминали и нетерминали, че
+    $S \Rightarrow^n w$, то съществува извод с дължина $n$ на $w$ от $S$. Да фиксираме
+    един такъв извод 
+    \begin{center}
+        $S = w_0 \Rightarrow w_1 \Rightarrow ... \Rightarrow w_{n-1} \Rightarrow w_n = w$.
+    \end{center}
+
+    От този извод можем да извлечем, че $S \Rightarrow^{n-1} w_{n-1}$. Съгласно И.П.
+    това означава, че $w_{n-1}$ е от вид (1) или (2). Но $w_{n-1} \Rightarrow w_n$ и
+    значи няма как $w_{n-1}$ да е от вид (1) (тя трябва да съдържа нетерминали, съгласно
+    дефиницията на $\Rightarrow$).
+    Тогава $w_{n-1} = a^kSb^k$ за някое $k \in \mathbb{N}$.
+    Сега, щом $w_{n-1} \Rightarrow w_n$ и в $w_{n-1}$ има един единствен нетерминал, $S$, то 
+    имаме, че $w_n = a^kaSbb^k$ или $w_n = a^k \epsilon b^k$. Тоест $w_n = a^{k+1}Sb^{k+1}$ или
+    $w_n = a^kb^k$. Следователно $w_n$ е от вид (1) или (2). Остана само да си припомним, че
+    $w_n = w$. 
+    }}
+
+    \vspace{10pt}
+
+    Сега преминаваме към доказателството на същинското твърдение. Нека $w \in \Sigma^*$. \\
+    ($\Rightarrow$) Нека $w \in L(G)$. Тогава $S \Rightarrow^* w$ и $w \in \Sigma^*$. Съгласно
+    \textbf{Лема 1} това означава, че $w = a^nb^n$ за някое $n\in\mathbb{N}$. Значи 
+    $w \in L$. \\
+    ($\Leftarrow$) Обратно с индукция относно $n$ ще покажем, че \\
+    \begin{center}
+        $(\forall n \in \mathbb{N})[S \Rightarrow^{n+1} a^nb^n]$,
+    \end{center}
+    което е еквивалентно на обратната посока на твърдението.
+
+    \vspace{5pt}
+
+    \textbf{База:} $n = 0$. Имаме извода $S \Rightarrow \epsilon = a^0b^0$. Значи $S \Rightarrow^1 a^0b^0$. \\
+    
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Да допуснем, че за някое $n\in\mathbb{N}$ $S \Rightarrow^{n+1} a^nb^n$. Приемаме за 
+    очевидно, че това означава, че $aSb \Rightarrow^{n+1} aa^nb^nb = a^{n+1}b^{n+1}$. От друга страна
+    $S \Rightarrow aSb$ и значи общо имаме "извода" \\
+    \begin{center}
+        $S \Rightarrow aSb \Rightarrow^{n+1} a^{n+1}b^{n+1}$.
+    \end{center} 
+    Тоест $S \Rightarrow^{n+2} a^{n+1}b^{n+1}$, което искахме да покажем.
+    
+\section{Задачи}
+    \textbf{Задача 1.} Докажете формално коректностите на граматиките, предложени на 
+    последното упражнение за следните езици. \\
+    (а) $\{ww^{rev}$ | $w \in \{a,b\}^*\}$ \\
+    (б) $\{a^mb^n$ | $m \geq n$\} \\
+    (в) $\{w \in \{a,b\}^*$ | броят на $a$-тата в $w$ е равен на два пъти броя на $a$-тата\}
+\vspace{25pt}
+  
+\end{document} 

@@ -1,0 +1,390 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 2}
+\end{center}
+
+\vspace{15pt}
+
+\section{Детерминирани крайни автомати}
+    \textit{Крайният автомат} представлява абстрактна машина снабдена с множество от състояния, азбука и правила за преход между състоянията с буквите от азбуката.
+    Някои от състоянията на автомата са \textit{крайни}, а някои — при \textit{детерминираните крайни автомати}, точно едно — \textit{начални}. 
+    Работата на автомата при подадена дума на вход е да прочете думата и в процеса на което, да извърши зададените преходи спрямо снабдените му правила. След
+    прочитането на подадената дума, автоматът има единствена функционалност да върне отговор \textit{да} или \textit{не} на въпроса дали четенето е приключило в 
+    крайно състояние.
+    
+    \vspace{15pt}
+
+    \textbf{Дефиниция 1.} \textbf{Детерминиран краен автомат (ДКА)} е наредена петорка $A = (Q, \Sigma, \delta, s, F)$, където \\
+    — $Q$ е \textit{крайно} множество от \textbf{състояния}, \\
+    — $\Sigma$ е азбука, \\
+    — $s \in Q$ е \textbf{началното състояние}, \\
+    — $F \subseteq Q$ е множеството от \textbf{крайни състояния} и \\
+    — $\delta$, \textbf{функцията на преходите}, е функция от $Q \times \Sigma$ към $Q$.
+
+    \vspace{5pt}
+    Неформално, за една дума $w \in \Sigma^*$ казваме, че автоматът $A$ разпознава $w$, ако четенето на $w$ по автомата приключи в някое заключително
+    състояние $q \in F$.
+
+    \vspace{5pt}
+
+    За да стигнем до формалната дефиниция на това, какво означава един автомат да разпознава дума $w$,
+    трябва първо да дефинираме така наречената \textit{разширена функция на преходите} $\hat{\delta}:Q \times \Sigma^* \rightarrow Q$. 
+    При аргументи състояние $q$ и дума $w$, функцията $\hat{\delta}$ връща състоянието, в което ще попаднем,
+    тръгвайки от $q$ и четейки думата $w$. Дефиницията е с индукция по дължината на $w$.
+
+    \vspace{5pt}
+
+    \textbf{База:} $\hat{\delta}(q,\epsilon) = q$, за всяко $q \in Q$.
+
+    \vspace{5pt}
+
+    \textbf{Стъпка:} Сега да предположим, че $w = ua$ за някои $u \in \Sigma^*$ и 
+    $a \in \Sigma$. Тогава \\
+    \begin{center}
+        $\hat{\delta}(q,w) = \delta(\hat{\delta}(q,x),a)$.
+    \end{center}
+
+    \vspace{5pt}
+    Сега вече формално, казваме, че автоматът $A$ \textbf{разпознава} думата $w$, ако просто
+    $\hat{\delta}(s,w) \in F$.
+
+    \vspace{5pt}
+    С $L(A)$ означаваме множеството от всички думи $w \in \Sigma^*$, които $A$ разпознава.
+    Тоест, $L(A) = \{w \in \Sigma^*$ | $\hat{\delta}(s,w) \in F$\}.
+    \vspace{10pt}
+
+    \textbf{Пример 1.} Нека $A$ е детерминираният краен автомат $(Q, \Sigma, \delta, s, F)$, където \\
+    \begin{center}
+        $Q = \{q_0, q_1\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $s = q_0$, \\
+        $F = \{q_0\}$,
+    \end{center}
+
+    и $\delta$ е функцията, представена чрез следната талбица.
+
+    \vspace{5pt} 
+
+    \begin{center}
+        \begin{tabular}{ c c c } 
+         \hline
+         $q$ & $\sigma$ & $\delta(q,\sigma)$ \\
+         \hline 
+         $q_0$ & $a$ & $q_0$ \\ 
+         $q_0$ & $b$ & $q_1$ \\ 
+         $q_1$ & $a$ & $q_1$ \\
+         $q_1$ & $b$ & $q_0$ \\
+         \hline
+        \end{tabular}
+    \end{center}
+
+    \vspace{5pt}
+
+    Можем да онагледим вида на $A$ чрез следната фигура.
+
+    \vspace{5pt}
+
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0)   {$q_0$}; 
+            \node[state] (q_1) [right=of q_0] {$q_1$}; 
+            \path[->] 
+            (q_0) edge  [loop above] node {$a$} ()
+                  edge  [bend left, above] node [swap] {$b$} (q_1)
+            (q_1) edge  [bend left, below] node [swap] {$b$} (q_0)
+                  edge [loop above] node {$a$} ();
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{5pt}
+
+    Състоянието $q_0$, бивайки крайно, е илюстрирано с двойно оградено кръгче.
+
+    \vspace{5pt}
+
+    Вече лесно се вижда, че $L(A) = \{w \in \{a,b\}^*$ | $w$ има четен брой $b$-та\}.
+
+    \vspace{10pt}
+
+    \textbf{Пример 2.} Сега ще построим ДКА $A$, който разпознава езика \\ $L = \{w \in \{a,b\}^*$ | $w$ не съдържа три последователни $b$-та\}.
+    Нека \\ $A = (Q, \Sigma, \delta, s, F)$, където
+    \begin{center}
+        $Q = \{q_0, q_1, q_2, q_3\}$, \\
+        $\Sigma = \{a,b\}$, \\
+        $s = q_0$, \\
+        $F = \{q_0, q_1, q_2\}$,
+    \end{center}
+    и $\delta$ е функцията, представена чрез следната талбица.
+
+    \vspace{5pt} 
+
+    \begin{center}
+        \begin{tabular}{ c c c } 
+         \hline
+         $q$ & $\sigma$ & $\delta(q,\sigma)$ \\
+         \hline 
+         $q_0$ & $a$ & $q_0$ \\ 
+         $q_0$ & $b$ & $q_1$ \\ 
+         $q_1$ & $a$ & $q_0$ \\
+         $q_1$ & $b$ & $q_2$ \\
+         $q_2$ & $a$ & $q_0$ \\ 
+         $q_2$ & $b$ & $q_3$ \\ 
+         $q_3$ & $a$ & $q_3$ \\
+         $q_3$ & $b$ & $q_3$ \\
+         \hline
+        \end{tabular}
+    \end{center}
+    
+    \vspace{5pt}
+
+    Можем да онагледим вида на $A$ чрез следната фигура.
+
+    \vspace{5pt}
+
+    \begin{center}
+        \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+            \node[state,initial,accepting] (q_0)   {$q_0$}; 
+            \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+            \node[state, accepting] (q_2) [right=of q_1] {$q_2$}; 
+            \node[state] (q_3) [right=of q_2] {$q_3$};  
+            \path[->] 
+            (q_0) edge  [loop above] node {$a$} ()
+                  edge  node [swap] {$b$} (q_1)
+            (q_1) edge  [bend right, above] node [swap] {$a$} (q_0)
+                  edge  node [swap] {$b$} (q_2)
+            (q_2) edge  [bend left, below] node [swap] {$a$} (q_0)
+                  edge  node [swap] {$b$} (q_3)
+            (q_3) edge  [loop above] node {$a$} ()
+                  edge  [loop right] node {$b$} ();
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{5pt}
+
+    Можем да мислим за състоянието $q_3$ като за "мъртво състояние" — влезем ли веднъж в него в процеса на четене, не можем да излезем.
+
+\vspace{25pt}
+
+\section{Задачи}
+    \textbf{Задача 1.} Нека $A$ е детерминиран краен автомат. Кога е изпълнено, че $\epsilon \in L(A)$? Докажете отговора си.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Постройте детерминирани крайни автомати разпознаващи всеки от следните езици. \\
+    (а) \{$w \in \{a,b\}^*$ | всяко $a$ в $w$ е последвано непосредствено от $b$\}. \\
+    (б) \{$w \in \{a,b\}^*$ | $w$ има $abab$ като поддума\}. \\
+    (в) \{$w \in \{a,b\}^*$ | $w$ няма нито $aa$, нито $bb$ като поддума\}. \\
+    (г) \{$w \in \{a,b\}^*$ | $w$ има нечетен брой $a$-та и четен брой $b$-та\}. \\
+    (д) \{$w \in \{a,b\}^*$ | $w$ има $ab$ и $ba$ като поддуми\}.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} За всеки от дадените по-долу автомати посочете езиците, които разпознават. \\
+    \vspace{10pt}
+    (а) \hspace{5.2cm} (б) \\ 
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial] (q_0)   {$q_0$}; 
+        \node[state, accepting] (q_1) [above right=of q_0] {$q_1$};
+        \node[state] (q_2) [below right=of q_0] {$q_2$}; 
+        \node[state] (q_3) [below right=of q_1] {$q_3$};
+        %(b)
+        \node[state,initial] (p_0) [right=3cm of q_3]  {$q_0$}; 
+        \node[state] (p_1) [above right=of p_0] {$q_1$};
+        \node[state, accepting] (p_2) [below right=of p_0] {$q_2$}; 
+        \node[state, accepting] (p_3) [right=of p_1] {$q_3$};  
+        \node[state] (p_4) [right=of p_2] {$q_4$};  
+        \path[->] 
+        (q_0) edge  [bend left, above] node {$a$} (q_1)
+              edge  node [swap] {$b$} (q_2)
+        (q_1) edge  node [swap] {$a$} (q_3)
+              edge  [bend left, below] node {$b$} (q_0)
+        (q_2) edge  [loop below] node {$a$, $b$} (q_0)
+        (q_3) edge  node {$a$, $b$} (q_2)
+        %(b)
+        (p_0) edge  node {$a$} (p_1)
+              edge  node {$b$} (p_2)
+        (p_1) edge  [loop above] node  {$a$} ()
+              edge  node {$b$} (p_3)
+        (p_2) edge  node {$a$, $b$} (p_4)
+        (p_3) edge  node {$a$, $b$} (p_4)
+        (p_4) edge [loop right] node {$a$, $b$} ();
+    \end{tikzpicture}
+
+    \vspace{10pt}
+
+    (в) \hspace{5.2cm} (г)\\ 
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$}; 
+        \node[state] (q_3) [below right=2.45cm of q_0] {$q_3$};
+        %(г)
+        \node[state] (p_0) [right=2cm of q_2] {$q_0$};
+        \node[state,initial, initial where=above, accepting] (p_1) [right=of p_0] {$q_1$};
+        \node[state] (p_2) [right=of p_1] {$q_2$};
+        \node[state] (p_3) [below right=2.45cm of p_0] {$q_3$};
+        \path[->]
+        (q_0) edge [bend left, above] node {$a$} (q_1)
+              edge node [below] {$b$} (q_3)
+        (q_1) edge [bend left, above] node {$a$} (q_2)
+              edge [bend left, below] node {$b$} (q_0)
+        (q_2) edge node {$a$} (q_3)
+              edge [bend left, below] node {$b$} (q_1)
+        (q_3) edge [loop below] node {$a$,$b$} ()
+        (p_0) edge [bend right, below] node {$a$} (p_1)
+              edge node [below] {$b$} (p_3)
+        (p_1) edge [bend left, above] node {$a$} (p_2)
+              edge [bend right, above] node {$b$} (p_0)
+        (p_2) edge node {$a$} (p_3)
+              edge [bend left, below] node {$b$} (p_1)
+        (p_3) edge [loop below] node {$a$,$b$} (); 
+    \end{tikzpicture}
+        
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Докажете, че за произволни думи $w_1$ и $w_2$ и произволно състояние $q$, 
+    $\hat{\delta}(q,w_1w_2) = \hat{\delta}(\hat{\delta}(q,w_1),w_2)$.
+
+\vspace{25pt}
+
+\section{Решения}
+    
+    \textbf{Задача 1.} Нека $s$ е началното състояние на $A$, a
+    $F$ — множеството от крайните му състояния. Твърдим, че 
+    $\epsilon \in L(A) \iff s \in F$. \\
+    Имаме $\epsilon \in L(A) \iff$ \\
+    $\hat{\delta}(s,\epsilon) \in F \iff$ \\
+    $s \in F$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} \\
+    (а) \hspace{5cm} (б) \\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.4cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$};
+        %(б)
+        \node[state,initial] (p_0) [above=of p_1]  {$q_0$}; 
+        \node[state] (p_1) [right=3cm of q_2] {$q_1$};
+        \node[state] (p_2) [below=of p_1] {$q_2$}; 
+        \node[state] (p_3) [below=of p_2] {$q_3$};  
+        \node[state,accepting] (p_4) [below=of p_3] {$q_4$};  
+        \path[->] 
+        (q_0) edge node {$a$} (q_1)
+              edge [loop above] node {$b$} ()
+        (q_1) edge node {$a$} (q_2)
+              edge [bend left, below] node {$b$} (q_0)
+        (q_2) edge [loop above] node {$a$,$b$} ()
+        %(б)
+        (p_0) edge  node {$a$} (p_1)
+              edge  [loop right] node {$b$} ()
+        (p_1) edge  [loop left] node  {$a$} ()
+              edge  node {$b$} (p_2)
+        (p_2) edge  node {$a$} (p_3)
+              edge  [bend right, above] node [below, pos=0.2] {$b$} (p_0)
+        (p_3) edge  [bend left, below] node [below, pos=0.5, xshift=-0.2cm] {$a$} (p_1)
+              edge node {$b$} (p_4)
+        (p_4) edge [loop right] node {$a$, $b$} (); 
+    \end{tikzpicture}
+
+    \vspace{10pt}
+    (в) \hspace{6.5cm} (г)\\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0)   {$q_0$}; 
+        \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+        \node[state,accepting] (q_2) [right=of q_1] {$q_2$}; 
+        \node[state] (q_3) [below right=2.45cm of q_0] {$q_3$};
+        %(г)
+        \node[state,initial] (p_0) [right=4cm of q_2]   {$q_0$}; 
+        \node[state,accepting] (p_1) [right=of p_0] {$q_1$};
+        \node[state] (p_2) [below=of p_0] {$q_2$}; 
+        \node[state] (p_3) [right=of p_2] {$q_3$};
+        \path[->]
+        (q_0) edge node {$a$} (q_1)
+             edge node [below, pos=0.2] {$b$} (q_3)
+        (q_1) edge node {$a$} (q_2)
+              edge [bend left, below] node [pos=0.3, xshift=0.15cm] {$b$} (q_3)
+        (q_2) edge [loop right] node {$a$,$b$} ()
+        (q_3) edge [bend left, below] node [pos=0.7, xshift=-0.15cm] {$a$} (q_1)
+              edge node [below] {$b$} (q_2)
+        (p_0) edge [bend right, below] node {$a$} (p_1)
+              edge [bend right, above] node [xshift=-0.15cm] {$b$} (p_2)
+        (p_1) edge [bend right, above] node {$a$} (p_0)
+              edge [bend left] node {$b$} (p_3)
+        (p_2) edge [bend left] node {$a$} (p_3)
+              edge [bend right] node {$b$} (p_0)
+        (p_3) edge [bend left] node {$a$} (p_2)
+              edge [bend left] node {$b$} (p_1);
+    \end{tikzpicture}
+
+    \vspace{15pt}
+    (д) \\
+    \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial] (q_1) {$q_0$}; 
+        \node[state] (q_2) [above right=of q_1] {$q_1$};
+        \node[state] (q_3) [right=of q_2] {$q_2$}; 
+        \node[state,accepting] (q_4) [below right=of q_3] {$q_3$};
+        \node[state] (q_5) [below right=of q_1] {$q_4$};
+        \node[state] (q_6) [right=of q_5] {$q_5$};
+        \path[->]
+        (q_1) edge node {$a$} (q_2)
+              edge node {$b$} (q_5)
+        (q_2) edge [loop above] node {$a$} (q_2)
+              edge node {$b$} (q_3)
+        (q_3) edge node {$a$} (q_4)
+              edge [loop above] node {$b$} ()
+        (q_4) edge [loop above] node {$a$,$b$} (q_3)
+        (q_5) edge node {$a$} (q_6)
+              edge [loop below] node {$b$} ()
+        (q_6) edge [loop below] node {$a$} ()
+              edge node {$b$} (q_4);
+    \end{tikzpicture}
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} (а) ${a} \circ \{ba\}^*$ \\
+    (б) $\{a\}^* \circ \{b\}$ \\
+    (в) $(\{a\} \circ \{ab\}^* \circ \{b\})^*$ \\
+    (г) $(\{ab\}^* \circ \{ba\}^*)^*$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Ще докажем твърдението с индукция по $|w_2|$. \\
+    \textbf{База:} Ако $w_2 = \epsilon$, то $\hat{\delta}(q,w_1w_2) = \hat{\delta}(q,w_1) = \textcolor{blue}{\hat{\delta}}\cleft[blue](\hat{\delta}(q,w_1)\textcolor{blue}{,\epsilon}\cright[blue]) = \textcolor{blue}{\hat{\delta}}\cleft[blue](\hat{\delta}(q,w_1)\textcolor{blue}{,w_2}\cright[blue])$. \\
+    \textbf{Стъпка:} Ако $w_2 = ua$ за някои $u \in \Sigma^*$ и $a \in \Sigma$, то \\
+
+    \vspace{5pt}
+    $\hat{\delta}(q,w_1w_2) = $ \\
+    \vspace{5pt}
+    $\hat{\delta}(q,w_1ua) = $ \\
+    \vspace{5pt}
+    $\textcolor{blue}{\delta}\cleft[blue](\hat{\delta}(q,w_1u)\textcolor{blue}{,a}\cright[blue]) \stackrel{\text{И.П}}{=}$ \\
+    \vspace{5pt}
+    $\textcolor{blue}{\delta}\cleft[blue](\textcolor{red}{\hat{\delta}}\cleft[red](\hat{\delta}(q,w_1)\textcolor{red}{,u}\cright[red])\textcolor{blue}{,a}\cright[blue]) \stackrel{\text{деф.} \hat{\delta}}{=}$ \\
+    \vspace{5pt}
+    $\textcolor{violet}{\hat{\delta}}\cleft[violet](\hat{\delta}(q,w_1)\textcolor{violet}{,ua}\cright[violet]) = $ \\
+    \vspace{5pt}
+    $\hat{\delta}(\hat{\delta}(q,w_1),w_2)$.
+
+        
+
+\end{document} 

@@ -1,0 +1,476 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 4}
+\end{center}
+
+\vspace{15pt}
+
+\section{Затвореност относно регулярните операции}
+      В това упражнение целим да покажем, че класът на \textit{автоматните} езици е
+      затворен относно някои от операциите, които въведохме върху езици — 
+      \textit{обединение, конкатенация} и \textit{звезда на Клини}.
+
+      \vspace{15pt}
+
+      \textbf{Дефиниция 1.} Казваме, че един език $L$ е \textbf{автоматен}, ако
+      съществува ДКА $A$, такъв че $L(A) = L$.
+
+      \vspace{15pt}
+
+      \textbf{Теорема 1.} Класът на автоматните езици е затворен относно операциите \\
+      (а) \textit{обединение}; \\
+      (б) \textit{конкатенация}; \\
+      (в) \textit{звезда на Клини}; \\
+
+     \vspace{15pt}
+
+     Доказателството на горната теорема би се състояло в това да се предложат конструкции,
+     които по подадени два детерминирани автомата $A_1$ и $A_2$ или единствен ДКА
+     $A$ строят нови детерминирани автомати, разпознаващи съответно езиците 
+     $L(A_1) \cup L(A_2)$, $L(A_1) \circ L(A_2)$ и $L(A)^*$, след което да се докаже 
+     коректността на предложените конструкции. Ние ще се ограничим само до това да 
+     предложим конструкции.
+
+     \vspace{15pt}
+     
+     (а) \textit{Обединение.} Нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и 
+     $A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$ са детерминирани крайни автомати. Ще
+     конструираме нов НКА $N$, такъв че $L(N) = L(A_1) \cup L(A_2)$. Идеята е да
+     добавим ново начално състояние, което недетерминистично да извършва всички преходи,
+     които $s_1$ и $s_2$ извършват, ефективно опитвайки се да \textit{познаем} 
+     дали входната дума принадлежи на $L(A_1)$ или на $L(A_2)$. \\
+     \hspace{15pt} Формално, ако Б.О.О.
+     допуснем, че $Q_1 \cap Q_2 = \varnothing$, то $N$ дефинираме както следва:
+     $N = (Q,\Sigma,\Delta,s,F)$, където $s \notin Q_1 \cup Q_2$,
+     \begin{center}
+        $Q = Q_1 \cup Q_2 \cup \{s\}$, \\
+     \end{center}
+
+     \begin{center}
+     $F = 
+     \begin{cases}
+      F_1 \cup F_2 \cup \{s\}, & \text { ако } s_1 \in F_1 \text { или } s_2 \in F_2, \\
+      F_1 \cup F_2, & \text { иначе },
+    \end{cases}$
+    \end{center}      
+    
+     а $\Delta$ дефинираме по следния начин
+
+     \begin{center}
+        $\Delta(q,a) =
+        \begin{cases}
+          \{\delta_1(q,a)\}, & \text { ако } q \in Q_1, \\
+          \{\delta_2(q,a)\}, & \text { ако } q \in Q_2, \\
+          \{\delta_1(q,a)\} \cup \{\delta_2(q,a)\}, & \text { ако } q = s.
+        \end{cases}$
+     \end{center}
+
+     \vspace{15pt}
+
+     \textbf{Пример 1.} Ще построим НКА за езика $\{a\} \cup \{ab\}$ използвайки 
+     горната конструкция върху следните два автомата за езиците $\{a\}$ и $\{ab\}$
+     съответно.
+
+     \vspace{10pt}
+
+    \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+      \node[state,initial] (q_0) {$q_0$}; 
+      \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+      \node[state] (q_2) [below=of q_0] {$q_2$};
+      \node[state,initial] (p_0) [right=3cm of q_1] {$p_0$};
+      \node[state] (p_1) [right=of p_0] {$p_1$};
+      \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+      \node[state] (p_3) [below=of p_1] {$p_3$};
+      \path[->]
+      (q_0) edge node {$a$} (q_1)
+            edge node {$b$} (q_2)
+      (q_1) edge node {$a$,$b$} (q_2)
+      (q_2) edge [loop left] node {$a$,$b$} ()
+      (p_0) edge node {$a$} (p_1)
+            edge node {$b$} (p_3)
+      (p_1) edge node {$b$} (p_2)
+            edge node {$a$} (p_3)
+      (p_2) edge node {$a$,$b$} (p_3)
+      (p_3) edge [loop left] node {$a$,$b$} ();
+  \end{tikzpicture}
+
+  \vspace{10pt}
+
+  Резултатния НКА е следният. 
+
+  \vspace{10pt}
+
+  \begin{center}
+  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+    \node[state,initial] (s) [below left=1.5cm of q_2] {$s$} ;
+    \node[state] (q_0) {$q_0$}; 
+    \node[state,accepting] (q_1) [right=of q_0] {$q_1$};
+    \node[state] (q_2) [below=of q_0] {$q_2$};
+    \node[state] (p_0) [below=of q_2] {$p_0$};
+    \node[state] (p_1) [right=of p_0] {$p_1$};
+    \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+    \node[state] (p_3) [below=of p_1] {$p_3$};
+    \path[->]
+    (s)   edge [bend right] node [swap] {$a$} (q_1)
+          edge [bend left] node [swap] {$a$} (p_1)
+          edge node [yshift=-0.1cm] {$b$} (q_2)
+          edge [bend right] node [swap] {$b$} (p_3)
+    (q_0) edge node {$a$} (q_1)
+          edge node [swap] {$b$} (q_2)
+    (q_1) edge node [swap] {$a$,$b$} (q_2)
+    (q_2) edge [loop left] node {$a$,$b$} ()
+    (p_0) edge node {$a$} (p_1)
+          edge node {$b$} (p_3)
+    (p_1) edge node {$b$} (p_2)
+          edge node {$a$} (p_3)
+    (p_2) edge node {$a$,$b$}  (p_3)
+    (p_3) edge [loop below] node {$a$,$b$} ();
+\end{tikzpicture}
+\end{center}
+
+\vspace{15pt}
+
+(б) \textit{Конкатенация.} Отново, нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и \\
+$A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$, са детерминирани крайни автомати. Конструираме
+НКА $N$ такъв че $L(N) = L(A_1) \circ L(A_2)$. Идеята този път е $N$ да симулира $A_1$
+докато стигне до някое негово крайно състояние, след което да направи
+недетерминистичен "скок" \hspace{0.1cm} към $A_2$ чрез имитация на преходите
+на $s_2$ със следващата прочетена буква. \\
+\hspace{15pt} Формално, ако Б.О.О.
+допуснем, че $Q_1 \cap Q_2 = \varnothing$, то $N$ дефинираме както следва:
+     $N = (Q,\Sigma,\Delta,s_1,F)$,
+     \begin{center}
+        $Q = Q_1 \cup Q_2$ \\
+     \end{center}
+
+     \begin{center}
+      $F = 
+      \begin{cases}
+       F_1 \cup F_2, & \text { ако } s_2 \in F_2, \\
+       F_2, & \text { иначе },
+      \end{cases}$
+     \end{center} 
+      
+     а $\Delta$ дефинираме по следния начин
+
+     \begin{center}
+        $\Delta(q,a) =
+        \begin{cases}
+          \{\delta_1(q,a)\}, & \text { ако } q \in Q_1 \setminus F_1, \\
+          \{\delta_1(q,a)\} \cup \{\delta_2(s_2,a)\}, & \text { ако } q \in F_1, \\
+          \{\delta_2(q,a)\}, & \text { ако } q \in Q_2.
+        \end{cases}$
+     \end{center}
+
+
+\vspace{15pt}
+
+\textbf{Пример 2.} Ще построим НКА за езика $\{a\} \circ \{ab\}$ използвайки 
+горната конструкция върху автоматите от \textbf{Пример 1}.
+\vspace{25pt}
+
+\begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial] (q_0) {$q_0$}; 
+        \node[state] (q_1) [right=of q_0] {$q_1$};
+        \node[state] (q_2) [below=of q_0] {$q_2$};
+        \node[state] (p_0) [right=3cm of q_1] {$p_0$};
+        \node[state] (p_1) [right=of p_0] {$p_1$};
+        \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+        \node[state] (p_3) [below=of p_1] {$p_3$};
+        \path[->]
+        (q_0) edge node {$a$} (q_1)
+              edge node [swap] {$b$} (q_2)
+        (q_1) edge node [swap] {$a$,$b$} (q_2)
+              edge [bend left] node {$a$} (p_1)
+              edge [bend right] node [swap] {$b$} (p_3)
+        (q_2) edge [loop left] node {$a$,$b$} ()
+        (p_0) edge node {$a$} (p_1)
+              edge node {$b$} (p_3)
+        (p_1) edge node {$b$} (p_2)
+              edge node {$a$} (p_3)
+        (p_2) edge node {$a$,$b$}  (p_3)
+        (p_3) edge [loop below] node {$a$,$b$} ();
+    \end{tikzpicture}
+    \end{center}
+
+\vspace{15pt}
+
+(в) \textit{Звезда на Клини.} Нека $A = (Q,\Sigma,\delta,s,F)$ е ДКА. Ще конструираме
+НКА $N$, такъв че $L(N) = L(A)^*$. Естествената идея би била да конкатенираме 
+$A$ към самия себе си без да създаваме копие и да направим началното състояние крайно, ако вече не е 
+такова. Този подход обаче е грешен, защото може да вкара нови думи в езика в случаите,
+в които $A$ има преходи обратно към началното състояние.
+За да получим автомат за $L(A)^*$ трябва да добавим ново начално и заключително състояние,
+което да имитира преходите на оригиналното начално състояние вместо да правим оригиналното
+начално състояние крайно. \\
+
+\hspace{15pt} Формално $N$ дефинираме както следва:
+     $N = (Q',\Sigma,\Delta,s',F')$,
+     \begin{center}
+      $s' \notin Q$ \\
+      $Q' = Q \cup \{s'\}$ \\
+      $F' = F \cup \{s'\}$,
+     \end{center} 
+      
+     а $\Delta$ дефинираме по следния начин
+
+     \begin{center}
+        $\Delta(q,a) =
+        \begin{cases}
+          \{\delta(q,a)\}, & \text { ако } q \in Q \setminus F_1, \\
+          \{\delta(s,a)\} \cup \{\delta(q,a)\}, & \text { ако } q \in F_1, \\
+          \{\delta(s,a)\}, & \text { ако } q = s'.
+        \end{cases}$
+     \end{center}
+
+\vspace{15pt}
+
+\textbf{Пример 3.} Ще построим НКА за езика $\{ab\}^*$ използвайки 
+горната конструкция върху автомата за $\{ab\}$ от \textbf{Пример 1}.
+
+\vspace{15pt}
+
+\begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial,accepting] (s') {$s'$}; 
+        \node[state] [right=of s'] (p_0) {$p_0$};
+        \node[state] (p_1) [right=of p_0] {$p_1$};
+        \node[state,accepting] (p_2) [right=of p_1] {$p_2$};
+        \node[state] (p_3) [below=of p_1] {$p_3$};
+        \path[->]
+        (s')  edge [bend left] node {$a$} (p_1)
+              edge node [swap] {$b$} (p_3)
+        (p_0) edge node {$a$} (p_1)
+              edge node {$b$} (p_3)
+        (p_1) edge node [swap] {$b$} (p_2)
+              edge node {$a$} (p_3)
+        (p_2) edge node {$a$,$b$}  (p_3)
+              edge [bend right] node [swap] {$a$} (p_1)
+        (p_3) edge [loop below] node {$a$,$b$} ();
+    \end{tikzpicture}
+    \end{center}
+
+\vspace{15pt}
+
+Разбира се, предложените конструкции строят недетерминирани автомати, а нашата цел
+беше да построим детерминирани такива, за да покажем затвореността на класа на
+автоматните езици. Както показахме на миналото упражнение, резултатните недетерминирани
+автомати винаги могат да се детерминират като последна стъпка в предложените конструкции.
+
+\section{Задачи}
+    \textbf{Задача 1.} Дайте \textit{директни} конструкции за затвореността относно
+    следните две операции.\\
+    (а) \textit{Допълнение.} \\
+    (б) \textit{Сечение.} \\
+
+    \vspace{10pt}
+
+    \textit{Забележка.} \textit{Директни} ще рече да не използвате, че сечението може
+    да се представи чрез допълнение и обединение.
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Използвайки конструкциите от \textbf{Теорема 1}, постройте
+    недетерминирани крайни автомати разпознаващи следните езици. \\
+    (а) $\{a\}^*\circ(\{ab\}\cup\{ba\}\cup\{\epsilon\})\circ\{b\}^*$ \\
+    (б) $(\{a\}\cup\{b\})^*\circ(\{\epsilon\}\cup\{c\})$ \\
+    (в) $(\{a\}^*\cup\{b\}^*)\circ\{c\}$ 
+
+    \vspace{20pt}
+
+    \textit{Забележка.} В \textbf{Задача 2} можете неформално да приложите конструкциите върху 
+    недетерминирани автомати, вместо да започнете от детерминирани такива и да 
+    детерминирате на всяка стъпка. Ако човек е схванал конструкциите за детерминирани
+    автомати, не би трябвало да се затрудни да ги прилага и за недетерминирани такива,
+    въпреки липсата на формално изложение.
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Нека $L \subseteq \Sigma^*$. Дефинираме следните езици. \\
+    \textcolor{blue}{\hspace{10pt} 1. $Pref(L) = \{w \in \Sigma^*$ | $x = wy$ за някои $x \in L, y \in \Sigma^*$\}
+    (множеството \\ \hspace{22pt} от \textbf{префиксите} на $L$). \\
+    \hspace{10pt} 2. $Suff(L) = \{w \in \Sigma^*$ | $x = yw$ за някои $x \in L, y \in \Sigma^*$\}
+    (множеството \\ \hspace{22pt} от \textbf{суфиксите} на $L$). \\
+    \hspace{10pt} 3. $Subseq(L) = \{w_1w_2...w_k$ | $k \in \mathbb{N}, w_i \in \Sigma^*$ за $i = 1,...,k$,
+    и има дума \\ \hspace{22pt} $x = x_0w_1x_1w_2x_2...w_kx_k \in L\}$. (множеството от \textbf{подредиците}
+    на $L$). \\
+    \hspace{10pt} 4. $Max(L) = \{w \in L$ | ако $x \neq \epsilon$, то $wx \notin L\}$. \\
+    \hspace{10pt} 5. $L^{rev} = \{w^{rev}$ | $w \in L\}$.} \\
+    Покажете че ако $L$ е автоматен, то всеки от следните езици също е автоматен. \\
+    (а) $Pref(L)$ \\
+    (б) $Suff(L)$ \\
+    (в) $Subseq(L)$ \\
+    (г) $Max(L)$ \\
+    (д) $L^{rev}$
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} За два езика $L_1$ и $L_2$ над азбука $\Sigma$, дефинираме 
+    \textit{частното} на $L_1$ по отношение $L_2$ да бъде езикът 
+    \begin{center}
+      $L_1/L_2 = \{w \in \Sigma^*$ | $wx \in L_1$ за някое $x \in L_2$\}.
+    \end{center}
+    Докажете, че ако $L_1$ е автоматен, то $L_1/L_2$ е автоматен език.
+
+
+\vspace{25pt}
+
+\section{Решения}
+    \textbf{Задача 1.}(а) Достатъчно е да обърнем крайността на всяко състояние. Тоест
+    $F' = Q \setminus F$. Тук обаче е ключово да отбележим, че входният автомат трябва
+    да бъде детерминиран. \\
+    (б) Нека $A_1 = (Q_1,\Sigma,\delta_1,s_1,F_1)$ и $A_2 = (Q_2,\Sigma,\delta_2,s_2,F_2)$.
+    Предлагаме НКА $N = (Q_1 \times Q_2,\Sigma,\Delta,(s_1,s_2),F_1 \times F_2)$, където 
+    $\Delta$ е дефинирана както следва. \\
+    \begin{center}
+      $\Delta((q_1,q_2),a) = (\delta_1(q_1,a),\delta_2(q_2,a))$
+    \end{center}
+
+    \vspace{100pt}
+
+    \textbf{Задача 2.} 
+    (а)
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0) {$q_0$}; 
+        \node[state] [right=of q_0] (q_1) {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$};
+        \node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+        \node[state] (q_4) [above=of q_1] {$q_4$};
+        \node[state] (q_5) [right=of q_4] {$q_5$};
+        \node[state,accepting] (q_6) [right=of q_5] {$q_6$};
+        \node[state,accepting] (q_7) [below=of q_1] {$q_7$};
+        \node[state,accepting] (q_8) [right=of q_3] {$q_8$};
+        \path[->]
+        (q_0)  edge [loop above] node {$a$} ()
+               edge node {$a$} (q_5)
+               edge [bend right,below] node [xshift=0.5cm] {$b$} (q_2)
+               edge [bend right=40,below] node {$b$} (q_8)
+        (q_1)  edge node {$b$} (q_2)
+        (q_2)  edge node {$a$} (q_3)
+        (q_3)  edge node {$b$} (q_8)
+        (q_4)  edge node {$a$} (q_5)
+        (q_5)  edge node {$b$} (q_6)
+        (q_6)  edge node {$b$} (q_8)
+        (q_7)  edge [bend right,below] node {$b$} (q_8)
+        (q_8)  edge [loop above] node  {$b$} ();
+    \end{tikzpicture}
+    \end{center}
+
+    (б)
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+        \node[state,initial,accepting] (q_0) {$q_0$}; 
+        \node[state] [right=of q_0] (q_1) {$q_1$};
+        \node[state] (q_2) [above right=of q_1] {$q_2$};
+        \node[state,accepting] (q_3) [right=of q_2] {$q_3$};
+        \node[state] (q_4) [below right=of q_1] {$q_4$};
+        \node[state,accepting] (q_5) [right=of q_4] {$q_5$};
+        \node[state,accepting] (q_6) [below right=of q_3] {$q_6$};
+        \node[state,accepting] (q_7) [above right=of q_6] {$q_7$};
+        \node[state] (q_8) [below right=of q_6] {$q_8$};
+        \node[state,accepting] (q_9) [right=of q_8] {$q_9$};
+        \path[->]
+        (q_0)  edge [bend left=50] node {$a$} (q_3)
+               edge [bend right=50,below] node {$b$} (q_5)
+               edge [bend right=60,below] node {$c$} (q_9)
+        (q_1)  edge [bend right=20] node {$a$} (q_3)
+               edge [bend left=20] node {$b$} (q_5)
+        (q_2)  edge node {$a$} (q_3)
+        (q_3)  edge [loop above] node {$a$} ()
+               edge [bend right] node {$b$} (q_5)
+               edge [bend left=90] node {$c$} (q_9)
+        (q_4)  edge node {$b$} (q_5)
+        (q_5)  edge [loop below] node {$b$} (q_5)
+               edge [bend right] node {$a$} (q_3)
+               edge [bend right,below] node {$c$} (q_9)
+        (q_6)  edge [bend left] node {$c$} (q_9)
+        (q_8)  edge node  {$c$} (q_9);
+    \end{tikzpicture}
+    \end{center}
+
+    \vspace{1000pt}
+    (в)
+    \begin{center}
+      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto] 
+        \node[state,initial] (q_0) {$q_0$}; 
+        \node[state] [above right=of q_0] (q_1) {$q_1$};
+        \node[state] (q_2) [right=of q_1] {$q_2$};
+        \node[state] (q_3) [right=of q_2] {$q_3$};
+        \node[state] (q_4) [below right=of q_0] {$q_4$};
+        \node[state] (q_5) [right=of q_4] {$q_5$};
+        \node[state] (q_6) [right=of q_5] {$q_6$};
+        \node[state] (q_7) [above right=of q_6] {$q_7$};
+        \node[state,accepting] (q_8) [right=of q_7] {$q_8$};
+        \path[->]
+        (q_0)  edge [bend right=15] node {$a$} (q_3)
+               edge [bend left=15,below] node {$b$} (q_6)
+               edge [bend right=90,below] node {$c$} (q_8)
+        (q_1)  edge [bend left] node {$a$} (q_3)
+               edge [bend left=50] node {$c$} (q_8)
+        (q_2)  edge node {$a$} (q_3)
+        (q_3)  edge [bend left=20] node {$c$} (q_8)
+               edge [bend left=12] node {$a$} (q_2)
+        (q_4)  edge [bend right=40] node {$b$} (q_6)
+               edge [bend right=50,below] node {$c$} (q_8)
+        (q_5)  edge node {$b$} (q_6)
+        (q_6)  edge [bend right=20] node {$c$} (q_8)
+               edge [bend left=12] node {$b$} (q_5)
+        (q_7)  edge node  {$c$} (q_8);
+    \end{tikzpicture}
+    \end{center}
+
+    \textbf{Задача 3.} (а) Просто променяме множеството от крайните състояния по следния
+    начин:
+    \begin{center}
+      $F' = \{q \in Q$ | $(\exists w \in \Sigma^*)[\hat{\delta}(q,w) \in F]\}$.
+    \end{center}
+    (б) Едно състояние $q \in Q$ ще наричаме \textit{достижимо от s}, ако съществува дума
+    $w \in \Sigma^*$, такава че $\hat{\delta}(s,w) = q$. Нека $\mathbb{Q}$
+    е множеството от всички достижими от $s$ състояния на входния автомат 
+    (този, разпознаващ $L$). Добавяме ново начално състояние $s \notin Q$. Добавяме $s$ към $F$.
+    Ясно е как работи $\Delta$ върху състояния, които не са $s$. Нека $a \in \Sigma$. Имаме
+    \begin{center}
+      $\Delta(s,a) = \{\delta(q,a)$ | $q \in \mathbb{Q}\}$.
+    \end{center}
+    (в) Нека $Q = \{q_1,...,q_n\}$. За $i=1,...,n$ нека $Q_i$ е множеството от достижимите
+    от $q_i$ състояния. Нека $a \in \Sigma$. Тогава
+    \begin{center}
+      $\Delta(q_i,a) = \bigcup\limits_{q \in Q_i} \{\delta(q,a)\}$ 
+    \end{center}
+    (г) Променяме множеството от крайните състояния по следния начин:
+    \begin{center}
+      $F' = \{q \in F$ | $(\forall w \in \Sigma^+)[\hat{\delta}(q,w) \notin F]\}$.
+    \end{center}
+    (д) Първо обръщаме преходите на автомата:
+    \begin{center}
+      $\Delta(q,a) = \{p \in Q$ | $\delta(p,a) = q\}$.
+    \end{center}
+    След това добавяме ново начално състояние $s \notin Q$, което е крайно тстк началното
+    състояние на входния автомат е крайно. Към $\Delta$ добавяме преходите
+    \begin{center}
+      $\Delta(s,a) = \bigcup\limits_{q \in F} \Delta(q,a)$,
+    \end{center}
+    за всяко $a \in \Sigma$.
+
+\end{document} 

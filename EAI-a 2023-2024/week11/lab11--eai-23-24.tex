@@ -1,0 +1,228 @@
+\documentclass{article}
+\usepackage[document]{ragged2e}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\cleft}[2][.]{%
+  \begingroup\colorlet{savedleftcolor}{.}%
+  \color{#1}\left#2\color{savedleftcolor}%
+}
+\newcommand{\cright}[2][.]{%
+  \color{#1}\right#2\endgroup
+}
+
+\newcommand{\bleft}{
+    \boldsymbol{\left(\right.}
+}
+
+\newcommand{\bright}{
+    \boldsymbol{\left.\right)}
+}
+
+\newcommand{\bplus}{
+    \boldsymbol{+}
+}
+
+\newcommand{\bepsilon}{
+    \boldsymbol{\epsilon}
+}
+
+\begin{document}
+\begin{center}
+    {\huge Упражнение 11}
+\end{center}
+
+\vspace{15pt}
+
+\section{Коректност на контекстно-свободни граматики}
+    \hspace{15pt} Продължаваме с доказателство на коректността на к-св. граматика с две променливи.
+
+    \vspace{15pt}
+
+    \textbf{Пример 1.} Ще докажем коректността на следната граматика $G$, генерираща 
+    езика $L = \{a^mb^n$ | $m > n\}$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow aA$ \\
+                    $A \rightarrow aA$ | $aAb$ | $\epsilon$        
+        \end{tabular}}
+    \end{center}
+
+    Отново, твърдението което се опитваме да докажем е следното: \\
+    \begin{center}
+        $(\forall w \in \Sigma^*)[w \in L(G) \iff w \in L]$.
+    \end{center}
+
+    Следната Лема късаеща релацията $\Rightarrow^*$ ще ни бъде нужна. \\
+
+    \vspace{5pt}
+    
+    \hspace{15pt}\textbf{Лема 1.} За всяка дума $w \in (\Sigma \cup V)^*$, ако 
+    $S \Rightarrow^* w$, то $w$ е в един от следните четири вида: \\
+    (1) $S$; \\
+    (2) $a^mAb^n$, за някои $m,n \in \mathbb{N}$ и $m > n$;\\
+    (3) $a^mb^n$, за някои $m,n \in \mathbb{N}$ и $m > n$. \\
+    \textit{Доказателство:} Еквивалентно, искаме да покажем, че \\
+    \begin{center}
+        $(\forall n \in \mathbb{N})[(\forall w \in (\Sigma \cup V)^*)[S \Rightarrow^n w \implies w$ е в някои от видовете (1)-(3)$]]$.
+    \end{center}
+        За целта ще проведем индукция относно $n$. \\
+        \vspace{5pt}
+        \textbf{База:} Ако $n = 0$ и $w$ е такава редица от терминали и нетерминали, че
+        $S \Rightarrow^0 w$, то $w = S$. Следователно, $w$ е от вид (1). \\
+        \vspace{5pt}
+        \textbf{Стъпка:} Ако $n > 0$ и $w$ е такава редица от терминали и нетерминали,
+        че $S \Rightarrow^n w$, то съществува извод с дължина $n$ на $w$ от $S$. Да 
+        фиксираме един такъв извод \\
+        \begin{center}
+            $S = w_0 \Rightarrow w_1 \Rightarrow ... \Rightarrow w_{n-1} \Rightarrow w_n = w$.
+        \end{center}
+        От този извод можем в частност да заключим, че $S \Rightarrow^{n-1} w_{n-1}$. 
+        Съгласно И.П. това означава, че $w_{n-1}$ е в някои от видовете (1)-(3). Веднага
+        отхвърляме възможността $w_{n-1}$ да е от вид (3), тъй като тя трябва да съдържа
+        нетерминали, съгласно дефиницията на $\Rightarrow$. Значи имаме следните два
+        случая: \\
+        \textbf{1 сл.} $w_{n-1} = S$. Тогава единствената възможност е $w_n = aA$, съгласно
+        правилата на $G$. Следователно $w_n$ е от вид (2), за $m = 1$. \\
+        \textbf{2 сл.} $w_{n-1} = a^mAb^n$, за някои $m,n \in \mathbb{N}$, такива че
+        $m > n$. Тук имаме три
+        възможности за това, кое правило ще приложим на следваща стъпка (върху 
+        единствения нетерминал в редицата, $A$). \\
+        \hspace{15pt}\textbf{2.1 сл.} $w_n = a^maAb^n$, тоест приложили сме правилото
+        $\boxed{A \rightarrow aA}$. Тогава $w_n = a^{m+1}Ab^n$ е очевидно от вид (2),
+        тъй като $m > n \implies m+1 > n$. \\
+        \hspace{15pt}\textbf{2.2 сл.} $w_n = a^maAbb^n$, тоест приложили сме правилото
+        $\boxed{A \rightarrow aAb}$. Тогава $w_n = a^{m+1}Ab^{n+1}$ е очевидно от вид
+        (2), тъй като $m > n \implies m+1 > n+1$. \\
+        \hspace{15pt}\textbf{2.3 сл.} $w_n = a^m\epsilon b^n$, тоест приложили сме
+        правилото $\boxed{A \rightarrow \epsilon}$. Тогава $w_n = a^mb^n$ е очевидно
+        от вид (3). \\
+        С това случаите се изчерпаха и индукцията приключи. Лемата е доказана.
+
+        \vspace{15pt} 
+
+        Преминаваме към доказателството на същинското твърдение. Нека \\ $w \in \Sigma^*$. \\
+        ($\Rightarrow$) Нека $w \in L(G)$. Тогава $S \Rightarrow^* w$ и $w \in \Sigma^*$. 
+        Съгласно \textbf{Лема 1}, \\ $w = a^mb^n$, за някои $m,n \in \mathbb{N}$, такива че 
+        $m > n$. Следователно $w \in L$. \\
+        ($\Leftarrow$) Обратно, с индукция относно $m$ ще докажем, че \\
+        \begin{center}
+            ($\forall m \in \mathbb{N}$)$[(\forall n \in \mathbb{N}$)$[m > n \implies S \Rightarrow^{m+1} a^mb^n]]$
+        \end{center}
+        \textbf{База:} $m = 0$. Тогава със сигурност $m \not > n$. Значи импликацията
+        е тривиално изпълнена. \\
+        \vspace{5pt}
+        \textbf{Стъпка:} $m > 0$. Нека $m = m_1 > 0$. Искаме да покажем следното: \\
+        \begin{center}
+            ($\forall n \in \mathbb{N})[m_1 > n \implies S \Rightarrow^{{m_1}+1} a^{m_1}b^n]$
+        \end{center}
+        За целта ще проведем индукция по $n$. \\
+        \vspace{5pt}
+        \hspace{15pt} \textbf{База:} $n=0$. Съгласно И.П. на външната индукция, 
+        $S \Rightarrow^{m_1-1+1} a^{m_1-1}b^0$. Тоест $S \Rightarrow^{m_1} a^{m_1-1}$. Следователно
+        $aA \Rightarrow^{m_1-1} a^{m_1-1}$. От тук имаме, че $aaA \Rightarrow^{m_1-1} aa^{m_1-1}$.
+        Тоест $aaA \Rightarrow^{m_1-1} a^{m_1}$. От друга страна $S \Rightarrow aA$ и $aA \Rightarrow aaA$.
+        Общо имаме $S \Rightarrow^{m_1-1+2} a^m$. Тоест $S \Rightarrow^{m_1+1} a^{m_1}$. \\
+        \hspace{15pt} \textbf{Стъпка:} $n > 0$. Нека $m_1 > n$. Тогава $m_1-1 > n-1$. 
+        По И.П. на външната индукция имаме, че $S \Rightarrow^{m_1-1+1}a^{m_1-1}b^{n-1}$.
+        Тоест $S \Rightarrow^{m-1}a^{m_1-1}b^{n-1}$. Тогава $aA \Rightarrow^{m_1-1} a^{m_1-1}b^{n-1}$. 
+        Следователно $aaAb \Rightarrow^{m_1-1} aa^{m_1-1}b^{n-1}b$. Тоест 
+        $aaAb \Rightarrow^{m_1-1}a^{m_1}b^n$. От друга страна $S \Rightarrow aA$ и 
+        $aA \Rightarrow aaAb$. Общо имаме, че $S \Rightarrow^{m_1-1+2} a^{m_1}b^n$. 
+        Тоест $S \Rightarrow^{m_1+1} a^{m_1}b^n$, което искахме да покажем.
+\vspace{25pt}
+
+\section{Задачи}
+    \textbf{Задача 1.} Докажете коректността на следната регулярна граматика, генерираща
+    езика $\mathscr{L}(a^{\star}b)$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow aS$ | $A$ \\
+                    $A \rightarrow b$        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 2.} Докажете коректността на следната регулярна граматика, генерираща
+    езика $L = \{w \in \{a,b\}^*$ | $w$ има четен брой $a$-та\}: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow bS$ | $aA$ | $\epsilon$ \\
+                    $A \rightarrow bA$ | $aS$        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Докажете коректността на следната граматика, генерираща
+    езика $\mathscr{L}(aa^{\star}bb^{\star})$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow AB$ \\
+                    $A \rightarrow aA$ | $a$ \\
+                    $B \rightarrow bB$ | $b$.        
+        \end{tabular}}
+    \end{center}
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} Докажете коректността на следната граматика, генерираща
+    езика $L = \{a^nb^ma^k$ | $n+k = m\}$: \\
+    \begin{center}
+        $G$: 
+        \fbox{
+        \begin{tabular}{l}     
+                    $S \rightarrow AB$\\
+                    $A \rightarrow aAb$ | $\epsilon$ \\
+                    $B \rightarrow bBa$ | $\epsilon$        
+        \end{tabular}}
+    \end{center}
+\vspace{25pt}
+
+\section{Решения}
+    \textbf{Задача 1.} Възможните видове на редиците, генерирани от $G$ са: \\
+    (1) $a^nS$; \\
+    (2) $a^nA$; \\
+    (3) $a^nb$.
+
+    \vspace{15pt} 
+
+    \textbf{Задача 2.} Възможните видове на редиците, генерирани от $G$ са: \\
+    (1) $(b^nab^ka)^mb^lab^sA$; \\
+    (2) $(b^nab^ka)^mb^lS$; \\
+    (3) $(b^nab^ka)^mb^l$. \\
+    
+    \vspace{15pt}
+
+    \textbf{Задача 3.} Езикът по дефиниция е конкатенация на $\mathscr{L}(aa^{\star})$
+    и $\mathscr{L}(bb^{\star})$. Ако използваме конструкцията за конкатенация, е достатъчно
+    да покажем, че граматиката $G_1 : \boxed{S_1 \rightarrow aS_1 \; | \; a}$ генерира
+    $\mathscr{L}(aa^{\star})$ и аналогично, че граматиката $G_2 : \boxed{S_2 \rightarrow bS_2 \; | \; b}$
+    генерира $\mathscr{L}(bb^{\star})$.
+
+    \vspace{15pt}
+
+    \textbf{Задача 4.} 
+    Езикът може да се представи като конкатенация на $\{a^nb^n$ | $n \in \mathbb{N}\}$
+    и $\{b^na^n$ | $n \in \mathbb{N}\}$. Ако използваме конструкцията за конкатенация, е достатъчно
+    да покажем, че граматиката $G_1 : \boxed{S_1 \rightarrow aS_1b \; | \; \epsilon }$ генерира
+    $\{a^nb^n$ | $n \in \mathbb{N}\}$ и аналогично, че граматиката $G_2 : \boxed{S_2 \rightarrow bS_2a \; | \; \epsilon}$
+    генерира $\{b^na^n$ | $n \in \mathbb{N}\}$.
+
+\end{document} 
